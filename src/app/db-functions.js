@@ -20,6 +20,16 @@ async function connectToMongo() {
   }
 }
 
+async function connectToDB(dbName, collectionName) {
+  try {
+    await client.connect();
+    console.log('Connected to MongoDB!');
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+  } catch (error) {
+    console.error('Error connecting to MongoDB', error);
+  }
+}
 // Call the function to connect
 connectToMongo();
 

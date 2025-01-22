@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "server": "nodemon src/app/index.js",
+    "server": "nodemon src/app/db-functions.js",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
