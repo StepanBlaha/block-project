@@ -39,6 +39,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 <!---
 npm install mongodb
+npm install
 
 - git status (get status of changes)
 - git pull (pull changes from main and merges them)
