@@ -34,3 +34,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+<!---
+npm install mongodb
+
+- git status (get status of changes)
+- git pull (pull changes from main and merges them)
+- git fetch (pull changes from mainwithout meging them)
+- git clone repository-url (clones the repository to current folder on local machien)
+- git add file  (adds file tobe commited)
+- git commit -m"message" (stages changes to local repository)
+- git push (uploads the changes to github)
+- git log (display commit history)
+
+-->
