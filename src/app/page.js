@@ -22,7 +22,10 @@ export default function Home() {
   const brushSizeRef = useRef(null)
   const brushSize = useRef(1)
 
+  const brushColorRef = useRef(null)
   const brushColor = useRef("#ffffffs")
+
+
   const ctxRef = useRef(null)
   const canvasRef = useRef(null)
 
@@ -53,13 +56,27 @@ export default function Home() {
   function mouseUpHandle(){
     setDrawing(false)
   }
-  function changeBrushColor() {
+
+  function clearCanvas() {
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctxRef.current = ctx
     
+  }
+
+  //Function for changing brush color
+  function changeBrushColor() {
+    brushColor.current = brushColorRef.current.value
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    ctx.strokeStyle = brushColor.current;
+    ctxRef.current = ctx
   }
 
   //Function for changing brush size
   function changeBrushSize(){
-    brushSize.current = brushRef.current.value
+    brushSize.current = brushSizeRef.current.value
   }
   //Detects the change in brush size and updates the canvas brush size settings
   useEffect(() => { 
@@ -93,8 +110,19 @@ export default function Home() {
                 <p>Brush color</p>
               </div>
               <form id="brushColorForm">
-                <input type="color" name="brushColor" id="brushColor"  onChange={changeBrushSize}  ref={brushColorRef}/>
+                <input type="color" name="brushColor" id="brushColor"  onChange={changeBrushColor}  ref={brushColorRef}/>
               </form>
+            </div>
+
+            <div className="SettingsMenuItem">
+              <div className="SettingsMenuItemTitle">
+                <p>Clear canvas</p>
+              </div>
+              <div className="CanvasClear">
+                <div className="CanvasClearButton" onClick={clearCanvas}>
+                  <p>Clear</p>
+                </div>
+              </div>
             </div>
 
           </div>
