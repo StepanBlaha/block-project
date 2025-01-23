@@ -1,5 +1,91 @@
-canvas{
-    height: 200px;
-    width: 500px;
+body, html{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    float: left;
+}
+.Main{
+    height: 100%;
+    width: 100%;
+    float: left;
     border: 2px solid red;
+}
+.Title{
+    height: 10%;
+    width: 100%;
+    float: left;
+    border: 2px solid blue;
+}
+.Sidebar{
+    height:90% ;
+    width: 20%;
+    float: left;
+    border: 2px solid green;
+}
+.SettingsMenu{
+    height: 80%;
+    width: 100%;
+    float: left;
+    border: 1px solid red;
+}
+.SettingsMenuItem{
+    height: 10%;
+    width: 100%;
+    float: left;
+    border: 1px solid blue;
+    transition: 0.5s;
+}
+.SettingsMenuItem:hover{
+    background-color: rgb(32, 30, 30);
+}
+.SettingsMenuItemTitle{
+    height:50%;
+    width: 100%;
+    float: left;
+    border: 1px solid green;
+}
+#brushSizeForm, #brushColorFrom{
+    height: 50%;
+    width: 100%;
+    float: left;
+}
+#brushSize, #brushColor{
+    height: 100%;
+    width: 100%;
+    float: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.Content{
+    height:90% ;
+    width: 80%;
+    float: left;
+    border: 2px solid brown;
+}
+.ContentTitle{
+    float: left;
+    height: 10%;
+    width: 100%;
+    border: 2px solid red;
+}
+.ContentCanvas{
+    float: left;
+    height: 90%;
+    width: 100%;
+    border: 2px solid red;
+}
+
+canvas{
+    height: 100%;
+    width: 100%;
 }
