@@ -19,8 +19,8 @@ function Canvas({moveFunc}) {
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isDrawing, setDrawing] = useState(false)
+  const [brushSize, setBrushSize] = useState(4);
   const brushSizeRef = useRef(null)
-  const brushSize = useRef(1)
 
   const brushColorRef = useRef(null)
   const brushColor = useRef("#ffffffs")
@@ -37,15 +37,29 @@ export default function Home() {
     ctxRef.current = ctx
   },[])
 
-  function mouseDownHandle(){
+  //Function for getting mouse position
+  function getMousePos(event) {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect(); 
+    const scaleX = canvas.width / rect.width; 
+    const scaleY = canvas.height / rect.height; 
+    const offsetX = (event.clientX - rect.left) * scaleX;
+    const offsetY = (event.clientY - rect.top) * scaleY;
+    return {offsetX, offsetY}
+  }
+
+  //Function for handling when user presses down on mouse while on the canvas
+  function mouseDownHandle(event){
+    const {offsetX, offsetY} = getMousePos(event)
     setDrawing(true)
     const ctx = ctxRef.current
     ctx.beginPath()
-    ctx.moveTo(mousePos.x, mousePos.y)
+    ctx.moveTo(offsetX, offsetY)
   }
 
+  //Function for handling mouse movement
   function mouseMoveHandle(event){
-    const { offsetX, offsetY } = event.nativeEvent
+    const {offsetX, offsetY} = getMousePos(event)
     setMousePos({ x: offsetX, y: offsetY });
     if (isDrawing) {
       const ctx = ctxRef.current
@@ -53,10 +67,12 @@ export default function Home() {
       ctx.stroke()
     }
   }
+  //Function for stopping drawing when the user lets go of the mouse button
   function mouseUpHandle(){
     setDrawing(false)
   }
 
+  //Function for clearing the canvas
   function clearCanvas() {
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d");
@@ -76,15 +92,15 @@ export default function Home() {
 
   //Function for changing brush size
   function changeBrushSize(){
-    brushSize.current = brushSizeRef.current.value
+    setBrushSize(brushSizeRef.current.value)
   }
   //Detects the change in brush size and updates the canvas brush size settings
   useEffect(() => { 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    ctx.lineWidth = brushSize.current
+    ctx.lineWidth = brushSize
     ctxRef.current = ctx
-  }, [brushSize.current])
+  }, [brushSize])
 
 
 
@@ -101,7 +117,7 @@ export default function Home() {
                 <p>Brush Size</p>
               </div>
               <form id="brushSizeForm">
-                <input type="range" name="brushSize" id="brushSize" min="1" max="100" step="1" onChange={changeBrushSize}  ref={brushSizeRef}/>
+                <input type="range" name="brushSize" id="brushSize"  min="1" max="50"  value={brushSize} step="1" onChange={changeBrushSize}  ref={brushSizeRef}/>
               </form>
             </div>
 
