@@ -1,22 +1,17 @@
-"use client";
 
+'use client'
 import Image from "next/image";
 import "./../styles/canvas.css";
-import { useEffect, useState, useRef, use } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { document } from "postcss";
 
-function Canvas({moveFunc}) {
-  return(
-
-    <canvas id="myCanvas" width="400" height="200" onMouseMove={moveFunc}></canvas>
-  )
-}
 
 
 
 
+export default  function Home() {
 
-export default function Home() {
+
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isDrawing, setDrawing] = useState(false)
   const [brushSize, setBrushSize] = useState(4);
@@ -30,13 +25,24 @@ export default function Home() {
   const canvasRef = useRef(null)
 
 
+  
+  
+
+
+
   function saveCanvas(){
+   
     const canvas = canvasRef.current
-    const canvasUrl = canvas.toDataURL()
+      const canvasUrl = canvas.toDataURL()
     const data = {image: canvasUrl, date: Date.now()}
     const jsonData = JSON.stringify(data)
     
     const file = new Blob([jsonData], {type : "application/json"})
+
+
+
+
+
 
     const fr = new FileReader();
     fr.onload = function(){
@@ -44,7 +50,6 @@ export default function Home() {
       console.log(res)
     }
     fr.readAsText(file)
-
   }
 
   useEffect(()=>{
@@ -161,7 +166,7 @@ export default function Home() {
 
             <div className="SettingsMenuItem">
               <div className="SettingsMenuItemTitle">
-                <p>Save anvas</p>
+                <p>Save canvas</p>
               </div>
               <div className="CanvasSave">
                 <div className="CanvasSaveButton" onClick={saveCanvas}>
@@ -169,6 +174,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+
+
+
 
           </div>
         </div>
