@@ -29,6 +29,24 @@ export default function Home() {
   const ctxRef = useRef(null)
   const canvasRef = useRef(null)
 
+
+  function saveCanvas(){
+    const canvas = canvasRef.current
+    const canvasUrl = canvas.toDataURL()
+    const data = {image: canvasUrl, date: Date.now()}
+    const jsonData = JSON.stringify(data)
+    
+    const file = new Blob([jsonData], {type : "application/json"})
+
+    const fr = new FileReader();
+    fr.onload = function(){
+      const res = JSON.parse(fr.result)
+      console.log(res)
+    }
+    fr.readAsText(file)
+
+  }
+
   useEffect(()=>{
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -137,6 +155,17 @@ export default function Home() {
               <div className="CanvasClear">
                 <div className="CanvasClearButton" onClick={clearCanvas}>
                   <p>Clear</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="SettingsMenuItem">
+              <div className="SettingsMenuItemTitle">
+                <p>Save anvas</p>
+              </div>
+              <div className="CanvasSave">
+                <div className="CanvasSaveButton" onClick={saveCanvas}>
+                  <p>Save</p>
                 </div>
               </div>
             </div>

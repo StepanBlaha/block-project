@@ -69,12 +69,32 @@ body, html{
     width: 100px;
     background-color: rgb(12, 12, 12);
     border: 1px solid white;
-    display: flex
-;
+    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 6px;
 }
+.CanvasSave{
+    height:50%;
+    width: 100%;
+    float: left;
+    border: 1px solid green;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.CanvasSaveButton{
+    height: 80%;
+    width: 100px;
+    background-color: rgb(12, 12, 12);
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
 
 
 
