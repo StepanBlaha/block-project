@@ -36,7 +36,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-
+TODO:
+- guma
+- ukladani do monga
+- prihlaseni a ukladani dle uzivatele
+- vytvareni tvaru
+- vytvareni textu
+- vyplnovani (takovy ten kyblik)
+- styl line
 <!---
 npm install mongodb
 npm install
