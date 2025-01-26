@@ -11,32 +11,24 @@ import { send } from "process";
 import { map } from "jquery";
 
 
-/*
-async function getData() {
-  console.log("Fetching data from the server");
-  const res = await fetch("http://localhost:3000/api/posts", {cache: "no-store"});
-  if (!res.ok) {
-    console.error("Failed to fetch data from the server");
-    return notFound();
-  }
-  return res.json();
-
-}*/
 
 
 
-const Home =  ()=> {
+const Home = () => {
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isDrawing, setDrawing] = useState(false)
   const [brushSize, setBrushSize] = useState(4);
+  
   const brushSizeRef = useRef(null)
   const brushColorRef = useRef(null)
   const brushColor = useRef("#ffffffs")
+
   const ctxRef = useRef(null)
   const canvasRef = useRef(null)
-  const [queryData, setQueryData] = useState(null); // State for storing the fetched data
-  const [loading, setLoading] = useState(true); // Loading state for handling async data fetching
+
+  const [queryData, setQueryData] = useState(null); 
+  const [loading, setLoading] = useState(true); 
   const [sending, setSending] = useState(false);
 
   //For fetching data from database on reload

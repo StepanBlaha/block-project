@@ -21,8 +21,18 @@ export const  GET = async (request) => {
 }
 
 export const POST = async (request) => {
-    const {image, date} = await request.json();
-    await connect();
-    await Canvas.create({image, date});
-    return NextResponse.json({ message: "Post created successfully" }, { status: 201 });
+    try {
+        console.log("Getting request data...");
+        const {image, date} = await request.json();
+        console.log("Connecting to database...");
+        await connect();
+        console.log("Creating database post...");
+        await Canvas.create({image, date});
+
+        return NextResponse.json({ message: "Post created successfully" }, { status: 201 });
+    } catch (error) {
+        console.error("Error creating post:", error.message);
+        return new NextResponse("Error creating post" + error.message, { status: 500 });
+    }
+    
 }
