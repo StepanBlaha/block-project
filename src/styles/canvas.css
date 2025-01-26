@@ -129,3 +129,27 @@ canvas{
     height: 100%;
     width: 100%;
 }
+
+
+
+
+
+
+
+
+
+
+.savedPostTable{
+    height: fit-content;
+    width: 100%;
+    float: left;
+    border: 1px solid blue;
+    transition: 0.5s;
+}
+.savedPost{
+    height: 100px;
+    width: 100%;
+    float: left;
+    border: 1px solid red;
+    transition: 0.5s;
+}

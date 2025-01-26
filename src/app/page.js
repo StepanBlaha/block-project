@@ -2,48 +2,110 @@
 'use client'
 import Image from "next/image";
 import "./../styles/canvas.css";
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, use } from 'react'
+import React from 'react';
 import { document } from "postcss";
+import { notFound } from "next/navigation";
+import { set } from "mongoose";
+import { send } from "process";
+import { map } from "jquery";
+
+
+/*
+async function getData() {
+  console.log("Fetching data from the server");
+  const res = await fetch("http://localhost:3000/api/posts", {cache: "no-store"});
+  if (!res.ok) {
+    console.error("Failed to fetch data from the server");
+    return notFound();
+  }
+  return res.json();
+
+}*/
 
 
 
-
-
-export default  function Home() {
-
+const Home =  ()=> {
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isDrawing, setDrawing] = useState(false)
   const [brushSize, setBrushSize] = useState(4);
   const brushSizeRef = useRef(null)
-
   const brushColorRef = useRef(null)
   const brushColor = useRef("#ffffffs")
-
-
   const ctxRef = useRef(null)
   const canvasRef = useRef(null)
+  const [queryData, setQueryData] = useState(null); // State for storing the fetched data
+  const [loading, setLoading] = useState(true); // Loading state for handling async data fetching
+  const [sending, setSending] = useState(false);
 
+  //For fetching data from database on reload
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("Fetching data from the server");
+        const res = await fetch("http://localhost:3000/api/posts", { cache: "no-store" });
+        if (!res.ok) {
+          console.error("Failed to fetch data from the server");
+          return;
+        }
+        const data = await res.json();
+        setQueryData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Stop loading when the fetch is done
+      }
+    };
+    
+    fetchData();
+  }, []);
 
-  
-  
-
-
-
-  function saveCanvas(){
-   
-    const canvas = canvasRef.current
+//For sending data to databade
+  const sendData = async () => {
+    try {
+      setSending(true);
+      const canvas = canvasRef.current
       const canvasUrl = canvas.toDataURL()
+      const canvasData = {
+        image: canvasUrl, 
+        date: Date.now()
+      }
+
+      const response = await fetch("http://localhost:3000/api/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(canvasData ),
+      })
+      
+      if (response.ok) {
+        const data = await response.json();  
+        console.log('Post created successfully:', data);
+      } else {
+        console.error('Failed to create post:', response.statusText);
+      }
+
+    }catch (error) {
+      console.error("Error sending data:", error);
+    }finally {
+      setSending(false);
+    }
+      
+  } 
+
+
+
+
+  //Old function for saving canavas data
+  function saveCanvas() {
+    const canvas = canvasRef.current
+    const canvasUrl = canvas.toDataURL()
     const data = {image: canvasUrl, date: Date.now()}
     const jsonData = JSON.stringify(data)
-    
     const file = new Blob([jsonData], {type : "application/json"})
-
-
-
-
-
-
+    console.log(file)
     const fr = new FileReader();
     fr.onload = function(){
       const res = JSON.parse(fr.result)
@@ -169,11 +231,28 @@ export default  function Home() {
                 <p>Save canvas</p>
               </div>
               <div className="CanvasSave">
-                <div className="CanvasSaveButton" onClick={saveCanvas}>
+                <div className="CanvasSaveButton" onClick={sendData}>
                   <p>Save</p>
                 </div>
               </div>
             </div>
+
+           {/*Display loading message while loading*/}
+            {loading && <div>Loading...</div>}
+
+            {/*Displays fetch data once loaded*/}
+            {queryData && (
+              <div className="savedPostTable">
+                {queryData.map((data) => {
+                  const { id, image, date } = data;
+                  return (
+                    <div key={date} className="savedPost">
+                      <p>{date}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
 
 
@@ -203,3 +282,4 @@ export default  function Home() {
     </>
   );
 }
+export default Home;
