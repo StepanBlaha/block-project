@@ -1,6 +1,8 @@
 
 'use client'
 import Image from "next/image";
+import { render } from "react-dom";
+
 import "./../styles/canvas.css";
 import { useEffect, useState, useRef, use } from 'react'
 import React from 'react';
@@ -27,6 +29,8 @@ const Home = () => {
   const ctxRef = useRef(null)
   const canvasRef = useRef(null)
 
+  const hiddenImgRef = useRef(null)
+
   const [queryData, setQueryData] = useState(null); 
   const [loading, setLoading] = useState(true); 
   const [sending, setSending] = useState(false);
@@ -51,7 +55,7 @@ const Home = () => {
     };
     
     fetchData();
-  }, []);
+  }, [sending]);
 
 //For sending data to databade
   const sendData = async () => {
@@ -180,6 +184,21 @@ const Home = () => {
   }, [brushSize])
 
 
+  function openSavedCanvas(imageSrc){
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    const img = hiddenImgRef.current;
+    img.onload = () => {ctx.drawImage(img , 0, 0)}
+    img.src = imageSrc
+   
+    hiddenImgRef.current = img
+
+    canvasRef.current = canvas
+    ctxRef.current = ctx
+  }
+
 
   return (
     <>
@@ -240,6 +259,9 @@ const Home = () => {
                   return (
                     <div key={date} className="savedPost">
                       <p>{date}</p>
+                      <div className="openSavedCanvasButton" onClick={() => openSavedCanvas(image)}>
+                        <p>Open</p>
+                      </div>
                     </div>
                   );
                 })}
@@ -270,6 +292,7 @@ const Home = () => {
         </div>
 
       </div>
+      <img className="hiddenImg" ref={hiddenImgRef}></img>
 
     </>
   );

@@ -93,6 +93,7 @@ body, html{
     align-items: center;
     justify-content: center;
     border-radius: 6px;
+    cursor: pointer;
 }
 
 
@@ -152,4 +153,17 @@ canvas{
     float: left;
     border: 1px solid red;
     transition: 0.5s;
+}
+.openSavedCanvasButton{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    height: fit-content;
+    width: 70px;
+    border: 2px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.hiddenImg{
+    display: none;
 }
