@@ -43,36 +43,41 @@ const Home = () => {
     const fetchData = async () => {
       try {
         console.log("Fetching data from the server");
+        // Fetch data from the server
         const res = await fetch("http://localhost:3000/api/posts", { cache: "no-store" });
+        // Check if the response is ok
         if (!res.ok) {
           console.error("Failed to fetch data from the server");
           return;
         }
+        // Parse the response body as JSON
         const data = await res.json();
+        // Set the data to the state
         setQueryData(data);
-      } catch (error) {
+      } catch (error) {//Catch any errors
         console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false); // Stop loading when the fetch is done
+      } finally {//Finally set the loading state to false
+        setLoading(false); 
       }
     };
     
     fetchData();
   }, [sending]);
 
-
+  //For updating data in database
   const updateData = async (updateId) => {
     try{
+      // Set the sending state to true
       setSending(true);
+      //Get the api url
       const apiUrl = `http://localhost:3000/api/posts/${updateId}`;
+      // Get the canvas and convert it to a data URL
       const canvas = canvasRef.current
       const canvasUrl = canvas.toDataURL()
       const canvasData = {
         newImage: canvasUrl
       }
-      console.log(canvasData)
-      console.log(apiUrl)
-      console.log(updateId)
+      // Send the data to the server
       const response = await fetch(apiUrl, {
         method: "PUT",
         headers: {
@@ -80,6 +85,7 @@ const Home = () => {
         },
         body: JSON.stringify(canvasData),
       })
+      // Check if the response is ok
       if (response.ok) {
         const data = await response.json();  
         console.log('Post updated successfully:', data);
@@ -88,9 +94,9 @@ const Home = () => {
       }
 
 
-    }catch(error){
+    }catch(error){//Catch any errors
       console.error("Error updating data:", error);
-    }finally{ 
+    }finally{//Finally set the sending state to false
       setSending(false);    
     }
   };
@@ -98,14 +104,16 @@ const Home = () => {
 //For sending data to databade
   const sendData = async () => {
     try {
+      // Set the sending state to true
       setSending(true);
+      // Get the canvas and convert it to a data URL
       const canvas = canvasRef.current
       const canvasUrl = canvas.toDataURL()
       const canvasData = {
         image: canvasUrl, 
         date: Date.now()
       }
-
+      // Send the data to the server
       const response = await fetch("http://localhost:3000/api/posts", {
         method: "POST",
         headers: {
@@ -113,24 +121,19 @@ const Home = () => {
         },
         body: JSON.stringify(canvasData ),
       })
-      
+      // Check if the response is ok
       if (response.ok) {
         const data = await response.json();  
         console.log('Post created successfully:', data);
       } else {
         console.error('Failed to create post:', response.statusText);
       }
-
-    }catch (error) {
+    }catch (error) {//Catch any errors
       console.error("Error sending data:", error);
-    }finally {
+    }finally {//Finally set the sending state to false
       setSending(false);
     }
-      
   } 
-
-
-
 
   //Old function for saving canavas data
   function saveCanvas() {
@@ -148,6 +151,7 @@ const Home = () => {
     fr.readAsText(file)
   }
 
+  //Initial canvas setup
   useEffect(()=>{
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -186,6 +190,7 @@ const Home = () => {
       ctx.stroke()
     }
   }
+
   //Function for stopping drawing when the user lets go of the mouse button
   function mouseUpHandle(){
     setDrawing(false)
@@ -213,7 +218,7 @@ const Home = () => {
   function changeBrushSize(){
     setBrushSize(brushSizeRef.current.value)
   }
-  
+
   //Detects the change in brush size and updates the canvas brush size settings
   useEffect(() => { 
     const canvas = canvasRef.current;
@@ -307,17 +312,11 @@ const Home = () => {
                       <div className="openSavedCanvasButton" onClick={() => openSavedCanvas(image, _id)}>
                         <p>Open</p>
                       </div>
-                      
                     </div>
                   );
                 })}
               </div>
             )}
-
-
-
-
-
           </div>
         </div>
         <div className="Content">
@@ -328,7 +327,6 @@ const Home = () => {
                 <p>Update</p>
               </div>
             }
-            <p>X: {mousePos.x}, Y: {mousePos.y}</p>
           </div>
 
           <div className="ContentCanvas">

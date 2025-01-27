@@ -167,3 +167,13 @@ canvas{
 .hiddenImg{
     display: none;
 }
+.updateCanvasButton{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    height: fit-content;
+    width: 70px;
+    border: 2px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+}
