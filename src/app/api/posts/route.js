@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import connect from "../../../../db"
 import Post from "../../../../models/Post"
 import Canvas from "../../../../models/Canvas";
+import mongoose from 'mongoose';
 
+const { ObjectId } = mongoose.Types;
 export const  GET = async (request) => {
     console.log("Handling api request");
     try {
