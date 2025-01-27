@@ -35,6 +35,9 @@ const Home = () => {
   const [loading, setLoading] = useState(true); 
   const [sending, setSending] = useState(false);
 
+  const [updatableImg, setUpdatableImg] = useState(false);
+  const [updateId, setUpdateId] = useState(null);
+
   //For fetching data from database on reload
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +59,41 @@ const Home = () => {
     
     fetchData();
   }, [sending]);
+
+
+  const updateData = async (updateId) => {
+    try{
+      setSending(true);
+      const apiUrl = `http://localhost:3000/api/posts/${updateId}`;
+      const canvas = canvasRef.current
+      const canvasUrl = canvas.toDataURL()
+      const canvasData = {
+        newImage: canvasUrl
+      }
+      console.log(canvasData)
+      console.log(apiUrl)
+      console.log(updateId)
+      const response = await fetch(apiUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(canvasData),
+      })
+      if (response.ok) {
+        const data = await response.json();  
+        console.log('Post updated successfully:', data);
+      } else {
+        console.error('Failed to update post:', response.statusText);
+      }
+
+
+    }catch(error){
+      console.error("Error updating data:", error);
+    }finally{ 
+      setSending(false);    
+    }
+  };
 
 //For sending data to databade
   const sendData = async () => {
@@ -175,6 +213,7 @@ const Home = () => {
   function changeBrushSize(){
     setBrushSize(brushSizeRef.current.value)
   }
+  
   //Detects the change in brush size and updates the canvas brush size settings
   useEffect(() => { 
     const canvas = canvasRef.current;
@@ -183,18 +222,24 @@ const Home = () => {
     ctxRef.current = ctx
   }, [brushSize])
 
+  //Function for opening saved canvas
+  function openSavedCanvas(imageSrc, id){
+    //Set the canvas to be updatable
+    setUpdatableImg(true)
+    //Set the update id
+    setUpdateId(id) 
 
-  function openSavedCanvas(imageSrc){
+    //Get the canvas and context
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d");
+    //Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-
+    //Draw the image on the canvas
     const img = hiddenImgRef.current;
     img.onload = () => {ctx.drawImage(img , 0, 0)}
     img.src = imageSrc
-   
+    //Set the context and canvas to the refs
     hiddenImgRef.current = img
-
     canvasRef.current = canvas
     ctxRef.current = ctx
   }
@@ -255,13 +300,14 @@ const Home = () => {
             {queryData && (
               <div className="savedPostTable">
                 {queryData.map((data) => {
-                  const { id, image, date } = data;
+                  const { _id, image, date } = data;
                   return (
                     <div key={date} className="savedPost">
                       <p>{date}</p>
-                      <div className="openSavedCanvasButton" onClick={() => openSavedCanvas(image)}>
+                      <div className="openSavedCanvasButton" onClick={() => openSavedCanvas(image, _id)}>
                         <p>Open</p>
                       </div>
+                      
                     </div>
                   );
                 })}
@@ -277,6 +323,11 @@ const Home = () => {
         <div className="Content">
 
           <div className="ContentTitle">
+            {updatableImg && 
+              <div className="updateCanvasButton" onClick={() => updateData(updateId)}>
+                <p>Update</p>
+              </div>
+            }
             <p>X: {mousePos.x}, Y: {mousePos.y}</p>
           </div>
 
