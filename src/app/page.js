@@ -24,6 +24,7 @@ const Home = () => {
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isDrawing, setDrawing] = useState(false)
+  const [isErasing, setErasing] = useState(false)
   const [brushSize, setBrushSize] = useState(4);
   
   const brushSizeRef = useRef(null)
@@ -45,10 +46,24 @@ const Home = () => {
 
 
 
+
   //Dictionary that calls the correct function based on the selected tool
-  const canvasActions = {
+  const canvasClickActions = {
     "brush": mouseDownHandle,
-    "bucket": bucketFillCanvas
+    "bucket": bucketFillCanvas,
+    "eraser": mouseEraserDownHandle
+  }
+
+  const canvasMouseMoveActions = {
+    "brush": mouseMoveHandle,
+    "bucket": null,
+    "eraser": mouseEraserMoveHandle
+  }
+
+  const canvasMouseUpActions = {
+    "brush": mouseUpHandle,
+    "bucket": null,
+    "eraser": mouseEraserUpHandle
   }
   //Dictionary that sets the correct cursor icon based on the selected tool
   const cursors = {
@@ -80,10 +95,27 @@ const Home = () => {
 
 
 
+//Gumu udelam pres clearrect(e.offsetx, e.offsety, a pak rozmery mysi)
 
 
-
-
+  function mouseEraserDownHandle(event){
+    setErasing(true)
+    const {offsetX, offsetY} = getMousePos(event)
+    const ctx = ctxRef.current
+    ctx.beginPath()
+    ctx.moveTo(offsetX, offsetY)
+  }
+ function mouseEraserMoveHandle(event){
+  const {offsetX, offsetY} = getMousePos(event)
+  setMousePos({ x: offsetX, y: offsetY });
+  if(isErasing){
+    const ctx = ctxRef.current
+    ctx.clearRect(offsetX, offsetY, brushSize, brushSize)
+  }
+ }
+ function mouseEraserUpHandle(){
+  setErasing(false)
+ }
 
 
 
@@ -409,9 +441,9 @@ const Home = () => {
           <div className="ContentCanvas">
             <canvas id="myCanvas" width="400" height="200" 
             ref={canvasRef}
-            onMouseMove={mouseMoveHandle} 
-            onMouseDown={canvasActions[selectedTool]}
-            onMouseUp={mouseUpHandle}
+            onMouseMove={canvasMouseMoveActions[selectedTool]} 
+            onMouseDown={canvasClickActions[selectedTool]}
+            onMouseUp={canvasMouseUpActions[selectedTool]}
             ></canvas>
           </div>
 
