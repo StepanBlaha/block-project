@@ -28,7 +28,7 @@ const Home = () => {
   
   const brushSizeRef = useRef(null)
   const brushColorRef = useRef(null)
-  const brushColor = useRef("#ffffffs")
+  const brushColor = useRef("#ffffff")
 
   const ctxRef = useRef(null)
   const canvasRef = useRef(null)
@@ -45,26 +45,26 @@ const Home = () => {
 
 
 
+  //Dictionary that calls the correct function based on the selected tool
   const canvasActions = {
     "brush": mouseDownHandle,
     "bucket": bucketFillCanvas
   }
+  //Dictionary that sets the correct cursor icon based on the selected tool
   const cursors = {
-    "brush": "default",
-    "bucket": "url('/bucket.png'), pointer"
+    "brush": "url('/paint-brush.png') 0 16, auto",
+    "bucket": "url('/bucket.png'), auto"
   }
+  //Function for setting the cursor icon based on the selected tool 
   function setCursorIcon() {
     const canvas = canvasRef.current
     canvas.style.cursor = cursors[selectedTool]
-    console.log(cursors[selectedTool])
-    console.log(canvas.style.cursor)
     canvasRef.current = canvas
-    console.log(canvasRef.current)
   }
   useEffect(() => {
     setCursorIcon()
   },[selectedTool])
-
+  //Function for filling the canvas with the selected color using bucket tool
   function bucketFillCanvas() {
     const canvas = canvasRef.current
     const ctx = ctxRef.current
