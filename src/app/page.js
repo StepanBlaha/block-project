@@ -18,6 +18,10 @@ import { map } from "jquery";
 
 const Home = () => {
 
+  const [selectedTool, setSelectedTool] = useState("brush")
+
+
+
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isDrawing, setDrawing] = useState(false)
   const [brushSize, setBrushSize] = useState(4);
@@ -37,6 +41,42 @@ const Home = () => {
 
   const [updatableImg, setUpdatableImg] = useState(false);
   const [updateId, setUpdateId] = useState(null);
+
+
+
+
+  const canvasActions = {
+    "brush": mouseDownHandle,
+    "bucket": bucketFillCanvas
+  }
+
+  function bucketFillCanvas() {
+    const canvas = canvasRef.current
+    const ctx = ctxRef.current
+    ctx.fillStyle = brushColor.current
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctxRef.current = ctx
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //For fetching data from database on reload
   useEffect(() => {
@@ -278,6 +318,28 @@ const Home = () => {
 
             <div className="SettingsMenuItem">
               <div className="SettingsMenuItemTitle">
+                <p>Brush</p>
+              </div>
+              <div className="ToolItem">
+                <div className="ToolButton" onClick={() => setSelectedTool("brush")}>
+                  <p>Pick</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="SettingsMenuItem">
+              <div className="SettingsMenuItemTitle">
+                <p>Bucket</p>
+              </div>
+              <div className="ToolItem">
+                <div className="ToolButton" onClick={() => setSelectedTool("bucket")}>
+                  <p>Pick</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="SettingsMenuItem">
+              <div className="SettingsMenuItemTitle">
                 <p>Clear canvas</p>
               </div>
               <div className="CanvasClear">
@@ -333,7 +395,7 @@ const Home = () => {
             <canvas id="myCanvas" width="400" height="200" 
             ref={canvasRef}
             onMouseMove={mouseMoveHandle} 
-            onMouseDown={mouseDownHandle}
+            onMouseDown={canvasActions[selectedTool]}
             onMouseUp={mouseUpHandle}
             ></canvas>
           </div>
