@@ -49,6 +49,21 @@ const Home = () => {
     "brush": mouseDownHandle,
     "bucket": bucketFillCanvas
   }
+  const cursors = {
+    "brush": "default",
+    "bucket": "url('/bucket.png'), pointer"
+  }
+  function setCursorIcon() {
+    const canvas = canvasRef.current
+    canvas.style.cursor = cursors[selectedTool]
+    console.log(cursors[selectedTool])
+    console.log(canvas.style.cursor)
+    canvasRef.current = canvas
+    console.log(canvasRef.current)
+  }
+  useEffect(() => {
+    setCursorIcon()
+  },[selectedTool])
 
   function bucketFillCanvas() {
     const canvas = canvasRef.current
@@ -307,7 +322,7 @@ const Home = () => {
               </form>
             </div>
 
-            <div className="SettingsMenuItem">
+            <div className="SettingsMenuItem" >
               <div className="SettingsMenuItemTitle">
                 <p>Brush color</p>
               </div>

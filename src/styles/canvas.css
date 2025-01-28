@@ -4,6 +4,9 @@ body, html{
     margin: 0 auto;
     float: left;
 }
+cursor{
+    color: white;
+}
 .Main{
     height: 100%;
     width: 100%;
