@@ -20,7 +20,8 @@ export const PUT = async (request, { params }) => {
             console.error("Post not found");
             return new NextResponse("Post not found", { status: 404 });
         }
-      
+        
+        console.log("Successfully updated post");
         return NextResponse.json({ message: "Successfully updated post", data: result },{ status: 200 } );
 
     } catch(error){

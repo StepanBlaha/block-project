@@ -12,6 +12,7 @@ export const  GET = async (request) => {
         const posts = await Canvas.find();
         console.log("Successfully connected to the database");
 
+        console.log("Successfully fetched posts");
         return new NextResponse(JSON.stringify(posts), { status: 200 });
     } catch (error) {
         console.error("Error in fetching posts:", error.message);
@@ -30,6 +31,7 @@ export const POST = async (request) => {
         console.log("Creating database post...");
         await Canvas.create({image, date});
 
+        console.log("Post created successfully");
         return NextResponse.json({ message: "Post created successfully" }, { status: 201 });
     } catch (error) {
         console.error("Error creating post:", error.message);
