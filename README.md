@@ -48,7 +48,12 @@ TODO:
 <!---
 npm install mongodb
 npm install
+npm install react-icons --save
+npm install mongoose
+npm install tailwindcss @tailwindcss/cli
+npm install tailwindcss @tailwindcss/postcss postcss
 
+npm i @flaticon/flaticon-uicons
 
 - git status (get status of changes)
 - git pull (pull changes from main and merges them)
