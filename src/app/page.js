@@ -84,7 +84,8 @@ const Home = () => {
   //Dictionary that sets the correct cursor icon based on the selected tool
   const cursors = {
     "brush": "url('/paint-brush.png') 0 16, auto",
-    "bucket": "url('/bucket.png'), auto"
+    "bucket": "url('/bucket.png'), auto",
+    "eraser":  "url('/eraser.png'), auto",
   }
   //Function for setting the cursor icon based on the selected tool 
   function setCursorIcon() {
