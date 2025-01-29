@@ -52,6 +52,10 @@ cursor{
     width: 100%;
     float: left;
 }
+#brushColorForm{
+    height: 30px;
+    width: 30px;
+}
 #brushSize, #brushColor{
     height: 100%;
     width: 100%;
@@ -199,4 +203,46 @@ canvas{
     border: 2px solid white;
     border-radius: 10px;
     cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.Menu{
+    height: 80px;
+    width: 100%;
+    float: left;
+    border: 2px solid red;
+    gap: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.ToolMenu{
+    height: 100%;
+    width: fit-content;
+    float: right;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.Tool, .ActionTool{
+    height: fit-content;
+    width: fit-content;
+    float: left;
+}
+.ActionMenu{
+    width: fit-content;
+    height: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
