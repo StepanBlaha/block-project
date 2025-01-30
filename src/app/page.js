@@ -63,7 +63,7 @@ const Home = () => {
   const shapeStartPoint = useRef(null);
   const shapeEndPoint = useRef(null);
 
-  const [isDrawingShapes, setDrawingShapes] =  useState(false)
+  const fillCheckRef = useRef(null)
 
 
 
@@ -74,8 +74,7 @@ const Home = () => {
     "bucket": bucketFillCanvas,
     "eraser": mouseEraserDownHandle,
     "rectangle": shapeDownHandle,
-    "circle": shapeDownHandle,
-    "triangle": shapeDownHandle
+    "circle": shapeDownHandle
   }
 
   const canvasMouseMoveActions = {
@@ -83,8 +82,7 @@ const Home = () => {
     "bucket": null,
     "eraser": mouseEraserMoveHandle,
     "rectangle":  null,
-    "circle": null,
-    "triangle": null
+    "circle": null
   }
 
   const canvasMouseUpActions = {
@@ -92,8 +90,7 @@ const Home = () => {
     "bucket": null,
     "eraser": mouseEraserUpHandle,
     "rectangle": shapeUpHandle,
-    "circle": shapeUpHandle,
-    "triangle": shapeUpHandle
+    "circle": shapeUpHandle
   }
   //Dictionary that sets the correct cursor icon based on the selected tool
   const cursors = {
@@ -101,8 +98,7 @@ const Home = () => {
     "bucket": "url('/bucket.png'), auto",
     "eraser":  "url('/eraser.png') 0 16, auto",
     "rectangle": "auto",
-    "circle": "auto",
-    "triangle": "auto"
+    "circle": "auto"
   }
 
   //Function for setting the cursor icon based on the selected tool 
@@ -129,7 +125,10 @@ const Home = () => {
 
 
   function createShape() {
-    const ctx = ctxRef.current
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    const fillCheck = fillCheckRef.current
+    ctx.globalCompositeOperation="source-over";
     const { x: startX, y: startY } = shapeStartPoint.current;
     const { x: endX, y: endY } = shapeEndPoint.current;
     ctx.beginPath()
@@ -141,11 +140,14 @@ const Home = () => {
         const radius =Math.abs(endX - startX);
         ctx.arc(startX, startY, radius, 0, Math.PI * 2)
         break;
-      case "triangle":
-      
-        break;
+    }
+    if (fillCheck.checked) {
+      ctx.fillStyle = brushColor.current
+      ctx.fill()
     }
     ctx.stroke()
+    ctxRef.current = ctx
+    fillCheckRef.current  = fillCheck
   }
   function shapeDownHandle(event) {
     const {offsetX, offsetY} = getMousePos(event)
@@ -414,9 +416,7 @@ const Home = () => {
   return (
     <>
       <div className="Main">
-        <div className="Title">
-          <h1>Drawing App</h1>
-        </div>
+        
         <div className="Menu">
           <div className="ActionMenu">
             
@@ -462,10 +462,18 @@ const Home = () => {
                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
               </svg>
             </div>
+
             <div className="Tool">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-square size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("circle")}>
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("circle")}>
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
               </svg>
+            </div>
+
+            <div className="Tool">
+              <form id="fillCheck" >
+                <label>Fill</label>
+                <input type="checkbox" id="fillCheckBox" name="fillCheckBox" ref={fillCheckRef}/>
+              </form>
             </div>
 
 

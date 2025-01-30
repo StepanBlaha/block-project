@@ -264,3 +264,10 @@ canvas{
     align-items: center;
     gap: 8px;
 }
+#fillCheck{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
