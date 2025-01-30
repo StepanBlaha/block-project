@@ -14,6 +14,7 @@ import { HiOutlineTrash } from "react-icons/hi";
 
 import { BeakerIcon } from '@heroicons/react/24/solid'
 
+
 /*
 menu icon
 HiOutlineMenu
@@ -59,6 +60,10 @@ const Home = () => {
   const [updatableImg, setUpdatableImg] = useState(false);
   const [updateId, setUpdateId] = useState(null);
 
+  const shapeStartPoint = useRef(null);
+  const shapeEndPoint = useRef(null);
+
+  const [isDrawingShapes, setDrawingShapes] =  useState(false)
 
 
 
@@ -67,26 +72,39 @@ const Home = () => {
   const canvasClickActions = {
     "brush": mouseDownHandle,
     "bucket": bucketFillCanvas,
-    "eraser": mouseEraserDownHandle
+    "eraser": mouseEraserDownHandle,
+    "rectangle": shapeDownHandle,
+    "circle": shapeDownHandle,
+    "triangle": shapeDownHandle
   }
 
   const canvasMouseMoveActions = {
     "brush": mouseMoveHandle,
     "bucket": null,
-    "eraser": mouseEraserMoveHandle
+    "eraser": mouseEraserMoveHandle,
+    "rectangle":  null,
+    "circle": null,
+    "triangle": null
   }
 
   const canvasMouseUpActions = {
     "brush": mouseUpHandle,
     "bucket": null,
-    "eraser": mouseEraserUpHandle
+    "eraser": mouseEraserUpHandle,
+    "rectangle": shapeUpHandle,
+    "circle": shapeUpHandle,
+    "triangle": shapeUpHandle
   }
   //Dictionary that sets the correct cursor icon based on the selected tool
   const cursors = {
     "brush": "url('/paint-brush.png') 0 16, auto",
     "bucket": "url('/bucket.png'), auto",
-    "eraser":  "url('/eraser.png'), auto",
+    "eraser":  "url('/eraser.png') 0 16, auto",
+    "rectangle": "auto",
+    "circle": "auto",
+    "triangle": "auto"
   }
+
   //Function for setting the cursor icon based on the selected tool 
   function setCursorIcon() {
     const canvas = canvasRef.current
@@ -96,17 +114,48 @@ const Home = () => {
   useEffect(() => {
     setCursorIcon()
   },[selectedTool])
+
+
   //Function for filling the canvas with the selected color using bucket tool
   function bucketFillCanvas() {
     const canvas = canvasRef.current
     const ctx = ctxRef.current
     ctx.globalCompositeOperation="source-over";
-
     ctx.fillStyle = brushColor.current
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     ctxRef.current = ctx
   }
+  
 
+
+  function createShape() {
+    const ctx = ctxRef.current
+    const { x: startX, y: startY } = shapeStartPoint.current;
+    const { x: endX, y: endY } = shapeEndPoint.current;
+    ctx.beginPath()
+    switch (selectedTool) {
+      case "rectangle":
+        ctx.rect(startX, startY, (endX - startX), (endY - startY))
+        break;
+      case "circle":
+        const radius =Math.abs(endX - startX);
+        ctx.arc(startX, startY, radius, 0, Math.PI * 2)
+        break;
+      case "triangle":
+      
+        break;
+    }
+    ctx.stroke()
+  }
+  function shapeDownHandle(event) {
+    const {offsetX, offsetY} = getMousePos(event)
+    shapeStartPoint.current = { x: offsetX, y: offsetY };
+  }
+  function shapeUpHandle(event) {
+    const {offsetX, offsetY} = getMousePos(event)
+    shapeEndPoint.current = { x: offsetX, y: offsetY };
+    createShape()
+  }
 
 
 
@@ -263,9 +312,12 @@ const Home = () => {
   useEffect(()=>{
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
     ctx.strokeStyle = "#ffffff";
     ctx.lineWidth = 10;
     ctxRef.current = ctx
+    canvasRef.current = canvas
   },[])
 
   //Function for getting mouse position
@@ -404,6 +456,19 @@ const Home = () => {
                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"/>
               </svg>
             </div>
+
+            <div className="Tool">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-square size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("rectangle")}>
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+              </svg>
+            </div>
+            <div className="Tool">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-square size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("circle")}>
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+              </svg>
+            </div>
+
+
             
             <div className="Tool">
               <form id="brushColorForm">

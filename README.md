@@ -66,3 +66,50 @@ npm i @flaticon/flaticon-uicons
 - git log (display commit history)
 
 -->
+
+
+ function drawShape(event){
+    const {offsetX, offsetY} = getMousePos(event)
+    if (isDrawingShapes) {
+      const ctx = ctxRef.current
+      ctx.globalCompositeOperation="source-over";
+      
+      ctx.arc(offsetX, offsetY, 5, 0, Math.PI * 2);
+      ctx.current  = ctx
+    }
+  }
+
+  function createShape() {
+    const canvas = canvasRef.current
+    const ctx = ctxRef.current
+    console.log(shapeStartPoint)
+    const startX =  shapeStartPoint["x"]
+    const startY = shapeStartPoint["y"]
+    const endX =  shapeEndPoint["x"]
+    const endY = shapeEndPoint["y"]
+    ctx.beginPath()
+    console.log(startX, startY, (endX - startX), (endY - startY))
+    ctx.rect(startX, startY, (endX - startX), (endY - startY))
+    ctx.stroke()
+    ctxRef.current = ctx
+  }
+  function shapeDownHandle(event) {
+    setDrawingShapes(true)
+    const {offsetX, offsetY} = getMousePos(event)
+    setShapeStartPoint({ x: offsetX, y: offsetY });
+    const ctx = ctxRef.current
+    ctx.fillStyle = "black";
+    ctx.beginPath();
+    ctx.current = ctx
+  }
+  function shapeUpHandle(event) {
+    setDrawingShapes(false)
+    const ctx = ctxRef.current
+    ctx.fill();
+    ctx.current = ctx
+    /*
+    const {offsetX, offsetY} = getMousePos(event)
+    setShapeEndPoint({ x: offsetX, y: offsetY });
+    createShape()
+    */
+  }
