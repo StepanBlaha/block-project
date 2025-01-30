@@ -37,14 +37,15 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 TODO:
 
-- guma
-- ukladani do monga
 - prihlaseni a ukladani dle uzivatele
 - vytvareni tvaru
 - vytvareni textu
 - vyplnovani (takovy ten kyblik)
 - styl line
 - k serveru se to pripojuje vickrat (mel bych to optimalizovat)
+
+-kruy a ctverce udelam ze kdyz bude selectnuta dana tool zapisu si pri mouse downu cords a pak pri mouse up a ty od sebe odectu a to nastavim na size arc nebo rect
+
 <!---
 npm install mongodb
 npm install
