@@ -100,6 +100,8 @@ const Home = () => {
   function bucketFillCanvas() {
     const canvas = canvasRef.current
     const ctx = ctxRef.current
+    ctx.globalCompositeOperation="source-over";
+
     ctx.fillStyle = brushColor.current
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     ctxRef.current = ctx
@@ -127,7 +129,9 @@ const Home = () => {
   setMousePos({ x: offsetX, y: offsetY });
   if(isErasing){
     const ctx = ctxRef.current
-    ctx.clearRect(offsetX, offsetY, brushSize, brushSize)
+    ctx.globalCompositeOperation="destination-out";
+    ctx.lineTo(offsetX, offsetY);
+    ctx.stroke()
   }
  }
  function mouseEraserUpHandle(){
@@ -290,6 +294,7 @@ const Home = () => {
     setMousePos({ x: offsetX, y: offsetY });
     if (isDrawing) {
       const ctx = ctxRef.current
+      ctx.globalCompositeOperation="source-over";
       ctx.lineTo(offsetX, offsetY);
       ctx.stroke()
     }
