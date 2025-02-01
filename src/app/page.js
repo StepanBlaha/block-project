@@ -100,14 +100,13 @@ const Home = () => {
     if (isTyping.current) { 
       const canvas = canvasRef.current
       const ctx = canvas.getContext("2d");
-      ctx.font = "30px Arial";
+      ctx.font = brushSizeRef.current.value + "px Arial";
       ctx.fillStyle = brushColor.current
       ctx.fillText(val, textboxTextPos.x, textboxTextPos.y);
       isTyping.current = false;
       const textbox = textboxRef.current;
       textbox.style.display = "none";
       textbox.value = "";
-      console.log("blur")
 
     }else{
       console.log("not typing")
@@ -693,9 +692,13 @@ const Home = () => {
               <textarea ref={textboxRef} style={{
                 position: "fixed",
                 top: textboxPos.y ,
-                left: textboxPos.x ,
+                left: textboxPos.x,
+                color: brushColor.current,
+                border: "none",
+                background: "none",
+                fontSize: brushSize + "px",
               }}
-  
+                placeholder="Enter text here..."
                 className="textbox"></textarea>
             )}
             
