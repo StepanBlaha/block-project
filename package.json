@@ -18,7 +18,9 @@
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "fabric": "^6.5.4",
     "jquery": "^3.7.1",
+    "konva": "^9.3.18",
     "mongodb": "^6.12.0",
     "mongoose": "^8.9.5",
     "net": "^1.0.2",
@@ -27,10 +29,12 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
+    "react-konva": "^19.0.2",
     "tls": "^0.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/fabric": "^5.3.9",
     "@types/node": "^22.10.10",
     "eslint": "^9",
     "eslint-config-next": "15.1.5",

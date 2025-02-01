@@ -46,14 +46,17 @@ TODO:
 
 -kruy a ctverce udelam ze kdyz bude selectnuta dana tool zapisu si pri mouse downu cords a pak pri mouse up a ty od sebe odectu a to nastavim na size arc nebo rect
 
+-sirka a vyska tvaru porad rozjebna
+
 <!---
 npm install mongodb
 npm install
+npm install konva react-konva
 npm install react-icons --save
 npm install mongoose
 npm install tailwindcss @tailwindcss/cli
 npm install tailwindcss @tailwindcss/postcss postcss
-
+npm install fabric
 npm i @flaticon/flaticon-uicons
 
 - git status (get status of changes)
@@ -67,49 +70,49 @@ npm i @flaticon/flaticon-uicons
 
 -->
 
+function drawShape(event){
+const {offsetX, offsetY} = getMousePos(event)
+if (isDrawingShapes) {
+const ctx = ctxRef.current
+ctx.globalCompositeOperation="source-over";
 
- function drawShape(event){
-    const {offsetX, offsetY} = getMousePos(event)
-    if (isDrawingShapes) {
-      const ctx = ctxRef.current
-      ctx.globalCompositeOperation="source-over";
-      
       ctx.arc(offsetX, offsetY, 5, 0, Math.PI * 2);
       ctx.current  = ctx
     }
-  }
 
-  function createShape() {
-    const canvas = canvasRef.current
-    const ctx = ctxRef.current
-    console.log(shapeStartPoint)
-    const startX =  shapeStartPoint["x"]
-    const startY = shapeStartPoint["y"]
-    const endX =  shapeEndPoint["x"]
-    const endY = shapeEndPoint["y"]
-    ctx.beginPath()
-    console.log(startX, startY, (endX - startX), (endY - startY))
-    ctx.rect(startX, startY, (endX - startX), (endY - startY))
-    ctx.stroke()
-    ctxRef.current = ctx
-  }
-  function shapeDownHandle(event) {
-    setDrawingShapes(true)
-    const {offsetX, offsetY} = getMousePos(event)
-    setShapeStartPoint({ x: offsetX, y: offsetY });
-    const ctx = ctxRef.current
-    ctx.fillStyle = "black";
-    ctx.beginPath();
-    ctx.current = ctx
-  }
-  function shapeUpHandle(event) {
-    setDrawingShapes(false)
-    const ctx = ctxRef.current
-    ctx.fill();
-    ctx.current = ctx
-    /*
-    const {offsetX, offsetY} = getMousePos(event)
-    setShapeEndPoint({ x: offsetX, y: offsetY });
-    createShape()
-    */
-  }
+}
+
+function createShape() {
+const canvas = canvasRef.current
+const ctx = ctxRef.current
+console.log(shapeStartPoint)
+const startX = shapeStartPoint["x"]
+const startY = shapeStartPoint["y"]
+const endX = shapeEndPoint["x"]
+const endY = shapeEndPoint["y"]
+ctx.beginPath()
+console.log(startX, startY, (endX - startX), (endY - startY))
+ctx.rect(startX, startY, (endX - startX), (endY - startY))
+ctx.stroke()
+ctxRef.current = ctx
+}
+function shapeDownHandle(event) {
+setDrawingShapes(true)
+const {offsetX, offsetY} = getMousePos(event)
+setShapeStartPoint({ x: offsetX, y: offsetY });
+const ctx = ctxRef.current
+ctx.fillStyle = "black";
+ctx.beginPath();
+ctx.current = ctx
+}
+function shapeUpHandle(event) {
+setDrawingShapes(false)
+const ctx = ctxRef.current
+ctx.fill();
+ctx.current = ctx
+/_
+const {offsetX, offsetY} = getMousePos(event)
+setShapeEndPoint({ x: offsetX, y: offsetY });
+createShape()
+_/
+}

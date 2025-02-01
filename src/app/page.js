@@ -1,5 +1,4 @@
-
-'use client'
+"use client";
 import Image from "next/image";
 import { render } from "react-dom";
 import "./../styles/canvas.css";
@@ -11,9 +10,9 @@ import { set } from "mongoose";
 import { send } from "process";
 import { map } from "jquery";
 import { HiOutlineTrash } from "react-icons/hi";
-
+import { Canvas, Textbox, StaticCanvas, FabricText } from 'fabric'
 import { BeakerIcon } from '@heroicons/react/24/solid'
-
+import { Stage, Layer, Text } from "react-konva";
 
 /*
 menu icon
@@ -73,6 +72,7 @@ const Home = () => {
     "brush": mouseDownHandle,
     "bucket": bucketFillCanvas,
     "eraser": mouseEraserDownHandle,
+    "text": drawText,
     "rectangle": shapeDownHandle,
     "circle": shapeDownHandle
   }
@@ -81,6 +81,7 @@ const Home = () => {
     "brush": mouseMoveHandle,
     "bucket": null,
     "eraser": mouseEraserMoveHandle,
+    "text": null,
     "rectangle":  null,
     "circle": null
   }
@@ -89,6 +90,7 @@ const Home = () => {
     "brush": mouseUpHandle,
     "bucket": null,
     "eraser": mouseEraserUpHandle,
+    "text": null,
     "rectangle": shapeUpHandle,
     "circle": shapeUpHandle
   }
@@ -96,7 +98,8 @@ const Home = () => {
   const cursors = {
     "brush": "url('/paint-brush.png') 0 16, auto",
     "bucket": "url('/bucket.png'), auto",
-    "eraser":  "url('/eraser.png') 0 16, auto",
+    "eraser": "url('/eraser.png') 0 16, auto",
+    "text": "text",
     "rectangle": "auto",
     "circle": "auto"
   }
@@ -159,7 +162,23 @@ const Home = () => {
     createShape()
   }
 
+  
 
+
+  function drawText(event) {
+    const { offsetX, offsetY } = getMousePos(event)
+    const canvas = canvasRef.current
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const fbCanvas = new Canvas(canvas)
+    const text = new TextBox("Click here", {
+      left: offsetX,
+      top: offsetY,
+      fontSize: 20,
+      fill: "black",
+    })
+    fbCanvas.add(text)
+  }
 
 
 
@@ -454,6 +473,12 @@ const Home = () => {
             <div className="Tool">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eraser size-10" viewBox="0 0 16 16" onClick={() => setSelectedTool("eraser")}>
                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"/>
+              </svg>
+            </div>
+
+            <div className="Tool">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-fonts size-10" viewBox="0 0 16 16" onClick={() => setSelectedTool("text")}>
+                <path d="M12.258 3h-8.51l-.083 2.46h.479c.26-1.544.758-1.783 2.693-1.845l.424-.013v7.827c0 .663-.144.82-1.3.923v.52h4.082v-.52c-1.162-.103-1.306-.26-1.306-.923V3.602l.431.013c1.934.062 2.434.301 2.693 1.846h.479z"/>
               </svg>
             </div>
 
