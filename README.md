@@ -49,6 +49,7 @@ TODO:
 -sirka a vyska tvaru porad rozjebna
 
 <!---
+npm install canvasinput
 npm install mongodb
 npm install
 npm install konva react-konva
@@ -68,6 +69,11 @@ npm i @flaticon/flaticon-uicons
 - git push (uploads the changes to github)
 - git log (display commit history)
 
+
+
+
+npm install --global windows-build-tools
+npm install canvas
 -->
 
 function drawShape(event){

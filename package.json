@@ -16,6 +16,7 @@
     "@tailwindcss/cli": "^4.0.1",
     "@tailwindcss/postcss": "^4.0.1",
     "body-parser": "^1.20.3",
+    "canvasinput": "^1.2.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "fabric": "^6.5.4",

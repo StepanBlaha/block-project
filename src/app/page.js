@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import { render } from "react-dom";
 import "./../styles/canvas.css";
@@ -9,10 +10,10 @@ import { notFound } from "next/navigation";
 import { set } from "mongoose";
 import { send } from "process";
 import { map } from "jquery";
-import { HiOutlineTrash } from "react-icons/hi";
-import { Canvas, Textbox, StaticCanvas, FabricText } from 'fabric'
-import { BeakerIcon } from '@heroicons/react/24/solid'
-import { Stage, Layer, Text } from "react-konva";
+import * as fabric from 'fabric';
+import CanvasInputComponent from '../components/CanvasInputComponent';
+
+
 
 /*
 menu icon
@@ -72,7 +73,7 @@ const Home = () => {
     "brush": mouseDownHandle,
     "bucket": bucketFillCanvas,
     "eraser": mouseEraserDownHandle,
-    "text": drawText,
+    "text": null,
     "rectangle": shapeDownHandle,
     "circle": shapeDownHandle
   }
@@ -101,7 +102,7 @@ const Home = () => {
     "eraser": "url('/eraser.png') 0 16, auto",
     "text": "text",
     "rectangle": "auto",
-    "circle": "auto"
+    "circle": "auto",
   }
 
   //Function for setting the cursor icon based on the selected tool 
@@ -164,21 +165,51 @@ const Home = () => {
 
   
 
-
+/*
   function drawText(event) {
+
     const { offsetX, offsetY } = getMousePos(event)
-    const canvas = canvasRef.current
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const fbCanvas = new Canvas(canvas)
-    const text = new TextBox("Click here", {
+    const refCanvas = canvasRef.current
+    const ctx = refCanvas.getContext("2d");
+    const canvas = new fabric.Canvas(refCanvas);
+
+    const text = new fabric.Textbox('Click and edit text', {
       left: offsetX,
       top: offsetY,
       fontSize: 20,
-      fill: "black",
-    })
-    fbCanvas.add(text)
+      width: 300,
+      textBackgroundColor: "rgba(255, 255, 0, 0.5)",
+    });
+    console.log(text)
+
+    canvas.add(text);
+    canvas.setActiveObject(text);
+    canvas.renderAll();
+    const fabricElement = canvas.toCanvasElement();
+    ctx.drawImage(fabricElement, 0, 0)
+    console.log(canvas)
   }
+  */
+  /*
+  function drawText(event) {
+
+    const { offsetX, offsetY } = getMousePos(event)
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    const canvasInput = new CanvasInput({
+      canvas: canvas,
+      x: offsetX,  // x-coordinate for text position
+      y: offsetY,  // y-coordinate for text position
+      fontSize: 24,
+      width: 400,  // width of the input box
+      height: 40,  // height of the input box
+      borderColor: '#000',
+      borderWidth: 2,
+      backgroundColor: '#f0f0f0',
+      placeholder: 'Enter text here...',
+    });
+
+  }*/
 
 
 
@@ -432,8 +463,28 @@ const Home = () => {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   return (
     <>
+      
       <div className="Main">
         
         <div className="Menu">
@@ -580,6 +631,8 @@ const Home = () => {
             onMouseDown={canvasClickActions[selectedTool]}
             onMouseUp={canvasMouseUpActions[selectedTool]}
             ></canvas>
+            
+
           </div>
 
         </div>
