@@ -8,10 +8,11 @@ import React from 'react';
 import { document } from "postcss";
 import { notFound } from "next/navigation";
 import { set } from "mongoose";
-import { send } from "process";
-import { map } from "jquery";
+import { off, send } from "process";
+import { get, map } from "jquery";
 import * as fabric from 'fabric';
 import CanvasInputComponent from '../components/CanvasInputComponent';
+
 
 
 
@@ -65,7 +66,53 @@ const Home = () => {
 
   const fillCheckRef = useRef(null)
 
+  const [showTextbox, setShowTextbox] = useState(false);
+  const [textboxPos, setTextboxPos] = useState({ x: 0, y: 0 });
+  const [textboxTextPos, setTextboxTextPos] = useState({ x: 0, y: 0 });
+  const textboxRef = useRef(null);
+  const isTyping = useRef(false);
 
+  function detectTyping(event) {
+    const { offsetX, offsetY } = getMousePos(event);
+    const boxOffsetX = (event.clientX );
+    const boxOffsetY = (event.clientY );
+    setTextboxPos({ x: boxOffsetX, y: boxOffsetY });
+    
+    setTextboxTextPos({ x: offsetX, y: offsetY });
+    console.log(offsetX, offsetY)
+    setShowTextbox(!showTextbox);
+    
+    if (!showTextbox) {
+      isTyping.current = true;
+      const textbox = textboxRef.current;
+      textbox.style.display = "block";
+      textbox.focus();
+      
+    } else {
+      const textbox = textboxRef.current;
+      const text = textbox.value;
+      handleBlur(text);
+    }
+    
+  }
+  
+  function handleBlur(val) {
+    if (isTyping.current) { 
+      const canvas = canvasRef.current
+      const ctx = canvas.getContext("2d");
+      ctx.font = "30px Arial";
+      ctx.fillStyle = brushColor.current
+      ctx.fillText(val, textboxTextPos.x, textboxTextPos.y);
+      isTyping.current = false;
+      const textbox = textboxRef.current;
+      textbox.style.display = "none";
+      textbox.value = "";
+      console.log("blur")
+
+    }else{
+      console.log("not typing")
+    }
+  }
 
 
   //Dictionary that calls the correct function based on the selected tool
@@ -73,7 +120,7 @@ const Home = () => {
     "brush": mouseDownHandle,
     "bucket": bucketFillCanvas,
     "eraser": mouseEraserDownHandle,
-    "text": null,
+    "text": detectTyping,
     "rectangle": shapeDownHandle,
     "circle": shapeDownHandle
   }
@@ -210,7 +257,16 @@ const Home = () => {
     });
 
   }*/
-
+  
+    function drawText(event) {
+      const { offsetX, offsetY } = getMousePos(event)
+      const canvas = canvasRef.current
+      const ctx = canvas.getContext("2d");
+      const text = "nigga"
+      ctx.font = "30px Arial";
+      ctx.fillStyle = brushColor.current
+      ctx.fillText(text, offsetX, offsetY);
+    }
 
 
 
@@ -628,9 +684,21 @@ const Home = () => {
             <canvas id="myCanvas" width="400" height="200" 
             ref={canvasRef}
             onMouseMove={canvasMouseMoveActions[selectedTool]} 
-            onMouseDown={canvasClickActions[selectedTool]}
+            onMouseDown={selectedTool === "text" ? detectTyping : canvasClickActions[selectedTool]}
             onMouseUp={canvasMouseUpActions[selectedTool]}
-            ></canvas>
+            >
+              
+            </canvas>
+            {selectedTool === "text" && (
+              <textarea ref={textboxRef} style={{
+                position: "fixed",
+                top: textboxPos.y ,
+                left: textboxPos.x ,
+              }}
+  
+                className="textbox"></textarea>
+            )}
+            
             
 
           </div>

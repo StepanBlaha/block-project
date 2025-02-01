@@ -336,3 +336,14 @@ ul li ul:hover {
     background: #676767;
 
 }
+
+.textbox {
+    border: 1px solid #000;
+    background-color: #f0f0f0;
+    font-size: 24px;
+    width: 400px;
+    height: 40px;
+    position: absolute;
+    z-index: 10;
+    display: none;
+}
