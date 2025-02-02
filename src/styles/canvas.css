@@ -367,6 +367,8 @@ canvas{
     left: -5;
     display: none;
     background: #313131;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
 }
 ul li:hover > ul,
 ul li ul:hover {
@@ -379,6 +381,10 @@ ul li ul:hover {
   
 }
 
+#BottomShape{
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
 .ShapeSelectItem{
     clear: both;
     width: fit-content;
@@ -390,6 +396,7 @@ ul li ul:hover {
     border-style: none;
     box-sizing: content-box;
     transition: ease-in-out 0.3s;
+    
 }
 .ShapeSelectItem:hover{
     background: #676767;
