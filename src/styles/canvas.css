@@ -273,7 +273,7 @@ canvas{
     left: 0;
     width: 160px;
     height: fit-content;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
@@ -281,6 +281,9 @@ canvas{
     background-color: #313131;
     border-radius: 7px;
     gap: 6px;
+}
+.ActionSaveMenu a {
+    width: 100%;
 }
 .ActionSaveItem{
     height: 40px;

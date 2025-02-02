@@ -13,6 +13,7 @@ import { get, map } from "jquery";
 import * as fabric from 'fabric';
 import CanvasInputComponent from '../components/CanvasInputComponent';
 import SaveMenu from "../components/SaveMenu";
+import { jsPDF } from "jspdf";
 
 
 
@@ -36,21 +37,34 @@ HiOutlineTrash
 
 
 const Home = () => {
+  //Reference for link to save canvas as png
+  const pngSaveRef = useRef(null)
 
+  //State containing currently selected tool
   const [selectedTool, setSelectedTool] = useState("brush")
 
+  //Reference for the save&export menu
+  const actionMenuRef = useRef(null)
 
-
+  //Mouse position
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  //State for checking if user is currently drawing with brush tool
   const [isDrawing, setDrawing] = useState(false)
+  //State for checking if user is currently erasing with eraser
   const [isErasing, setErasing] = useState(false)
+  //State containing current brush size
   const [brushSize, setBrushSize] = useState(4);
   
+  //Reference for object for changing brush size
   const brushSizeRef = useRef(null)
+  //Reference for object for changing color
   const brushColorRef = useRef(null)
+  //Reference for current brush color
   const brushColor = useRef("#ffffff")
 
+  //Reference for the context element
   const ctxRef = useRef(null)
+  //Reference for the main canvas element
   const canvasRef = useRef(null)
 
   const hiddenImgRef = useRef(null)
@@ -59,18 +73,27 @@ const Home = () => {
   const [loading, setLoading] = useState(true); 
   const [sending, setSending] = useState(false);
 
+  //State for checking if image is updatable
   const [updatableImg, setUpdatableImg] = useState(false);
+  //State for containing the id of updatable image
   const [updateId, setUpdateId] = useState(null);
 
+  //Reference containing the starting point of a drawn shape
   const shapeStartPoint = useRef(null);
+  //Reference containing the ending point of a drawn shape
   const shapeEndPoint = useRef(null);
-
+  //Reference for checking wether the shape should be filled or not 
   const fillCheckRef = useRef(null)
 
+  //State containing wether the textbox should be shown or not
   const [showTextbox, setShowTextbox] = useState(false);
+  //State for containing textbox position
   const [textboxPos, setTextboxPos] = useState({ x: 0, y: 0 });
+  //State for containing position of written text
   const [textboxTextPos, setTextboxTextPos] = useState({ x: 0, y: 0 });
+  //Reference for textbox object
   const textboxRef = useRef(null);
+  //Reference for checking if user is typing
   const isTyping = useRef(false);
 
   function detectTyping(event) {
@@ -127,7 +150,7 @@ const Home = () => {
     "rectangle": shapeDownHandle,
     "circle": shapeDownHandle
   }
-
+  //Dictionary that calls the correct function based on the selected tool
   const canvasMouseMoveActions = {
     "brush": mouseMoveHandle,
     "bucket": null,
@@ -136,7 +159,7 @@ const Home = () => {
     "rectangle":  null,
     "circle": null
   }
-
+  //Dictionary that calls the correct function based on the selected tool
   const canvasMouseUpActions = {
     "brush": mouseUpHandle,
     "bucket": null,
@@ -161,6 +184,7 @@ const Home = () => {
     canvas.style.cursor = cursors[selectedTool]
     canvasRef.current = canvas
   }
+  //Triggers setCursor function upon selectedTool getting changed
   useEffect(() => {
     setCursorIcon()
   },[selectedTool])
@@ -168,24 +192,35 @@ const Home = () => {
 
   //Function for filling the canvas with the selected color using bucket tool
   function bucketFillCanvas() {
+    //Gets the canvas element
     const canvas = canvasRef.current
+    //Gets the context element
     const ctx = ctxRef.current
+    //Sets the context mode to drawing
     ctx.globalCompositeOperation="source-over";
+    //Sets the fill color to current brush color
     ctx.fillStyle = brushColor.current
+    //Fills the canvas
     ctx.fillRect(0, 0, canvas.width, canvas.height)
+    //Sets current context to changed context
     ctxRef.current = ctx
   }
-  
-
-
+  //Function for creating the shape
   function createShape() {
+    //Gets the canvas element
     const canvas = canvasRef.current
+    //Gets the context element
     const ctx = canvas.getContext("2d");
+    //Gets the fillcheck value
     const fillCheck = fillCheckRef.current
+    //Sets the context mode to drawing
     ctx.globalCompositeOperation="source-over";
+    //Sets the start and end points
     const { x: startX, y: startY } = shapeStartPoint.current;
     const { x: endX, y: endY } = shapeEndPoint.current;
+    //Begins drawing
     ctx.beginPath()
+    //Handles different shape tools
     switch (selectedTool) {
       case "rectangle":
         ctx.rect(startX, startY, (endX - startX), (endY - startY))
@@ -195,71 +230,36 @@ const Home = () => {
         ctx.arc(startX, startY, radius, 0, Math.PI * 2)
         break;
     }
+    //If the fillcheck  = true fills the shape
     if (fillCheck.checked) {
       ctx.fillStyle = brushColor.current
       ctx.fill()
     }
+    //Does the stroke
     ctx.stroke()
+    //Sets the current context to context
     ctxRef.current = ctx
     fillCheckRef.current  = fillCheck
   }
+  //Function for handling mousedown when holding any shape tool
   function shapeDownHandle(event) {
+    //Gets the mouse position
     const {offsetX, offsetY} = getMousePos(event)
+    //Sets the shape start point to current mouse position
     shapeStartPoint.current = { x: offsetX, y: offsetY };
   }
+  //Function for handling mouseup when holding any shape tool
   function shapeUpHandle(event) {
+    //Gets the mouse position
     const {offsetX, offsetY} = getMousePos(event)
+    //Sets the shape end point to current mouse position
     shapeEndPoint.current = { x: offsetX, y: offsetY };
+    //Calls the function to create the shape
     createShape()
   }
 
   
 
-/*
-  function drawText(event) {
-
-    const { offsetX, offsetY } = getMousePos(event)
-    const refCanvas = canvasRef.current
-    const ctx = refCanvas.getContext("2d");
-    const canvas = new fabric.Canvas(refCanvas);
-
-    const text = new fabric.Textbox('Click and edit text', {
-      left: offsetX,
-      top: offsetY,
-      fontSize: 20,
-      width: 300,
-      textBackgroundColor: "rgba(255, 255, 0, 0.5)",
-    });
-    console.log(text)
-
-    canvas.add(text);
-    canvas.setActiveObject(text);
-    canvas.renderAll();
-    const fabricElement = canvas.toCanvasElement();
-    ctx.drawImage(fabricElement, 0, 0)
-    console.log(canvas)
-  }
-  */
-  /*
-  function drawText(event) {
-
-    const { offsetX, offsetY } = getMousePos(event)
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext("2d");
-    const canvasInput = new CanvasInput({
-      canvas: canvas,
-      x: offsetX,  // x-coordinate for text position
-      y: offsetY,  // y-coordinate for text position
-      fontSize: 24,
-      width: 400,  // width of the input box
-      height: 40,  // height of the input box
-      borderColor: '#000',
-      borderWidth: 2,
-      backgroundColor: '#f0f0f0',
-      placeholder: 'Enter text here...',
-    });
-
-  }*/
   
     function drawText(event) {
       const { offsetX, offsetY } = getMousePos(event)
@@ -272,37 +272,41 @@ const Home = () => {
     }
 
 
-
-
-//Gumu udelam pres clearrect(e.offsetx, e.offsety, a pak rozmery mysi)
-
-
+  //Function for handling mousedown while having eraser selected
   function mouseEraserDownHandle(event){
+    //Sets erasing to true
     setErasing(true)
+    //Gets the mouse position
     const {offsetX, offsetY} = getMousePos(event)
+    //Gets the context element
     const ctx = ctxRef.current
+    //Starts erasing
     ctx.beginPath()
     ctx.moveTo(offsetX, offsetY)
   }
- function mouseEraserMoveHandle(event){
-  const {offsetX, offsetY} = getMousePos(event)
-  setMousePos({ x: offsetX, y: offsetY });
-  if(isErasing){
-    const ctx = ctxRef.current
-    ctx.globalCompositeOperation="destination-out";
-    ctx.lineTo(offsetX, offsetY);
-    ctx.stroke()
+  //Function for handling mousemove while having eraser selected
+  function mouseEraserMoveHandle(event){
+    //Gets the mouse position
+    const {offsetX, offsetY} = getMousePos(event)
+    //Sets the mouse position
+    setMousePos({ x: offsetX, y: offsetY });
+    //Checks if  user is erasing
+    if(isErasing){
+      //Gets the context element
+      const ctx = ctxRef.current
+      //Sets the context mode to erasing
+      ctx.globalCompositeOperation="destination-out";
+      //Erases line to the position of maouse
+      ctx.lineTo(offsetX, offsetY);
+      //Does the erase stroke
+      ctx.stroke()
+    }
   }
- }
- function mouseEraserUpHandle(){
-  setErasing(false)
- }
-
-
-
-
-
-
+  //Function for handling mouseup while having eraser selected
+  function mouseEraserUpHandle(){
+    //Sets erasing to false
+    setErasing(false)
+  }
 
 
 
@@ -369,7 +373,7 @@ const Home = () => {
     }
   };
 
-//For sending data to databade
+//For sending data to database
   const sendData = async () => {
     try {
       // Set the sending state to true
@@ -402,6 +406,39 @@ const Home = () => {
       setSending(false);
     }
   } 
+
+  //Function for saving canvas as png
+  function saveCanvasAsPng(){
+    //Get the canvas object
+    const canvas = canvasRef.current
+    //Turns it to DataURL element 
+    const canvasUrl = canvas.toDataURL("image/png")
+    //Get the download link
+    const downloadLink = pngSaveRef.current
+    //Sets the attributes for downloading
+    downloadLink.setAttribute("download", "Barcode.png");
+    downloadLink.setAttribute("href", canvasUrl);
+  }
+
+  //Function for saving canvas as pdf
+  function saveCanvasAsPdf(){
+    //Get the canvas object
+    const canvas = canvasRef.current
+    //Turns it to DataURL element 
+    const canvasUrl = canvas.toDataURL("image/png")
+    //Initialize pdf object
+    const doc = new jsPDF();
+    //Get the scale
+    const scalingOffset = (doc.internal.pageSize.width / canvas.width)
+    //Scale the width of the saved canvas
+    const width = canvas.width * scalingOffset
+    //Scale the height of the saved canvas
+    const height  = canvas.height  *scalingOffset
+    //Add the canvas image to the pdf
+    doc.addImage(canvasUrl, "PNG", 0, 10, width, height)
+    //Save the pdf
+    doc.save("canvas.pdf")
+  }
 
   //Old function for saving canavas data
   function saveCanvas() {
@@ -505,7 +542,6 @@ const Home = () => {
     setUpdatableImg(true)
     //Set the update id
     setUpdateId(id) 
-
     //Get the canvas and context
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d");
@@ -521,33 +557,12 @@ const Home = () => {
     ctxRef.current = ctx
   }
 
+  //Function for showing and hiding the save action menu
+  function toggleSaveActionMenu(value){
+    const menu = actionMenuRef.current
+    menu.style.display = value
+  }
 
-
-
-
-
-
-
-
-
-
-
-
- const actionMenuRef = useRef(null)
-
-function showSaveActionMenu(){
-  const menu = actionMenuRef.current
-  menu.style.display = "flex"
-}
-function hideSaveActionMenu(){
-  const menu = actionMenuRef.current
-  menu.style.display = "flex"
-}
-
-
-
-
-  
   return (
     <>
       
@@ -556,15 +571,15 @@ function hideSaveActionMenu(){
         <div className="Menu">
           <div className="ActionMenu">
             
-            <div className="ActionTool" id="SaveMenuButton" onMouseOver={showSaveActionMenu} onMouseOut={hideSaveActionMenu}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-floppy size-10" viewBox="0 0 16 16" onClick={sendData}>
+            <div className="ActionTool" id="SaveMenuButton" onMouseOver={() => toggleSaveActionMenu("flex")} onMouseOut={() => toggleSaveActionMenu("none")}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-floppy size-10" viewBox="0 0 16 16" >
                 <path d="M11 2H9v3h2z"/>
                 <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
               </svg>
-              
+
               <div className="ActionSaveMenu" ref={actionMenuRef} >
 
-                  <div className="ActionSaveItem">
+                  <div className="ActionSaveItem" onClick={sendData}>
 
                     <div className="ActionSaveItemIcon">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download size-6" viewBox="0 0 16 16">
@@ -573,7 +588,7 @@ function hideSaveActionMenu(){
                       </svg>
                     </div>
 
-                    <div className="ActionSaveItemText">
+                    <div className="ActionSaveItemText" >
                       <p>Save</p>
                     </div>
 
@@ -599,22 +614,23 @@ function hideSaveActionMenu(){
                   }
 
 
+                  <a ref={pngSaveRef}>
+                    <div className="ActionSaveItem"  onClick={saveCanvasAsPng}>
 
-                  <div className="ActionSaveItem">
+                      <div className="ActionSaveItemIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-filetype-png size-6" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zm-3.76 8.132q.114.23.14.492h-.776a.8.8 0 0 0-.097-.249.7.7 0 0 0-.17-.19.7.7 0 0 0-.237-.126 1 1 0 0 0-.299-.044q-.427 0-.665.302-.234.301-.234.85v.498q0 .351.097.615a.9.9 0 0 0 .304.413.87.87 0 0 0 .519.146 1 1 0 0 0 .457-.096.67.67 0 0 0 .272-.264q.09-.164.091-.363v-.255H8.82v-.59h1.576v.798q0 .29-.097.55a1.3 1.3 0 0 1-.293.458 1.4 1.4 0 0 1-.495.313q-.296.111-.697.111a2 2 0 0 1-.753-.132 1.45 1.45 0 0 1-.533-.377 1.6 1.6 0 0 1-.32-.58 2.5 2.5 0 0 1-.105-.745v-.506q0-.543.2-.95.201-.406.582-.633.384-.228.926-.228.357 0 .636.1.281.1.48.275.2.176.314.407Zm-8.64-.706H0v4h.791v-1.343h.803q.43 0 .732-.172.305-.177.463-.475a1.4 1.4 0 0 0 .161-.677q0-.374-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.381.57.57 0 0 1-.238.24.8.8 0 0 1-.375.082H.788v-1.406h.66q.327 0 .512.182.185.181.185.521m1.964 2.666V13.25h.032l1.761 2.675h.656v-3.999h-.75v2.66h-.032l-1.752-2.66h-.662v4z"/>
+                        </svg>
+                      </div>
 
-                    <div className="ActionSaveItemIcon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-filetype-png size-6" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2v-1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zm-3.76 8.132q.114.23.14.492h-.776a.8.8 0 0 0-.097-.249.7.7 0 0 0-.17-.19.7.7 0 0 0-.237-.126 1 1 0 0 0-.299-.044q-.427 0-.665.302-.234.301-.234.85v.498q0 .351.097.615a.9.9 0 0 0 .304.413.87.87 0 0 0 .519.146 1 1 0 0 0 .457-.096.67.67 0 0 0 .272-.264q.09-.164.091-.363v-.255H8.82v-.59h1.576v.798q0 .29-.097.55a1.3 1.3 0 0 1-.293.458 1.4 1.4 0 0 1-.495.313q-.296.111-.697.111a2 2 0 0 1-.753-.132 1.45 1.45 0 0 1-.533-.377 1.6 1.6 0 0 1-.32-.58 2.5 2.5 0 0 1-.105-.745v-.506q0-.543.2-.95.201-.406.582-.633.384-.228.926-.228.357 0 .636.1.281.1.48.275.2.176.314.407Zm-8.64-.706H0v4h.791v-1.343h.803q.43 0 .732-.172.305-.177.463-.475a1.4 1.4 0 0 0 .161-.677q0-.374-.158-.677a1.2 1.2 0 0 0-.46-.477q-.3-.18-.732-.179m.545 1.333a.8.8 0 0 1-.085.381.57.57 0 0 1-.238.24.8.8 0 0 1-.375.082H.788v-1.406h.66q.327 0 .512.182.185.181.185.521m1.964 2.666V13.25h.032l1.761 2.675h.656v-3.999h-.75v2.66h-.032l-1.752-2.66h-.662v4z"/>
-                      </svg>
+                      <div className="ActionSaveItemText">
+                        <p>Export as Png</p>
+                      </div>
+
                     </div>
+                  </a>
 
-                    <div className="ActionSaveItemText">
-                      <p>Export as Png</p>
-                    </div>
-
-                  </div>
-
-                  <div className="ActionSaveItem">
+                  <div className="ActionSaveItem" onClick={saveCanvasAsPdf}>
 
                     <div className="ActionSaveItemIcon">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-filetype-pdf size-6" viewBox="0 0 16 16">
