@@ -563,6 +563,33 @@ const Home = () => {
     menu.style.display = value
   }
 
+  const userImgFormRef = useRef(null)
+  const userImgRef = useRef(null)
+  const isDraggable = useRef(false)
+
+  function handleUserImg(e){
+    e.preventDefault();
+    const inputData = userImgFormRef.current.value
+    console.log(inputData)
+    const currentX = canvasRef.current.width/2
+    const currentY = canvasRef.current.height/2
+    //Tady dam draw a namaluju to do stredu
+    //image dam do samostatnyho objektu new Image()
+
+  }
+  function drawImage(){
+
+  }
+  function imageMouseDownHandle(event){
+    const {offsetX, offsetY} = getMousePos(event)
+    if(
+      //budu checkovat jestli je clicknuto v miste objektu
+      //Potom udelam ten drag
+      offsetX <= ()
+
+    )
+  }
+
   return (
     <>
       
@@ -661,6 +688,27 @@ const Home = () => {
           </div>
 
           <div className="ToolMenu">
+
+
+            <div className="Tool" id="ImageInputButton">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10"  onClick={() => setSelectedTool("brush")}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+              </svg>
+
+                <div className="ImageInputCard">
+
+                  <div className="InputCardSection">
+                    <p className="InputCardTitle">Select Image</p>
+                  </div>
+                  <div className="InputCardSection" id="FormCardSection">
+                    <form className="ImageInputForm" onSubmit={handleUserImg}>
+                      <input type="file" accept=".png, .jpeg, .jpg, image/png, image/jpeg" className="ImageInput" ref={userImgFormRef}/>
+                      <input type="submit" id="ImageInputSubmit"/>
+                    </form>
+                  </div>
+                </div>
+
+            </div>
 
             <div className="Tool">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10"  onClick={() => setSelectedTool("brush")}>
