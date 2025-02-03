@@ -38,9 +38,16 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 TODO:
 
 - prihlaseni a ukladani dle uzivatele
-- vytvareni tvaru
-- vytvareni textu
-- vyplnovani (takovy ten kyblik)
+- vytvareni tvaru - done
+- save& export menu - done
+- pridat obrazky
+- eraser - done
+- zadavani jmena pro ulozeni
+- noise brush
+- vytvareni textu - done
+- Hybani s textem
+- Vyplnovani v carach
+- vyplnovani (takovy ten kyblik) - don
 - styl line
 - k serveru se to pripojuje vickrat (mel bych to optimalizovat)
 
