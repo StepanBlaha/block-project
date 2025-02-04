@@ -566,7 +566,7 @@ const Home = () => {
   const userImgFormRef = useRef(null)
   const userImgRef = useRef(null)
   const isDraggable = useRef(false)
-
+  
   function handleUserImg(e){
     e.preventDefault();
     const inputData = userImgFormRef.current.value
@@ -587,7 +587,7 @@ const Home = () => {
     console.log(imgSrc)
     img.src = imgSrc
     
-    img.onload = async () => {
+    img.onload = () => {
       console.log("Image loaded")
       ctx.drawImage(img, 10, 10)
       console.log("Image Drawn")
@@ -595,9 +595,10 @@ const Home = () => {
       const imgHeight = img.height
       console.log(`width: ${imgWidth}`)
       console.log(`height: ${imgHeight}`)
-      return(imgHeight, imgWidth)
-    }
-    await 
+      return Promise.resolve(imgHeight, imgWidth);
+    };
+    
+    
     
 
     
