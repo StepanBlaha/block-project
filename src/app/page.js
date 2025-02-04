@@ -585,7 +585,30 @@ const Home = () => {
     //image dam do samostatnyho objektu new Image()
     drawImage(0, 0)
   }
-  function drawImage(x, y) {
+
+  //Function for geting the dimensions of loaded img
+  function getImageSize() {
+    return new Promise((resolve, reject) => {
+      //Create img
+      const img = new Image();
+      const imgSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAZlBMVEX///8DtYUAsn9hxqOm3cmT2sP6/v0iuYxDwpwXuo0AsHsAt4fC697i9vIAtIIAsH2s4tFiy6s5wJjQ7+VXw5500LNqyai75dWE1LvV8Oi05dVSxqPo9/MvvZPx+/nI6+CJ1r560LQdEhHrAAACX0lEQVR4nO3c23LaMBRGYUkFgg3INiQcwiHN+79k3V6kQyxruwcy9j/ru8/Ga3xA8SRyDgAAAAAAAAAAAAAAAAAAAAAAAACAUdo9f7PsX+brzZ/M3BsDnw+PqklZl9EWQhm3x91i4MyVMa6cPTTpk3Xww7SZxctp0MwnY1QYZ+GvynL5OmDmhAvbxqpYmzMnXfjzaj1fjJkTL2wbY52fOflC78sm+1gVKPThesvMVCj0scjcjBKFPq76lzkahW1i74UqUujjVr3Qh0a90Iee70WdQh/St6JQYTyrF/rwpl6Yfp4qFfqQ+l1KqjB5EqUKfZlYvGkVhnf1wnhVL/RV9zIVKwxz9cLEukas0D913tmoFfrO+wy1wtB51S9X2Fm4yRV2jndkhdU/F3a+Lr608LYx1HFlGHnhrDT0vjD7UIy80LjN4tKasKCQQgoppJBCCimkkEIKKaSQQgoppJBCCimkkEIKKaSQQgop/PvCK4WTL9xG9cJGvnBufOj0C2v5wp3xV0jTL7zI34fWw1SgcC5fuCvVC53xEwKF+W9EhcJN9kZUKHT7XKJE4Sb3uRKF7j1zEjUKb5mVm0ZhbvktUujOvdepSuFt1ZeoUuhOfbeiTKF77flwnUI3S6/AhQpdnUxUKnSHmHjcSBW6U9E9Aq1C55rOI1Wt0B0+n0a5Qrc4xrvD0Ctsh3xfVb8fOYqF7Zh6GUN8RKGxxWww/8NyURg7ylaDCluXuinKMvznPWgP1jbBia1J7i0aa1dgYyfM+2m7+rj/2n2EAQAAAAAAAAAAAAAAAAAAAAAAAAD48APbPUv6XuH4DQAAAABJRU5ErkJggg=="
+      img.src = imgSrc
+
+      //Upon loading get img size
+      img.onload = () => {
+
+        const imgWidth = img.width;
+        const imgHeight = img.height;
+        console.log(`width: ${imgWidth}`);
+        console.log(`height: ${imgHeight}`);
+        // Resolve with dimensions
+        resolve({ imgWidth, imgHeight });
+      };
+  
+    });
+  }
+  //Function for drawing the image on the canvas
+  function  drawImage(x, y){
     return new Promise((resolve, reject) => {
       // Get the canvas and context
       const canvas = canvasRef.current;
@@ -615,13 +638,12 @@ const Home = () => {
       ctxRef.current = ctx;
     });
   }
-  function  drawImage(){}
 
   //Function for handling clicking with image tool selected
   async function handleImgMouseDown(event){
     const {offsetX, offsetY} = getMousePos(event)
     
-    const {imgWidth, imgHeight} = await drawImage(offsetX, offsetY)
+    const {imgWidth, imgHeight} = await getImageSize()
     console.log(imagePosition.current.x)
 
     console.log(imgWidth)
@@ -639,7 +661,7 @@ const Home = () => {
 
     }
   }
-
+  //Function for handling mouse up event while holding the img tool
   function mouseImgUpHandle(){
     isDraggable.current = false
   }
