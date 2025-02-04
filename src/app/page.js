@@ -96,6 +96,29 @@ const Home = () => {
   //Reference for checking if user is typing
   const isTyping = useRef(false);
 
+
+  const imgMoveThrottle = throttle(mouseImgMoveHandle, 200)
+
+
+
+
+
+  //Throttling function for limiting how many times a given function runs
+  function throttle(mainFunc, delay){
+    let isThrottle = false
+    return (...args) => {
+      if(!isThrottle){
+        mainFunc(...args);
+        isThrottle = setTimeout(() => {
+          isThrottle = false
+        }, delay)
+      }
+    }
+  }
+
+
+
+
   function detectTyping(event) {
     const { offsetX, offsetY } = getMousePos(event);
     const boxOffsetX = (event.clientX );
@@ -159,7 +182,7 @@ const Home = () => {
     "text": null,
     "rectangle":  null,
     "circle": null,
-    "image": mouseImgMoveHandle
+    "image": imgMoveThrottle
   }
   //Dictionary that calls the correct function based on the selected tool
   const canvasMouseUpActions = {
@@ -571,6 +594,8 @@ const Home = () => {
   const userImgRef = useRef(null)
   const isDraggable = useRef(false)
   const imagePosition  = useRef({x: 0,y: 0})
+  const preImageCanvas = useRef(null)
+  const preImageCtx = useRef(null)
 
   
   function handleUserImg(e){
@@ -633,14 +658,17 @@ const Home = () => {
         // Resolve with dimensions
         resolve({ imgWidth, imgHeight });
       };
+      canvasRef.current = canvas
+      ctxRef.current = ctx
   
-      canvasRef.current = canvas;
-      ctxRef.current = ctx;
+
     });
   }
 
   //Function for handling clicking with image tool selected
   async function handleImgMouseDown(event){
+    preImageCanvas.current = canvasRef.current
+    preImageCtx.current = ctxRef.current
     const {offsetX, offsetY} = getMousePos(event)
     
     const {imgWidth, imgHeight} = await getImageSize()
@@ -656,8 +684,21 @@ const Home = () => {
     }
   }
 
-  function mouseImgMoveHandle(){
-    if(isDraggable){
+
+
+
+function resetCanvas(){
+  canvasRef.current = preImageCanvas.current
+  ctxRef.current = preImageCtx.current
+}
+   
+  function mouseImgMoveHandle(event){
+    if(isDraggable.current){
+      setTimeout(()=>{
+        resetCanvas()
+        let {offsetX, offsetY} = getMousePos(event)
+        drawImage(offsetX, offsetY)
+      },400)
 
     }
   }
