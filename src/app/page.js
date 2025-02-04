@@ -597,6 +597,8 @@ const Home = () => {
   const preImageCanvas = useRef(null)
   const preImageCtx = useRef(null)
 
+  const canvasBeforeMoveRef = useRef(null)
+
   
   function handleUserImg(e){
     e.preventDefault();
@@ -667,6 +669,7 @@ const Home = () => {
 
   //Function for handling clicking with image tool selected
   async function handleImgMouseDown(event){
+    saveCanvasBeforeMove()
     preImageCanvas.current = canvasRef.current
     preImageCtx.current = ctxRef.current
     const {offsetX, offsetY} = getMousePos(event)
@@ -685,11 +688,25 @@ const Home = () => {
   }
 
 
-
+function saveCanvasBeforeMove(){
+  const canvas = canvasRef.current
+  const imageSrc = canvas.toDataURL()
+  canvasBeforeMoveRef.current  = imageSrc
+}
 
 function resetCanvas(){
-  canvasRef.current = preImageCanvas.current
-  ctxRef.current = preImageCtx.current
+  const canvas = canvasRef.current
+  const ctx = canvas.getContext("2d");
+  const imageSrc = canvasBeforeMoveRef.current
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  //Draw the image on the canvas
+  const img = hiddenImgRef.current;
+  img.onload = () => {ctx.drawImage(img , 0, 0)}
+  img.src = imageSrc
+  //Set the context and canvas to the refs
+  hiddenImgRef.current = img
+  canvasRef.current = canvas
+  ctxRef.current = ctx
 }
    
   function mouseImgMoveHandle(event){
