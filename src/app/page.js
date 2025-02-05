@@ -602,7 +602,7 @@ const Home = () => {
   
   function handleUserImg(e){
     e.preventDefault();
-    
+    saveCanvasBeforeMove()
     const inputData = userImgFormRef.current.value
     userImgRef.current = inputData
     console.log(inputData)
@@ -669,7 +669,6 @@ const Home = () => {
 
   //Function for handling clicking with image tool selected
   async function handleImgMouseDown(event){
-    saveCanvasBeforeMove()
     preImageCanvas.current = canvasRef.current
     preImageCtx.current = ctxRef.current
     const {offsetX, offsetY} = getMousePos(event)
@@ -720,7 +719,9 @@ function resetCanvas(){
     }
   }
   //Function for handling mouse up event while holding the img tool
-  function mouseImgUpHandle(){
+  function mouseImgUpHandle(event) {
+    const { offsetX, offsetY } = getMousePos(event)
+    imagePosition.current = {x: offsetX,y: offsetY}
     isDraggable.current = false
   }
 
