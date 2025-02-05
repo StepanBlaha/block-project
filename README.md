@@ -51,6 +51,12 @@ TODO:
 - styl line
 - k serveru se to pripojuje vickrat (mel bych to optimalizovat)
 
+Image:
+
+- mikro blackscreen pri hybani
+- aby slo pridat a detekovat vic images
+-
+
 -kruy a ctverce udelam ze kdyz bude selectnuta dana tool zapisu si pri mouse downu cords a pak pri mouse up a ty od sebe odectu a to nastavim na size arc nebo rect
 
 -sirka a vyska tvaru porad rozjebna
