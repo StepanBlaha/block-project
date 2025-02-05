@@ -599,6 +599,18 @@ const Home = () => {
 
   const canvasBeforeMoveRef = useRef(null)
 
+
+  /*
+  Z ceho bude arr:
+  
+  jeden arr na imgsrc
+  jeden na imagePositiony
+  #nejakou promenou ktera pri draggovani buyde obsaho vat index img co taham
+
+
+  pri pridani obrazku pridam do jednoho arraye jeho dataurl a do dtuheho jeho position,
+  pri chckovani kliku projedu array a ten kde se dotkne hodim do use ref, potom pri tahani mu dam index kliknuteho a podle toho pak taham po screenu
+  */
   
   function handleUserImg(e){
     e.preventDefault();
