@@ -40,7 +40,9 @@ TODO:
 - prihlaseni a ukladani dle uzivatele
 - vytvareni tvaru - done
 - save& export menu - done
-- pridat obrazky
+- pridat obrazky - done
+- hybat s obrazkem jednim - done
+- hybat s vice obrazkama
 - eraser - done
 - zadavani jmena pro ulozeni
 - noise brush
