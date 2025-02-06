@@ -625,21 +625,29 @@ const Home = () => {
     console.log(inputData)
 
 
-    const imageSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAZlBMVEX///8DtYUAsn9hxqOm3cmT2sP6/v0iuYxDwpwXuo0AsHsAt4fC697i9vIAtIIAsH2s4tFiy6s5wJjQ7+VXw5500LNqyai75dWE1LvV8Oi05dVSxqPo9/MvvZPx+/nI6+CJ1r560LQdEhHrAAACX0lEQVR4nO3c23LaMBRGYUkFgg3INiQcwiHN+79k3V6kQyxruwcy9j/ru8/Ga3xA8SRyDgAAAAAAAAAAAAAAAAAAAAAAAACAUdo9f7PsX+brzZ/M3BsDnw+PqklZl9EWQhm3x91i4MyVMa6cPTTpk3Xww7SZxctp0MwnY1QYZ+GvynL5OmDmhAvbxqpYmzMnXfjzaj1fjJkTL2wbY52fOflC78sm+1gVKPThesvMVCj0scjcjBKFPq76lzkahW1i74UqUujjVr3Qh0a90Iee70WdQh/St6JQYTyrF/rwpl6Yfp4qFfqQ+l1KqjB5EqUKfZlYvGkVhnf1wnhVL/RV9zIVKwxz9cLEukas0D913tmoFfrO+wy1wtB51S9X2Fm4yRV2jndkhdU/F3a+Lr608LYx1HFlGHnhrDT0vjD7UIy80LjN4tKasKCQQgoppJBCCimkkEIKKaSQQgoppJBCCimkkEIKKaSQQgop/PvCK4WTL9xG9cJGvnBufOj0C2v5wp3xV0jTL7zI34fWw1SgcC5fuCvVC53xEwKF+W9EhcJN9kZUKHT7XKJE4Sb3uRKF7j1zEjUKb5mVm0ZhbvktUujOvdepSuFt1ZeoUuhOfbeiTKF77flwnUI3S6/AhQpdnUxUKnSHmHjcSBW6U9E9Aq1C55rOI1Wt0B0+n0a5Qrc4xrvD0Ctsh3xfVb8fOYqF7Zh6GUN8RKGxxWww/8NyURg7ylaDCluXuinKMvznPWgP1jbBia1J7i0aa1dgYyfM+2m7+rj/2n2EAQAAAAAAAAAAAAAAAAAAAAAAAAD48APbPUv6XuH4DQAAAABJRU5ErkJggg=="
-    //Tady dam draw a namaluju to do stredu
-    //image dam do samostatnyho objektu new Image()
+    const imageSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAe1BMVEX///8iIiIAAAAbGxsfHx9zc3NOTk4NDQ0mJiYWFhbBwcHy8vITExOZmZkYGBj7+/vh4eGysrLKysq4uLiJiYlfX1/19fXZ2dm/v79JSUk4ODgICAgtLS13d3fs7OydnZ1CQkLT09NsbGypqalXV1eHh4d/f39MTEySkpKQgEmkAAADEUlEQVR4nO3Zi3KiMACFYRJiA4pcFNCKtVZd6/s/4SYoblBrd2e2OKX/N9OpCZEJR3IRPQ8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABHyej0YjKdztPbbdJhts2Gq8761Lnt7nkRaCnl0pZmA1lbZlcN0zwyByrzJ8Z9zSOXsa+UECo0hYOMlC0IJQeX7SqtRKyljoWqovEjuvr18jAIAnP5oiq9QupquVDSxiFf3FardSVEHBWv2WuhfZPVU/moDn+lcjUale++ufo0lzJPy2SV1TeHnDmNglAIvTtOJbO1KUTrx3S3A08mjHCs47djcaZNGKEzUHaRKe+aUrIwzfXL5Un6woYhfDlsyr/Mxatl0hS30hTF6Nw8tWHJSced7EodRnz+6L03c/VCnxdY3wyb6tVpvzdh+esOO9ilOgzno05sGPI0aLzM3hihu5zOKvd4z9gw1NJZIOwUeh41RWzug+fWGwJzPMq762CXbBhx4VQEThjljSuv81l31r9O2TCivVPhhnEcE+0t6VjbKbWfG1Ebhj44FW4YE3m9dmR1QB98hfnm6jDcLbYbxlRez5bHupnXR3fDyG5c+PxGQH3xF3dGO4wfe2fcnDNsXfUD54zj5nvaekO9mgQ9Xk0+CiNZfrDPaO/DeuNuGN4mvNphmU1Gey3ukfth1JOGdmfL4zRynjJWaeL1x/0wvMXlBtWOkvipKe2VvvHM9Nv6JIzhxXrS3oYNpBJK9ieNT8LwXszuW6lmoLxV9mgzo65sMuY7b1d9/UrlaDRK7DPQ6JCYl/YHFMOGUU3rY3WrnU1DHuzDrlVuHxjLTXOC+kGQqXjUBfxPufTrnwrMxfp+rEpv61b4p9s/sWNBaP1ePGu7xZB/ZpA+3Rm5jKIorEWRDm0YTYX5H8ntqV0WyFgJE49QsVzOnTPs6zljeuvk3812M3Al3rxVsTlPHElWhPWvbWGRtVfSPJTLXmTxT8p0Mpzc2FOUoz7tMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgD34D5JwhFLaKceAAAAAASUVORK5CYII=";
 
-    //Gets the refs for posiitons and sources
-    const imageSrcList = imageSources.current
-    const imagePosList = imagePositions.current
-    //Insert the new image source and starting position
-    imageSrcList.push(imageSrc)
-    imagePosList.push({x: 0,y: 0})
-    //Update the refs
-    imageSources.current =  imageSrcList
-    imagePositions.current = imagePosList
+    const img = new Image();
+    img.src = imageSrc;
+    
+    img.onload = () => {
+      console.log("Image fully loaded, adding to list");
 
-    drawImage(0, 0, imageSrc)
+      // Get references to sources and positions
+      const imageSrcList = imageSources.current;
+      const imagePosList = imagePositions.current;
+
+      // Store the image source and initial position
+      imageSrcList.push(imageSrc);
+      imagePosList.push({ x: 0, y: 0 });
+
+      // Update the refs
+      imageSources.current = imageSrcList;
+      imagePositions.current = imagePosList;
+
+      // Draw the image after it has loaded
+      drawImage(0, 0, imageSrc);
+    };
   }
 
   //Function for geting the dimensions of loaded img
@@ -658,8 +666,8 @@ const Home = () => {
         const imgWidth = img.width;
         const imgHeight = img.height;
         //Debug
-        console.log(`width: ${imgWidth}`);
-        console.log(`height: ${imgHeight}`);
+        //console.log(`width: ${imgWidth}`);
+        //console.log(`height: ${imgHeight}`);
         // Resolve with dimensions
         resolve({ imgWidth, imgHeight });
       };
@@ -718,17 +726,29 @@ const Home = () => {
     //Get the list of image positions
     const imagePosList = imagePositions.current
 
+    console.log("Checking click at:", offsetX, offsetY);
+    console.log("Stored images:", imageSrcList);
+    console.log("Stored positions:", imagePosList);
+
     for (let index = 0; index < imageSrcList.length; index++) {
-      const imgSrc = imageSrcList[index]
+      let imgSrc = imageSrcList[index]
       //Gets the image position
-      const { x, y } = imagePosList[index];
+      let { x, y } = imagePosList[index];
       //Gets the image size
-      const {imgWidth, imgHeight} = await getImageSize(imgSrc)
+      let {imgWidth, imgHeight} = await getImageSize(imgSrc)
+
       //Checks for clicking on image
-      console.log(x, y)
+      console.log("--------------------------------")
+      console.log(`Index ${index}`)
+      console.log(`Dimension x: ${x}`)
+      console.log(`Dimension y: ${y}`)
+      console.log(`Width ${ imgWidth}`)
+      console.log(`Height ${ imgHeight}`)
+      console.log(`Source ${imgSrc}`)
+
       if(
-        offsetX >= x && offsetX <=x + imgWidth &&
-        offsetY >= y && offsetY <= y + imgHeight
+        offsetX >=  imagePosList[index].x && offsetX <= imagePosList[index].x + imgWidth &&
+        offsetY >=  imagePosList[index].y && offsetY <=  imagePosList[index].y + imgHeight
       ){
         //Debug
         console.log("image  clicked");
@@ -785,9 +805,13 @@ function resetCanvas(){
   function mouseImgMoveHandle(event){
     if(isDraggable.current){
       const imageSource = currentClickedImage.current
+      const imagePosList = imagePositions.current
+      console.log(imageSource)
       setTimeout(()=>{
         resetCanvas()
+        console.log(currentClickedImageIndex.current)
         let {offsetX, offsetY} = getMousePos(event)
+        imagePosList[currentClickedImageIndex.current] = {x: offsetX,y: offsetY}
         drawImage(offsetX, offsetY, imageSource)
       },400)
 
@@ -801,11 +825,16 @@ function resetCanvas(){
     const imagePosList = imagePositions.current
     //Set the position of last dragged image to current mouse position
     imagePosList[currentClickedImageIndex.current] = {x: offsetX,y: offsetY}
+    console.log( imagePosList[currentClickedImageIndex.current])
+    console.log(imagePositions.current)
     //Clear the working variables
+    imagePositions.current = imagePosList
     isDraggable.current = false
     currentClickedImage.current = null
     currentClickedImageIndex.current = null
-    imagePositions.current = imagePosList
+    console.log(imagePositions.current )
+    console.log(currentClickedImage.current )
+    console.log(currentClickedImageIndex.current )
   }
 
 
