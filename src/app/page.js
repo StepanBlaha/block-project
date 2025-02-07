@@ -619,7 +619,6 @@ const Home = () => {
   
   function handleUserImg(e){
     e.preventDefault();
-    saveCanvasBeforeMove()
     const inputData = userImgFormRef.current.value
     userImgRef.current = inputData
     console.log(inputData)
@@ -674,6 +673,7 @@ const Home = () => {
   
     });
   }
+
   //Function for drawing the image on the canvas
   function  drawImage(x, y, imageSrc){
     return new Promise((resolve, reject) => {
@@ -713,6 +713,7 @@ const Home = () => {
 
     });
   }
+
 
   //Function for handling clicking with image tool selected
   async function handleImgMouseDown(event){
@@ -781,7 +782,9 @@ function saveCanvasBeforeMove(){
   const imageSrc = canvas.toDataURL()
   //Update the save ref
   canvasBeforeMoveRef.current  = imageSrc
-}
+  }
+  
+
 
 //Function for reseting the canvas upon moving
 function resetCanvas(){
@@ -801,18 +804,16 @@ function resetCanvas(){
   canvasRef.current = canvas
   ctxRef.current = ctx
 }
-   
+  //Function for handling mouse move while holding the image tool
   function mouseImgMoveHandle(event){
     if(isDraggable.current){
-      const imageSource = currentClickedImage.current
       const imagePosList = imagePositions.current
-      console.log(imageSource)
       setTimeout(()=>{
         resetCanvas()
-        console.log(currentClickedImageIndex.current)
         let {offsetX, offsetY} = getMousePos(event)
         imagePosList[currentClickedImageIndex.current] = {x: offsetX,y: offsetY}
-        drawImage(offsetX, offsetY, imageSource)
+        imagePositions.current = imagePosList
+        redrawAll()
       },400)
 
     }
@@ -825,16 +826,74 @@ function resetCanvas(){
     const imagePosList = imagePositions.current
     //Set the position of last dragged image to current mouse position
     imagePosList[currentClickedImageIndex.current] = {x: offsetX,y: offsetY}
-    console.log( imagePosList[currentClickedImageIndex.current])
-    console.log(imagePositions.current)
     //Clear the working variables
     imagePositions.current = imagePosList
     isDraggable.current = false
     currentClickedImage.current = null
     currentClickedImageIndex.current = null
-    console.log(imagePositions.current )
-    console.log(currentClickedImage.current )
-    console.log(currentClickedImageIndex.current )
+
+  }
+
+  function clearAllImages(){
+    //get the canvas and context
+    const canvas = canvasRef.current;
+    const ctx = ctxRef.current
+    //Get the position and source list
+    const srcList = imageSources.current
+    const posList = imagePositions.current
+    //Draw all the images
+    for (let index = 0; index < srcList.length; index++) {
+      //Gets the image position
+      let { x, y } = posList[index];
+      //Create a new image object
+      const img = new Image();
+      //Get the source for the new image
+      const imgSrc = srcList[index]
+      //Set the source for the image
+      img.src = imgSrc
+
+      img.onload = () => {
+        const imgWidth = img.width;
+        const imgHeight = img.height;
+        ctx.clearRect(x,y, imgWidth, imgHeight)
+      }
+      //Update canvas and context refs
+      
+      
+    }
+    canvasRef.current = canvas
+    ctxRef.current = ctx
+  }
+
+  //Function for drawing all images
+  function redrawAll(){
+    //get the canvas and context
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    //Get the position and source list
+    const srcList = imageSources.current
+    const posList = imagePositions.current
+    //Draw all the images
+    for (let index = 0; index < srcList.length; index++) {
+      //Gets the image position
+      let { x, y } = posList[index];
+      //Create a new image object
+      const img = new Image();
+      //Get the source for the new image
+      const imgSrc = srcList[index]
+      //Set the source for the image
+      img.src = imgSrc
+
+      img.onload = () => {
+        //Draw the image
+        ctx.drawImage(img, x, y);
+      }
+      //Update canvas and context refs
+      canvasRef.current = canvas
+      ctxRef.current = ctx
+      
+      
+    }
   }
 
 
