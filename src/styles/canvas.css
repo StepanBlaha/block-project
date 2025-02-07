@@ -428,7 +428,7 @@ ul li ul:hover {
     border: 1px solid red;
     background-color: #313131;
     padding: 10px;
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
@@ -479,8 +479,8 @@ input[type=file] {
     padding: 5px;
     background: #fff;
     border-radius: 7px;
-  }
-  input[type=file]::file-selector-button {
+}
+input[type=file]::file-selector-button {
     margin-right: 20px;
     border: none;
     background: #676767;
@@ -489,8 +489,15 @@ input[type=file] {
     color: #fff;
     cursor: pointer;
     transition: background .2s ease-in-out;
-  }
-  
-  input[type=file]::file-selector-button:hover {
+}
+input[type=file]::file-selector-button:hover {
     background: #4d4d4d;
-  }
+}
+.ImageLinkInput{
+    width: 350px;
+    max-width: 100%;
+    color: #444;
+    padding: 5px;
+    background: #fff;
+    border-radius: 7px;
+}

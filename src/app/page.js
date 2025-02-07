@@ -45,6 +45,8 @@ const Home = () => {
 
   //Reference for the save&export menu
   const actionMenuRef = useRef(null)
+  //Reference for the image input
+  const imageMenuRef = useRef(null)
 
   //Mouse position
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
@@ -584,11 +586,7 @@ const Home = () => {
     ctxRef.current = ctx
   }
 
-  //Function for showing and hiding the save action menu
-  function toggleSaveActionMenu(value){
-    const menu = actionMenuRef.current
-    menu.style.display = value
-  }
+
 
   const userImgFormRef = useRef(null)
   const userImgRef = useRef(null)
@@ -764,15 +762,7 @@ const Home = () => {
       }
       
     }
-    /*
-    if(
-      offsetX >= imagePosition.current.x && offsetX <= imagePosition.current.x + imgHeight &&
-      offsetY >= imagePosition.current.y && offsetY <= imagePosition.current.y + imgWidth
-    ){
-      console.log("image  clicked")
-      isDraggable.current = true
-    }
-      */
+
   }
 
 //Function for saving the old canvas before moving an  image
@@ -906,18 +896,18 @@ function resetCanvas(){
 
 
 
+  
 
 
 
-  function imageMouseDownHandle(event){
-    const {offsetX, offsetY} = getMousePos(event)
-    //if(
-      //budu checkovat jestli je clicknuto v miste objektu
-      //Potom udelam ten drag
-      //offsetX <= ()
-
-    //)
+  //Function for setting display value of given menu
+  function toggleMenu(value, refItem){
+    const menu = refItem.current
+    menu.style.display = value
   }
+
+
+
 
   return (
     <>
@@ -927,7 +917,7 @@ function resetCanvas(){
         <div className="Menu">
           <div className="ActionMenu">
             
-            <div className="ActionTool" id="SaveMenuButton" onMouseOver={() => toggleSaveActionMenu("flex")} onMouseOut={() => toggleSaveActionMenu("none")}>
+            <div className="ActionTool" id="SaveMenuButton" onMouseOver={() => toggleMenu("flex", actionMenuRef)} onMouseOut={() => toggleMenu("none", actionMenuRef)}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-floppy size-10" viewBox="0 0 16 16" >
                 <path d="M11 2H9v3h2z"/>
                 <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
@@ -1019,19 +1009,20 @@ function resetCanvas(){
           <div className="ToolMenu">
 
 
-            <div className="Tool" id="ImageInputButton">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10"  onClick={() => setSelectedTool("image")}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+            <div className="Tool" id="ImageInputButton" onMouseOver =  {() => toggleMenu("flex", imageMenuRef)} onMouseOut={() => toggleMenu("none", imageMenuRef)} >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-image size-10" viewBox="0 0 16 16" onClick={() => setSelectedTool("image")}>
+                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z"/>
               </svg>
-
-                <div className="ImageInputCard">
+                <div className="ImageInputCard" ref={imageMenuRef}>
 
                   <div className="InputCardSection">
-                    <p className="InputCardTitle">Select Image</p>
+                    <p className="InputCardTitle">Insert Image link</p>
                   </div>
                   <div className="InputCardSection" id="FormCardSection">
                     <form className="ImageInputForm" onSubmit={handleUserImg}>
-                      <input type="file" accept=".png, .jpeg, .jpg, image/png, image/jpeg" className="ImageInput" ref={userImgFormRef}/>
+                      {/*<input type="file" accept=".png, .jpeg, .jpg, image/png, image/jpeg" className="ImageInput" ref={userImgFormRef}/>*/}
+                      <input type="text" className="ImageLinkInput" placeholder="https://..." ref={userImgFormRef}/>
                       <input type="submit" id="ImageInputSubmit"/>
                     </form>
                   </div>
