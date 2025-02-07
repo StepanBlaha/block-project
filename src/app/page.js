@@ -616,14 +616,17 @@ const Home = () => {
   */
   
   function handleUserImg(e){
+    //Prevent function of the form
     e.preventDefault();
+    //Get the user input link
     const inputData = userImgFormRef.current.value
-    userImgRef.current = inputData
-    console.log(inputData)
-
-
-    const imageSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAe1BMVEX///8iIiIAAAAbGxsfHx9zc3NOTk4NDQ0mJiYWFhbBwcHy8vITExOZmZkYGBj7+/vh4eGysrLKysq4uLiJiYlfX1/19fXZ2dm/v79JSUk4ODgICAgtLS13d3fs7OydnZ1CQkLT09NsbGypqalXV1eHh4d/f39MTEySkpKQgEmkAAADEUlEQVR4nO3Zi3KiMACFYRJiA4pcFNCKtVZd6/s/4SYoblBrd2e2OKX/N9OpCZEJR3IRPQ8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABHyej0YjKdztPbbdJhts2Gq8761Lnt7nkRaCnl0pZmA1lbZlcN0zwyByrzJ8Z9zSOXsa+UECo0hYOMlC0IJQeX7SqtRKyljoWqovEjuvr18jAIAnP5oiq9QupquVDSxiFf3FardSVEHBWv2WuhfZPVU/moDn+lcjUale++ufo0lzJPy2SV1TeHnDmNglAIvTtOJbO1KUTrx3S3A08mjHCs47djcaZNGKEzUHaRKe+aUrIwzfXL5Un6woYhfDlsyr/Mxatl0hS30hTF6Nw8tWHJSced7EodRnz+6L03c/VCnxdY3wyb6tVpvzdh+esOO9ilOgzno05sGPI0aLzM3hihu5zOKvd4z9gw1NJZIOwUeh41RWzug+fWGwJzPMq762CXbBhx4VQEThjljSuv81l31r9O2TCivVPhhnEcE+0t6VjbKbWfG1Ebhj44FW4YE3m9dmR1QB98hfnm6jDcLbYbxlRez5bHupnXR3fDyG5c+PxGQH3xF3dGO4wfe2fcnDNsXfUD54zj5nvaekO9mgQ9Xk0+CiNZfrDPaO/DeuNuGN4mvNphmU1Gey3ukfth1JOGdmfL4zRynjJWaeL1x/0wvMXlBtWOkvipKe2VvvHM9Nv6JIzhxXrS3oYNpBJK9ieNT8LwXszuW6lmoLxV9mgzo65sMuY7b1d9/UrlaDRK7DPQ6JCYl/YHFMOGUU3rY3WrnU1DHuzDrlVuHxjLTXOC+kGQqXjUBfxPufTrnwrMxfp+rEpv61b4p9s/sWNBaP1ePGu7xZB/ZpA+3Rm5jKIorEWRDm0YTYX5H8ntqV0WyFgJE49QsVzOnTPs6zljeuvk3812M3Al3rxVsTlPHElWhPWvbWGRtVfSPJTLXmTxT8p0Mpzc2FOUoz7tMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgD34D5JwhFLaKceAAAAAASUVORK5CYII=";
-
+    //Stop the function if the string is empty
+    if (!inputData) {
+      return
+    }
+    //const imageSrc = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAe1BMVEX///8iIiIAAAAbGxsfHx9zc3NOTk4NDQ0mJiYWFhbBwcHy8vITExOZmZkYGBj7+/vh4eGysrLKysq4uLiJiYlfX1/19fXZ2dm/v79JSUk4ODgICAgtLS13d3fs7OydnZ1CQkLT09NsbGypqalXV1eHh4d/f39MTEySkpKQgEmkAAADEUlEQVR4nO3Zi3KiMACFYRJiA4pcFNCKtVZd6/s/4SYoblBrd2e2OKX/N9OpCZEJR3IRPQ8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABHyej0YjKdztPbbdJhts2Gq8761Lnt7nkRaCnl0pZmA1lbZlcN0zwyByrzJ8Z9zSOXsa+UECo0hYOMlC0IJQeX7SqtRKyljoWqovEjuvr18jAIAnP5oiq9QupquVDSxiFf3FardSVEHBWv2WuhfZPVU/moDn+lcjUale++ufo0lzJPy2SV1TeHnDmNglAIvTtOJbO1KUTrx3S3A08mjHCs47djcaZNGKEzUHaRKe+aUrIwzfXL5Un6woYhfDlsyr/Mxatl0hS30hTF6Nw8tWHJSced7EodRnz+6L03c/VCnxdY3wyb6tVpvzdh+esOO9ilOgzno05sGPI0aLzM3hihu5zOKvd4z9gw1NJZIOwUeh41RWzug+fWGwJzPMq762CXbBhx4VQEThjljSuv81l31r9O2TCivVPhhnEcE+0t6VjbKbWfG1Ebhj44FW4YE3m9dmR1QB98hfnm6jDcLbYbxlRez5bHupnXR3fDyG5c+PxGQH3xF3dGO4wfe2fcnDNsXfUD54zj5nvaekO9mgQ9Xk0+CiNZfrDPaO/DeuNuGN4mvNphmU1Gey3ukfth1JOGdmfL4zRynjJWaeL1x/0wvMXlBtWOkvipKe2VvvHM9Nv6JIzhxXrS3oYNpBJK9ieNT8LwXszuW6lmoLxV9mgzo65sMuY7b1d9/UrlaDRK7DPQ6JCYl/YHFMOGUU3rY3WrnU1DHuzDrlVuHxjLTXOC+kGQqXjUBfxPufTrnwrMxfp+rEpv61b4p9s/sWNBaP1ePGu7xZB/ZpA+3Rm5jKIorEWRDm0YTYX5H8ntqV0WyFgJE49QsVzOnTPs6zljeuvk3812M3Al3rxVsTlPHElWhPWvbWGRtVfSPJTLXmTxT8p0Mpzc2FOUoz7tMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgD34D5JwhFLaKceAAAAAASUVORK5CYII=";
+    const imageSrc = inputData
+    //Create image and set its source
     const img = new Image();
     img.src = imageSrc;
     
@@ -1023,7 +1026,7 @@ function resetCanvas(){
                     <form className="ImageInputForm" onSubmit={handleUserImg}>
                       {/*<input type="file" accept=".png, .jpeg, .jpg, image/png, image/jpeg" className="ImageInput" ref={userImgFormRef}/>*/}
                       <input type="text" className="ImageLinkInput" placeholder="https://..." ref={userImgFormRef}/>
-                      <input type="submit" id="ImageInputSubmit"/>
+                      <input type="submit" id="ImageInputSubmit" onClick={() => setSelectedTool("image")}/>
                     </form>
                   </div>
                 </div>
