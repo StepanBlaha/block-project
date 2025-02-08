@@ -25,11 +25,11 @@ export const  GET = async (request) => {
 export const POST = async (request) => {
     try {
         console.log("Getting request data...");
-        const {image, date} = await request.json();
+        const {name, image, date} = await request.json();
         console.log("Connecting to database...");
         await connect();
         console.log("Creating database post...");
-        await Canvas.create({image, date});
+        await Canvas.create({name, image, date});
 
         console.log("Post created successfully");
         return NextResponse.json({ message: "Post created successfully" }, { status: 201 });

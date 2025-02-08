@@ -403,7 +403,7 @@ const Home = () => {
   };
 
 //For sending data to database
-  const sendData = async () => {
+  const sendData = async (canvasName) => {
     try {
       // Set the sending state to true
       setSending(true);
@@ -411,6 +411,7 @@ const Home = () => {
       const canvas = canvasRef.current
       const canvasUrl = canvas.toDataURL()
       const canvasData = {
+        name: canvasName,
         image: canvasUrl, 
         date: Date.now()
       }
@@ -426,6 +427,7 @@ const Home = () => {
       if (response.ok) {
         const data = await response.json();  
         console.log('Post created successfully:', data);
+        console.log(canvasData)
       } else {
         console.error('Failed to create post:', response.statusText);
       }
@@ -436,6 +438,18 @@ const Home = () => {
     }
   } 
 
+ //Function for saving current canvas under user inputed name
+  function saveCanvas(event) {
+    //Prevent function of the form
+    event.preventDefault();
+    //Get the user input
+    const userInput = saveMenuInputRef.current.value
+    //Stop the function if the string is empty
+    if (!userInput) {
+      return
+    }
+    sendData(userInput)
+  }
   //Function for saving canvas as png
   function saveCanvasAsPng(){
     //Get the canvas object
@@ -470,7 +484,7 @@ const Home = () => {
   }
 
   //Old function for saving canavas data
-  function saveCanvas() {
+ /*function saveCanvas() {
     const canvas = canvasRef.current
     const canvasUrl = canvas.toDataURL()
     const data = {image: canvasUrl, date: Date.now()}
@@ -483,7 +497,7 @@ const Home = () => {
       console.log(res)
     }
     fr.readAsText(file)
-  }
+  }*/
 
   //Initial canvas setup
   useEffect(()=>{
@@ -614,6 +628,7 @@ const Home = () => {
   pri pridani obrazku pridam do jednoho arraye jeho dataurl a do dtuheho jeho position,
   pri chckovani kliku projedu array a ten kde se dotkne hodim do use ref, potom pri tahani mu dam index kliknuteho a podle toho pak taham po screenu
   */
+
   
   function handleUserImg(e){
     //Prevent function of the form
@@ -910,13 +925,29 @@ function resetCanvas(){
   }
 
 
-
+//References forsaving the canvas
+const saveMenuRef = useRef(null)
+const saveMenuInputRef = useRef(null)
 
   return (
     <>
       
       <div className="Main">
+
+        {/*Menu for setting name for the saved canvas */}
+        <div className="SaveCardDiv" ref={saveMenuRef}>
+          <div  className="CanvasSaveNameCardBlur" onClick={() => toggleMenu("none", saveMenuRef)}></div>            
+          <div className="CanvasSaveNameCard" >
+            <div className="CanvasSaveNameCardForm">
+              <form className="SaveNameForm" onSubmit={saveCanvas}>
+                <input type="text"  className="SaveNameInput" placeholder="Save name..." ref={saveMenuInputRef}/>
+                <input type="submit" className="SavePostSubmit" value="Save"/>
+              </form>
+            </div>
+          </div>
+        </div>
         
+
         <div className="Menu">
           <div className="ActionMenu">
             
@@ -928,7 +959,7 @@ function resetCanvas(){
 
               <div className="ActionSaveMenu" ref={actionMenuRef} >
 
-                  <div className="ActionSaveItem" onClick={sendData}>
+                  <div className="ActionSaveItem"  onClick={() => {toggleMenu("flex", saveMenuRef);  toggleMenu("flex", actionMenuRef);}}>
 
                     <div className="ActionSaveItemIcon">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-download size-6" viewBox="0 0 16 16">
@@ -940,9 +971,8 @@ function resetCanvas(){
                     <div className="ActionSaveItemText" >
                       <p>Save</p>
                     </div>
-
-                    
                   </div>
+                  
                   {updatableImg && 
                   <>
                   <div className="ActionSaveItem" onClick={() => updateData(updateId)}>
@@ -1124,10 +1154,10 @@ function resetCanvas(){
             {queryData && (
               <div className="savedPostTable">
                 {queryData.map((data) => {
-                  const { _id, image, date } = data;
+                  const { _id, name, image, date } = data;
                   return (
                     <div key={date} className="savedPost">
-                      <p>{date}</p>
+                      <p>{name}</p>
                       <div className="openSavedCanvasButton" onClick={() => openSavedCanvas(image, _id)}>
                         <p>Open</p>
                       </div>

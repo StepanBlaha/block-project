@@ -3,6 +3,10 @@ import { title } from 'process';
 
 const { Schema } = mongoose;
 const canvasSchema = new Schema({
+    name: {
+      type: String,
+      required: true,
+    },
     image: {
         type: String, 
         required: true, 

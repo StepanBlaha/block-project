@@ -501,3 +501,88 @@ input[type=file]::file-selector-button:hover {
     background: #fff;
     border-radius: 7px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.SaveCardDiv{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 43436;
+    display: none;
+    
+}
+.CanvasSaveNameCard{
+    position: absolute;
+    top: 65px;
+    left: 10px;
+    width: 250px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px;
+    background-color: #313131;
+    border-radius: 7px;
+    gap: 6px;
+    /* border: 1px solid red;*/
+}
+.CanvasSaveNameCardBlur{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+}
+
+.CanvasSaveNameCardForm{
+    width: 100%;
+    height: fit-content
+}
+.SaveNameForm{
+    height: 100%;
+    width: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.SaveNameInput{
+    width: 100%;
+    max-width: 100%;
+    color: #444;
+    padding: 5px;
+    background: #fff;
+    border-radius: 7px;
+}
+.SavePostSubmit{
+    display: flex;
+    width: 70px;
+    height: 30px;
+    background-color: #676767;
+    float: right;
+    border-radius: 4px;
+    transition: background .2s ease-in-out;
+}
+.SavePostSubmit:hover{
+    background: rgb(90, 90, 90);
+}
