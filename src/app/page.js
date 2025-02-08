@@ -1119,11 +1119,12 @@ const saveMenuInputRef = useRef(null)
               </ul>
             </div>
 
-            <div className="Tool">
-              <form id="fillCheck" >
-                <label>Fill</label>
-                <input type="checkbox" id="fillCheckBox" name="fillCheckBox" ref={fillCheckRef}/>
-              </form>
+            <div className="Tool" id="FillTool">
+              <p className="FillTitle">Fill</p>
+              <label class="checkBox"> 
+                <input id="ch1" type="checkbox"ref={fillCheckRef}/>
+                <div class="transition"></div>
+              </label>
             </div>
 
 
