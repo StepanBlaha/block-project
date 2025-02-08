@@ -1129,7 +1129,7 @@ const saveMenuInputRef = useRef(null)
 
 
             
-            <div className="Tool">
+            <div className="Tool" id="BrushColorTool">
               <form id="brushColorForm">
                 <input type="color" name="brushColor" id="brushColor"  onChange={changeBrushColor}  ref={brushColorRef}/>
               </form>
@@ -1157,10 +1157,27 @@ const saveMenuInputRef = useRef(null)
                 {queryData.map((data) => {
                   const { _id, name, image, date } = data;
                   return (
+                    /*Saved post */
                     <div key={date} className="savedPost">
-                      <p>{name}</p>
-                      <div className="openSavedCanvasButton" onClick={() => openSavedCanvas(image, _id)}>
-                        <p>Open</p>
+                      <div className="savedPostContent" >
+                        {/*Part of  saved post used for opening it */}
+                        <div className="savedPostOpenPart" onClick={() => openSavedCanvas(image, _id)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark size-5" viewBox="0 0 16 16">
+                            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
+                          </svg>
+                          <p>{name}</p>
+                        </div>
+                        {/*Part of  saved post used for opening menu for renaming and deleting it*/}
+                        <div className="savedPostEditPart">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                          </svg>
+                        </div>
+
+                        <div className="savedPostQuickActionMenu">
+                          <p>dnnd</p>
+                        </div>
+
                       </div>
                     </div>
                   );

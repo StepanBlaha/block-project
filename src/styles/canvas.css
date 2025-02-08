@@ -175,12 +175,92 @@ canvas{
     transition: 0.5s;
 }
 .savedPost{
-    height: 100px;
     width: 100%;
     float: left;
-    border: 1px solid red;
     transition: 0.5s;
+    height: fit-content;
+    padding: 5px;
+    
 }
+.savedPostContent{
+    height: 100%;
+    width: 100%;
+    /* float: left; */
+    cursor: pointer;
+    display: inline-flex;
+    border-radius: 5px;
+    padding: 3px;
+    transition: all .3s ease-in-out;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.savedPostContent:hover{
+    background-color: #313131;
+}
+.savedPostOpenPart{
+    height: 100%;
+    width: fit-content;
+    float: left;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+}
+.savedPostOpenPart p{
+    transition: all .6s ease-in-out;
+}
+.savedPostOpenPart p:hover{
+    text-decoration: underline;
+}
+.savedPostEditPart{
+    height: 100%;
+    width: fit-content;
+    float: right;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    
+}
+.savedPostQuickActionMenu{
+    height: 100px;
+    width: 100px;
+    border: 1px solid red;
+    position: absolute;
+    left: 140px;
+    top: 0px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .openSavedCanvasButton{
     display: flex;
     align-self: center;
@@ -362,7 +442,13 @@ canvas{
 #FillTool{
     padding: 8px;
 }
-
+#brushColor{
+    border-radius: 4px;
+    border: none;
+}
+#BrushColorTool{
+    padding: 6px;
+}
 
 
 #fillCheck{
