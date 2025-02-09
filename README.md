@@ -37,6 +37,17 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 TODO:
 
+
+
+  - quick  action menu  muzu udelat jako zvlast com ponent  ktery b  ude  mit sams vuj vlastni ref
+  
+
+
+
+
+
+
+
 - prihlaseni a ukladani dle uzivatele
 - vytvareni tvaru - done
 - save& export menu - done

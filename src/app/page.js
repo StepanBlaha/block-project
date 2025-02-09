@@ -915,13 +915,28 @@ function resetCanvas(){
 
 
   
+ function toggleQuickCanvasMenu(){
+  const rrr =  document.getElementById("SaveMenuButton")
 
+  console.log(rrr)
+ }
 
 
   //Function for setting display value of given menu
   function toggleMenu(value, refItem){
     const menu = refItem.current
     menu.style.display = value
+    console.log(document);
+    console.log(typeof document);
+    console.log(window.document); // Should return a normal Document object
+    console.log(typeof window.document);
+    console.log(window.document === document);
+    if (typeof document !== "undefined") {
+      toggleQuickCanvasMenu()
+    }else{
+      console.log("skibidi")
+    }
+
   }
 
 
