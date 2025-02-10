@@ -53,7 +53,7 @@ function QuickCanvasActionMenu({id, name,  image}){
 
         <div className="card" ref={menuRef}>
           <ul className="list">
-            <li className="element">
+            <li className="element" onClick={()=> console.log({id})}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
