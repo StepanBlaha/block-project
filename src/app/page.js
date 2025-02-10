@@ -37,20 +37,20 @@ function CanvasRenameForm({id, updateFunc,  isOpen}){
   useEffect(()=>{
     if (isOpen) {
       cardRef.current.style.display = "flex"
-      console.log(isOpen)
-      console.log(cardRef.current.style.display = "flex")
-
-      
     }
 
   },[isOpen])
+
+  function closeForm(){
+    cardRef.current.style.display = "none"
+  }
 
 
   return(
     <>
     <div className="RenameCardDiv" ref={cardRef}>
 
-      <div className="RenameCardBlur"></div>
+      <div className="RenameCardBlur" onClick={closeForm}></div>
 
       <div className="CanvasRenameCard">
 
@@ -83,8 +83,8 @@ function QuickCanvasActionMenu({id, name,  image, updateFunc}){
   return(
     <>
 
+      <CanvasRenameForm isOpen={renameFormOpen.current}/>
       <div className="savedPostEditPart" onClick={toggleMenu}>
-        <CanvasRenameForm isOpen={renameFormOpen.current}/>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
           <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
         </svg>
