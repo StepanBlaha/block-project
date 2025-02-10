@@ -32,7 +32,100 @@ trash icon
 HiOutlineTrash
 */
 
+function QuickCanvasActionMenu({id, name,  image}){
+  const isOpen = useRef(false)
+  const menuRef =   useRef(null)
 
+  function toggleMenu(){
+    const menu =menuRef.current
+    isOpen.current ? menu.style.display = "none": menu.style.display = "flex";
+    isOpen.current = !isOpen.current
+    menuRef.current = menu
+  }
+
+  return(
+    <>
+
+      <div className="savedPostEditPart" onClick={toggleMenu}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
+          <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+        </svg>
+
+        <div className="card" ref={menuRef}>
+          <ul className="list">
+            <li className="element">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#7e8590"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-pencil"
+                >
+                <path
+                  d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                ></path>
+                <path d="m15 5 4 4"></path>
+              </svg>
+              <p className="label">Rename</p>{id}
+            </li>
+
+          </ul>
+          <div className="separator"></div>
+          <ul className="list">
+            <li className="element">
+              <svg
+                className="lucide lucide-settings"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2"
+                stroke="#7e8590"
+                fill="none"
+                viewBox="0 0 24 24"
+                height="24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+                ></path>
+                <circle r="3" cy="12" cx="12"></circle>
+              </svg>
+              <p className="label">Settings</p>
+            </li>
+            <li className="element delete">
+              <svg
+                className="lucide lucide-trash-2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2"
+                stroke="#7e8590"
+                fill="none"
+                viewBox="0 0 24 24"
+                height="24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M3 6h18"></path>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                <line y2="17" y1="11" x2="10" x1="10"></line>
+                <line y2="17" y1="11" x2="14" x1="14"></line>
+              </svg>
+              <p className="label">Delete</p>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+ 
+    </>
+  )
+}
 
 
 
@@ -1183,16 +1276,19 @@ const saveMenuInputRef = useRef(null)
                           <p>{name}</p>
                         </div>
                         {/*Part of  saved post used for opening menu for renaming and deleting it*/}
-                        <div className="savedPostEditPart">
+                        {/*<div className="savedPostEditPart">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
                             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
                           </svg>
-                        </div>
-
+                          <QuickCanvasActionMenu id = {_id} name =  {name} image = {image}/>
+                        </div>*/}
+                        {/*tady nekde zavolam muj component */}
+                        <QuickCanvasActionMenu id = {_id} name =  {name} image = {image}/>
+{/*
                         <div className="savedPostQuickActionMenu">
                           <p>dnnd</p>
                         </div>
-
+*/}
                       </div>
                     </div>
                   );
