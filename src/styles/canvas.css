@@ -351,6 +351,7 @@ canvas{
     background-color: #313131;
     border-radius: 7px;
     gap: 6px;
+    z-index: 43563654563487;
 }
 .ActionSaveMenu a {
     width: 100%;
@@ -837,6 +838,92 @@ input[type=file]::file-selector-button:hover {
     background-color: rgba(56, 45, 71, 0.836);
   }
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.RenameCardDiv{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 43436;
+    display: none;
+    
+}
+.CanvasRenameCard{
+    position: absolute;
+    top: 65px;
+    left: 10px;
+    width: 250px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px;
+    background-color: #313131;
+    border-radius: 7px;
+    gap: 6px;
+    /* border: 1px solid red;*/
+}
+.RenameCardBlur{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+}
+
+.CanvasRenameFormDiv{
+    width: 100%;
+    height: fit-content
+}
+.CanvasRenameForm{
+    height: 100%;
+    width: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.RenameInput{
+    width: 100%;
+    max-width: 100%;
+    height: 30px;
+    color: #444;
+    padding: 5px;
+    background: #fff;
+    border-radius: 7px;
+}
+.RenameSubmit{
+    display: flex;
+    width: fit-content;
+    padding-inline: 5px;
+    height: 30px;
+    background-color: #676767;
+    float: right;
+    border-radius: 4px;
+    transition: background .2s ease-in-out;
+}
+.RenameSubmit:hover{
+    background: rgb(90, 90, 90);
+}
 
 
 

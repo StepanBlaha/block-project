@@ -31,10 +31,47 @@ HiOutlinePrinter
 trash icon
 HiOutlineTrash
 */
+function CanvasRenameForm({id, updateFunc,  isOpen}){
+  const cardRef  = useRef(false)
 
-function QuickCanvasActionMenu({id, name,  image}){
+  useEffect(()=>{
+    if (isOpen) {
+      cardRef.current.style.display = "flex"
+      console.log(isOpen)
+      console.log(cardRef.current.style.display = "flex")
+
+      
+    }
+
+  },[isOpen])
+
+
+  return(
+    <>
+    <div className="RenameCardDiv" ref={cardRef}>
+
+      <div className="RenameCardBlur"></div>
+
+      <div className="CanvasRenameCard">
+
+        <div className="CanvasRenameFormDiv">
+          <form className="CanvasRenameForm">
+            <input type="text" className="RenameInput"  placeholder="New name..."/>
+            <input type="submit" className="RenameSubmit" value = "Rename" />
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+    </>
+  )
+}
+
+function QuickCanvasActionMenu({id, name,  image, updateFunc}){
   const isOpen = useRef(false)
   const menuRef =   useRef(null)
+  const renameFormOpen =  useRef(false)
 
   function toggleMenu(){
     const menu =menuRef.current
@@ -42,18 +79,19 @@ function QuickCanvasActionMenu({id, name,  image}){
     isOpen.current = !isOpen.current
     menuRef.current = menu
   }
-
+//updateFunc je funkce na  update
   return(
     <>
 
       <div className="savedPostEditPart" onClick={toggleMenu}>
+        <CanvasRenameForm isOpen={renameFormOpen.current}/>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
           <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
         </svg>
 
         <div className="card" ref={menuRef}>
           <ul className="list">
-            <li className="element" onClick={()=> console.log({id})}>
+            <li className="element" onClick={()=> renameFormOpen.current = true}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -61,9 +99,9 @@ function QuickCanvasActionMenu({id, name,  image}){
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#7e8590"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="lucide lucide-pencil"
                 >
                 <path
@@ -80,9 +118,9 @@ function QuickCanvasActionMenu({id, name,  image}){
             <li className="element">
               <svg
                 className="lucide lucide-settings"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                stroke-width="2"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth="2"
                 stroke="#7e8590"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -100,9 +138,9 @@ function QuickCanvasActionMenu({id, name,  image}){
             <li className="element delete">
               <svg
                 className="lucide lucide-trash-2"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                stroke-width="2"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth="2"
                 stroke="#7e8590"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -494,6 +532,40 @@ const Home = () => {
       setSending(false);    
     }
   };
+  const updateName = async (updateId) => {
+    try{
+      // Set the sending state to true
+      setSending(true);
+      //Get the api url
+      const apiUrl = `http://localhost:3000/api/posts/${updateId}`;
+      // Get the new canvas name
+      const canvasData = {
+        newName: "skibidi"
+      }
+      // Send the data to the server
+      const response = await fetch(apiUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(canvasData),
+      })
+      // Check if the response is ok
+      if (response.ok) {
+        const data = await response.json();  
+        console.log('Post updated successfully:', data);
+      } else {
+        console.error('Failed to update post:', response.statusText);
+      }
+
+
+
+    }catch(error){//Catch any errors
+      console.error("Error updating data:", error);
+    }finally{//Finally set the sending state to false
+      setSending(false);    
+    }
+  }
 
 //For sending data to database
   const sendData = async (canvasName) => {
@@ -1025,7 +1097,7 @@ function resetCanvas(){
     console.log(typeof window.document);
     console.log(window.document === document);
     if (typeof document !== "undefined") {
-      toggleQuickCanvasMenu()
+      //toggleQuickCanvasMenu()
     }else{
       console.log("skibidi")
     }
@@ -1283,7 +1355,7 @@ const saveMenuInputRef = useRef(null)
                           <QuickCanvasActionMenu id = {_id} name =  {name} image = {image}/>
                         </div>*/}
                         {/*tady nekde zavolam muj component */}
-                        <QuickCanvasActionMenu id = {_id} name =  {name} image = {image}/>
+                        <QuickCanvasActionMenu id = {_id} name =  {name} image = {image} updateFunc={updateName}/>
 {/*
                         <div className="savedPostQuickActionMenu">
                           <p>dnnd</p>
@@ -1297,6 +1369,7 @@ const saveMenuInputRef = useRef(null)
             )}
           </div>
         </div>
+        < CanvasRenameForm/>
         <div className="Content">
 
           <div className="ContentTitle">
