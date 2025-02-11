@@ -105,6 +105,8 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
   //toggleMenu(); blur.current.style.display = "flex";
   //setDisplay("quickAction","flex")
   const openRef = useRef()
+
+  
   useEffect(()=>{
     function setBackDisplay(){
       console.log("sigma")
