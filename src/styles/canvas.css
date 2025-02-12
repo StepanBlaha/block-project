@@ -4,6 +4,7 @@ body, html{
     margin: 0 auto;
     float: left;
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 cursor{
     color: white;
@@ -864,8 +865,8 @@ input[type=file]::file-selector-button:hover {
 .RenameCardDiv{
     height: 100%;
     width: 100%;
-    left: 0px;
-    position: absolute;
+    left: 0;
+    position: relative;
     z-index: 43436;
     display: none;
     

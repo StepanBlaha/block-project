@@ -92,12 +92,17 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
     formRef.current = form
 
   }
-  function setDisplay(key, value){
+  function setDisplay(updates){
+    if (blur.current && blur.current.style.display == "none") {
+      
+      console.log("sigma")
+    }
     blur.current.style.display = "flex";
+    console.log(updates)
     setWindowList(prev => {
       return {
       ...prev,
-      [key]:value,
+      ...updates,
       }
     })
 
@@ -106,8 +111,9 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
   //setDisplay("quickAction","flex")
   const openRef = useRef()
 
-  
+  //Effect handling clicking on  blur
   useEffect(()=>{
+    //Function for serring back display of all opened modals to none
     function setBackDisplay(){
       console.log("sigma")
       setWindowList(prevState => {
@@ -118,6 +124,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
         return nextState
       })
     }
+    //Function that  checks for clicking on blur element and sets its display to  none
     function blurClick(event){
       if (blur.current && blur.current.contains(event.target)) {
         setBackDisplay()
@@ -126,10 +133,12 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
         
       }
     }
+    //Add event listener to blur
     if (blur.current) {
       blur.current.addEventListener("click", blurClick)
       
     }
+    //remove the event  listener
     return ()=>{
       if(blur.current){
         blur.current.removeEventListener("click", blurClick)
@@ -168,7 +177,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
           <p>{name}</p>
         </div>
 
-        <div className="savedPostEditPart" onClick={() => setDisplay("quickAction","flex")}>
+        <div className="savedPostEditPart" onClick={() => setDisplay({"quickAction":"flex"})}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
           </svg>
@@ -176,7 +185,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
           <div className="RenameCardBlur" onClick={() => toggleForm("none")}></div>
           <div className="card" ref={menuRef}  style={{ display: windowList.quickAction }}>
             <ul className="list">
-              <li className="element" onClick={() => setDisplay("renameForm","flex")}>
+              <li className="element" onClick={(e) =>{ e.stopPropagation(); setDisplay({"renameForm":"flex", "quickAction":"none"});}}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
