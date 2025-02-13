@@ -69,36 +69,26 @@ function CanvasRenameForm({id, updateFunc,  isOpen}){
   )
 }*/
 function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, blur}){
-  const isOpen = useRef(false)
-  const menuRef =   useRef(null)
+  //Ref containing quick action menu
+  const menuRef = useRef(null)
+  //Ref containing rename form card
   const formRef = useRef(null)
+  //Ref  containing rename  input field value
+  const updateInputRef = useRef(null)
 
-
+  //List containing display values of multiple elements
   const [windowList, setWindowList] = useState({
     "quickAction": "none",
     "renameForm": "none"
   });
 
-  function toggleMenu(){
-    const menu =menuRef.current
-    isOpen.current ? menu.style.display = "none": menu.style.display = "flex";
-    isOpen.current = !isOpen.current
-    menuRef.current = menu
-  }
-
-  function toggleForm(val){
-    const form = formRef.current
-    form.style.display = val
-    formRef.current = form
-
-  }
+  //Function for changing display of set values
   function setDisplay(updates){
-    if (blur.current && blur.current.style.display == "none") {
-      
-      console.log("sigma")
-    }
+    //Set display of blur element to flex
     blur.current.style.display = "flex";
+    //Debug
     console.log(updates)
+    //Run the updates
     setWindowList(prev => {
       return {
       ...prev,
@@ -108,15 +98,11 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
 
   }
 
-
-  
-  
-
   //Effect handling clicking on  blur
   useEffect(()=>{
     //Function for serring back display of all opened modals to none
     function setBackDisplay(){
-      console.log("sigma")
+      console.log("Closing  opened modals..")
       setWindowList(prevState => {
         const  nextState =  {}
         Object.keys(prevState).forEach(key => {
@@ -129,15 +115,13 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
     function blurClick(event){
       if (blur.current && blur.current.contains(event.target)) {
         setBackDisplay()
-        console.log("sigddma")
+        console.log("Blur clicked..")
         blur.current.style.display = "none"
-        
       }
     }
     //Add event listener to blur
     if (blur.current) {
       blur.current.addEventListener("click", blurClick)
-      
     }
     //remove the event  listener
     return ()=>{
@@ -153,28 +137,22 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
     event.preventDefault();
     //Get the input data
     const inputData = updateInputRef.current.value;
-
+    //Return if inputdata is  missing
     if(!inputData){
       console.log("Missing new name");
       return;
     }
-
+    //Use update function
     updateFunc(id, inputData)
-    console.log("updated")
-
-
-
+    //Debug
+    console.log("Post Updated")
   }
-
- const updateInputRef = useRef(null)
-
   return(
-
     <>
     <div key={date} className="savedPost">
-
+      {/*Rename post form*/}
       <div className="RenameCardDiv" ref={formRef} style={{ display: windowList.renameForm }}>
-        <div className="RenameCardBlur" onClick={() => toggleForm("none")}></div>
+        <div className="RenameCardBlur" onClick={() => setDisplay({"quickAction":"none"})}></div>
         <div className="CanvasRenameCard">
           <div className="CanvasRenameFormDiv">
             <form className="CanvasRenameForm"  onSubmit={(event)  => updatePostName(event)}>
@@ -188,7 +166,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
 
       <div className="savedPostContent" >
         {/*Part of  saved post used for opening it */}
-        <div className="savedPostOpenPart" onClick={() => {openFunc(image, id);    toggleForm("none"); }}>
+        <div className="savedPostOpenPart" onClick={() => {openFunc(image, id); setDisplay({"renameForm":"none"}) }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark size-5" viewBox="0 0 16 16">
             <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
           </svg>
@@ -199,10 +177,12 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
           </svg>
-
+{/*
           <div className="RenameCardBlur" onClick={() => toggleForm("none")}></div>
+          */}
           <div className="card" ref={menuRef}  style={{ display: windowList.quickAction }}>
             <ul className="list">
+              {/*Rename post button */}
               <li className="element" onClick={(e) =>{ e.stopPropagation(); setDisplay({"renameForm":"flex", "quickAction":"none"});}}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +203,6 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
                 </svg>
                 <p className="label">Rename</p>
               </li>
-
             </ul>
             <div className="separator"></div>
             <ul className="list">
@@ -247,6 +226,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
                 </svg>
                 <p className="label">Settings</p>
               </li>
+              {/*Delete post button */}
               <li className="element delete"  onClick={() => deleteFunc(id)}>
                 <svg
                   className="lucide lucide-trash-2"
@@ -274,19 +254,14 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
         </div>
 
 
-
-
-
-
-
-        
-
       </div>
     </div>
     </>
   )
 }
 
+
+/*
 function QuickCanvasActionMenu({id, name,  image, updateFunc}){
   const isOpen = useRef(false)
   const menuRef =   useRef(null)
@@ -410,7 +385,7 @@ function QuickCanvasActionMenu({id, name,  image, updateFunc}){
     </>
   )
 }
-
+*/
 
 
 const Home = () => {
