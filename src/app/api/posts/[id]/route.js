@@ -58,3 +58,28 @@ export const PUT = async (request, { params }) => {
         return new NextResponse("Error updating post" + error.message, { status: 500 });
     }
 }
+
+export const DELETE = async (request, {params}) => {
+    try{
+        console.log("Getting  request data...");
+        const { id } = await  params;
+
+        console.log("Connecting to database...");
+        await connect();
+
+        const result = await Canvas.findByIdAndDelete( id );
+        
+        if(!result){
+            console.error("Post not found");
+            return new NextResponse("Post not found", { status: 404 });
+        }
+
+        console.log("Successfully deleted post");
+        return NextResponse.json({ message: "Successfully deleted post", data: result },{ status: 200 } );
+
+    }  catch(error){
+        console.error("Error deleting post:", error.message);
+        return new NextResponse("Error deleting post" + error.message, { status: 500 });
+    }
+
+}
