@@ -68,7 +68,7 @@ function CanvasRenameForm({id, updateFunc,  isOpen}){
     </>
   )
 }*/
-function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
+function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, blur}){
   const isOpen = useRef(false)
   const menuRef =   useRef(null)
   const formRef = useRef(null)
@@ -247,7 +247,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
                 </svg>
                 <p className="label">Settings</p>
               </li>
-              <li className="element delete">
+              <li className="element delete"  onClick={() => deleteFunc(id)}>
                 <svg
                   className="lucide lucide-trash-2"
                   strokeLinejoin="round"
@@ -716,7 +716,7 @@ const Home = () => {
 
 
 
-  //For fetching data from database on reload
+  //Function for fetching data from database on reload
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -742,7 +742,7 @@ const Home = () => {
     fetchData();
   }, [sending]);
 
-  //For updating data in database
+  //Function for updating data in database
   const updateData = async (updateId) => {
     try{
       // Set the sending state to true
@@ -778,6 +778,7 @@ const Home = () => {
       setSending(false);    
     }
   };
+  //Function for updating records name
   const updateName = async (updateId, updateName) => {
     try{
       // Set the sending state to true
@@ -806,6 +807,35 @@ const Home = () => {
 
 
 
+    }catch(error){//Catch any errors
+      console.error("Error updating data:", error);
+    }finally{//Finally set the sending state to false
+      setSending(false);    
+    }
+  }
+  //Function for deleting records from database
+  const deleteData = async (deleteId) => {
+    try{
+      // Set the sending state to true
+      setSending(true);
+      //Get the api url
+      const apiUrl = `http://localhost:3000/api/posts/${deleteId}`;
+      //Send data to server
+      const response = await fetch(apiUrl, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+
+      // Check if the response is ok
+      if (response.ok) {
+        const data = await response.json();  
+        console.log('Post deleted successfully:', data);
+      } else {
+        console.error('Failed to delete post:', response.statusText);
+      }
+ 
     }catch(error){//Catch any errors
       console.error("Error updating data:", error);
     }finally{//Finally set the sending state to false
@@ -1587,7 +1617,7 @@ const blurRef = useRef(null)
                   const { _id, name, image, date } = data;
                   return (
                     <>
-                    <SavedPost   id={_id} name={name} image={image} date={date} openFunc={openSavedCanvas} updateFunc={updateName} key={date}  blur={blurRef}/>
+                    <SavedPost   id={_id} name={name} image={image} date={date} openFunc={openSavedCanvas} updateFunc={updateName} deleteFunc={deleteData} key={date}  blur={blurRef}/>
    
                     {/*
                     <div key={date} className="savedPost">
