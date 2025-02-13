@@ -77,7 +77,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
   const [windowList, setWindowList] = useState({
     "quickAction": "none",
     "renameForm": "none"
-});
+  });
 
   function toggleMenu(){
     const menu =menuRef.current
@@ -107,9 +107,10 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
     })
 
   }
-  //toggleMenu(); blur.current.style.display = "flex";
-  //setDisplay("quickAction","flex")
-  const openRef = useRef()
+
+
+  
+  
 
   //Effect handling clicking on  blur
   useEffect(()=>{
@@ -146,9 +147,26 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
     }
   },[])
 
+  //Function for updating posts name
+  function updatePostName(event){
+    //Prevents function  of the  form
+    event.preventDefault();
+    //Get the input data
+    const inputData = updateInputRef.current.value;
+
+    if(!inputData){
+      console.log("Missing new name");
+      return;
+    }
+
+    updateFunc(id, inputData)
+    console.log("updated")
 
 
 
+  }
+
+ const updateInputRef = useRef(null)
 
   return(
 
@@ -159,8 +177,8 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, blur}){
         <div className="RenameCardBlur" onClick={() => toggleForm("none")}></div>
         <div className="CanvasRenameCard">
           <div className="CanvasRenameFormDiv">
-            <form className="CanvasRenameForm">
-              <input type="text" className="RenameInput"  placeholder="New name..."/>
+            <form className="CanvasRenameForm"  onSubmit={(event)  => updatePostName(event)}>
+              <input type="text" className="RenameInput"  placeholder="New name..." ref={updateInputRef} />
               <input type="submit" className="RenameSubmit" value = "Rename" />
             </form>
           </div>
@@ -760,7 +778,7 @@ const Home = () => {
       setSending(false);    
     }
   };
-  const updateName = async (updateId) => {
+  const updateName = async (updateId, updateName) => {
     try{
       // Set the sending state to true
       setSending(true);
@@ -768,7 +786,7 @@ const Home = () => {
       const apiUrl = `http://localhost:3000/api/posts/${updateId}`;
       // Get the new canvas name
       const canvasData = {
-        newName: "skibidi"
+        newName: updateName,
       }
       // Send the data to the server
       const response = await fetch(apiUrl, {
