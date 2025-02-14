@@ -247,9 +247,6 @@ function QuickCanvasActionMenu({id, name,  image, updateFunc}){
   const menuRef =   useRef(null)
   const formRef = useRef(null)
 
-
-  
-
   function toggleMenu(){
     const menu =menuRef.current
     isOpen.current ? menu.style.display = "none": menu.style.display = "flex";
