@@ -1428,7 +1428,7 @@ const blurRef = useRef(null)
             
             <div className="Tool" id="BrushColorTool">
               <form id="brushColorForm">
-                <input type="color" name="brushColor" id="brushColor"  onChange={changeBrushColor}  ref={brushColorRef}/>
+                <input type="color" name="brushColor" id="brushColor" value={brushColor.current}  onChange={changeBrushColor}  ref={brushColorRef}/>
               </form>
             </div>
 
