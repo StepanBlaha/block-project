@@ -366,6 +366,34 @@ function QuickCanvasActionMenu({id, name,  image, updateFunc}){
 
 
 const Home = () => {
+  //tady zacatek noveho -  jeste nefunguje
+  function resize_canvas(){
+    const height = canvasDivRef.current.clientHeight
+    const width = canvasDivRef.current.clientWidth
+    console.log(height);
+    console.log(width);
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    const tempImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    canvasRef.current.height = height
+    canvasRef.current.width = width
+    // Restore saved content
+    ctx.putImageData(tempImage, 0, 0);
+    canvasRef.current = canvas
+    ctxRef.current =  ctx
+  }
+  useEffect(() => {
+    // Ensure code runs only in the browser
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", resize_canvas);
+      
+      // Call resize initially
+      resize_canvas();
+
+      return () => window.removeEventListener("resize", resize_canvas);
+    }
+  }, []);
+  //Tady koonec noveho
   //Reference for link to save canvas as png
   const pngSaveRef = useRef(null)
 
@@ -397,6 +425,8 @@ const Home = () => {
   const ctxRef = useRef(null)
   //Reference for the main canvas element
   const canvasRef = useRef(null)
+  //Reference for the div containing main canvas element
+  const canvasDivRef = useRef(null)
 
   const hiddenImgRef = useRef(null)
 
@@ -1612,7 +1642,7 @@ const blurRef = useRef(null)
             
           </div>
 
-          <div className="ContentCanvas">
+          <div className="ContentCanvas" ref={canvasDivRef}>
             <canvas id="myCanvas" width="400" height="200" 
             ref={canvasRef}
             onMouseMove={canvasMouseMoveActions[selectedTool]} 
