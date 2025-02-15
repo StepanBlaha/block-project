@@ -18,56 +18,6 @@ import { jsPDF } from "jspdf";
 
 
 
-/*
-menu icon
-HiOutlineMenu
-
-pen icon
-HiOutlinePencil
-
-print icon
-HiOutlinePrinter
-
-trash icon
-HiOutlineTrash
-*/
-/*
-function CanvasRenameForm({id, updateFunc,  isOpen}){
-  const cardRef  = useRef(false)
-
-  useEffect(()=>{
-    if (isOpen) {
-      cardRef.current.style.display = "flex"
-    }
-
-  },[isOpen])
-
-  function closeForm(){
-    cardRef.current.style.display = "none"
-  }
-
-
-  return(
-    <>
-    <div className="RenameCardDiv" ref={cardRef}>
-
-      <div className="RenameCardBlur" onClick={closeForm}></div>
-
-      <div className="CanvasRenameCard">
-
-        <div className="CanvasRenameFormDiv">
-          <form className="CanvasRenameForm">
-            <input type="text" className="RenameInput"  placeholder="New name..."/>
-            <input type="submit" className="RenameSubmit" value = "Rename" />
-          </form>
-        </div>
-
-      </div>
-
-    </div>
-    </>
-  )
-}*/
 function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, blur}){
   //Ref containing quick action menu
   const menuRef = useRef(null)
@@ -245,44 +195,11 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
 
 
 const Home = () => {
-  //Resize page upon reload
-  useEffect(()=>{
-    //Debug
-    console.log("Page loaded")
-    //Get the parent element height and width
-    const height = canvasDivRef.current.clientHeight
-    const width = canvasDivRef.current.clientWidth
-    //Update the canvas html height and width
-    canvasRef.current.height = height
-    canvasRef.current.width = width
-  },[])
-  //tady zacatek noveho -  jeste nefunguje
-  function resize_canvas(){
-    const height = canvasDivRef.current.clientHeight
-    const width = canvasDivRef.current.clientWidth
-    console.log(height);
-    console.log(width);
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext("2d");
-    const tempImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-    canvasRef.current.height = height
-    canvasRef.current.width = width
-    // Restore saved content
-    ctx.putImageData(tempImage, 0, 0);
-    canvasRef.current = canvas
-    ctxRef.current =  ctx
-  }
+  
+ 
   useEffect(() => {
     // Ensure code runs only in the browser
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", resize_canvas);
-      
-      // Call resize initially
-      resize_canvas();
-
-      return () => window.removeEventListener("resize", resize_canvas);
-    }
+    
   }, []);
   //Tady koonec noveho
   //Reference for link to save canvas as png
@@ -363,7 +280,57 @@ const Home = () => {
     }
   }
 
+  //Initial canvas setup
+  useEffect(()=>{
+    //Debug
+    console.log("Page loaded")
+    //Get the parent element height and width
+    const height = canvasDivRef.current.clientHeight
+    const width = canvasDivRef.current.clientWidth
+    //Update the canvas html height and width
+    canvasRef.current.height = height
+    canvasRef.current.width = width
+    //Canvas setup func
+    canvasSetup()
+    //Asign event listener for resizing to window
+    if (typeof window !== "undefined") {
+      //Add the event listener
+      window.addEventListener("resize", resize_canvas);
+      //Call resize initially
+      resize_canvas();
+      //Remove the event listener to avoid having multiple of them at the same time
+      return () => window.removeEventListener("resize", resize_canvas);
+    }
+  },[])
+  //Function for default canvas setup
+  function canvasSetup(){
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.strokeStyle = brushColor.current;
+    ctx.lineWidth = brushSize;
+    ctxRef.current = ctx
+    canvasRef.current = canvas
+  }
 
+   //Function for handling window resize
+   function resize_canvas(){
+    //Get the parent height 
+    const height = canvasDivRef.current.clientHeight
+    const width = canvasDivRef.current.clientWidth
+    //Get the canvas and save its content
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    const tempImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    //Resize the canvas
+    canvasRef.current.height = height
+    canvasRef.current.width = width
+    //Restore saved content
+    ctx.putImageData(tempImage, 0, 0);
+    canvasRef.current = canvas
+    ctxRef.current =  ctx
+    //Perform initial canvas setup again
+    canvasSetup()
+  }
 
   //Function for detecting when user is typing
   function detectTyping(event) {
@@ -812,7 +779,7 @@ const Home = () => {
   }*/
 
   //Initial canvas setup
-  useEffect(()=>{
+  /*useEffect(()=>{
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     canvas.width = canvas.offsetWidth;
@@ -821,7 +788,7 @@ const Home = () => {
     ctx.lineWidth = 10;
     ctxRef.current = ctx
     canvasRef.current = canvas
-  },[])
+  },[])*/
 
   //Function for getting mouse position
   function getMousePos(event) {
