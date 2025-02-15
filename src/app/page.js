@@ -326,6 +326,10 @@ const Home = () => {
   //References canvas save name menu
   const saveMenuRef = useRef(null)
   const saveMenuInputRef = useRef(null)
+   //Ref for checking if user is making a shape
+   const isMakingShape = useRef(false)
+   //Ref for the shape preview canvas
+   const preShapeCanvas = useRef(null)
   //Reference for blur opened displayed when modal is opened
   const blurRef = useRef(null)
 
@@ -359,11 +363,11 @@ const Home = () => {
     //Asign event listener for resizing to window
     if (typeof window !== "undefined") {
       //Add the event listener
-      window.addEventListener("resize", resize_canvas);
+      window.addEventListener("resize", resizeCanvas);
       //Call resize initially
-      resize_canvas();
+      resizeCanvas();
       //Remove the event listener to avoid having multiple of them at the same time
-      return () => window.removeEventListener("resize", resize_canvas);
+      return () => window.removeEventListener("resize", resizeCanvas);
     }
   },[])
   //Function for default canvas setup
@@ -377,7 +381,7 @@ const Home = () => {
   }
 
    //Function for handling window resize
-   function resize_canvas(){
+   function resizeCanvas(){
     //Get the parent height 
     const height = canvasDivRef.current.clientHeight
     const width = canvasDivRef.current.clientWidth
@@ -513,12 +517,8 @@ const Home = () => {
     //Sets current context to changed context
     ctxRef.current = ctx
   }
-  //Function for creating the shape
-  function createShape() {
-    //Gets the canvas element
-    const canvas = canvasRef.current
-    //Gets the context element
-    const ctx = canvas.getContext("2d");
+  //Function for drawing shape on given canvas context
+  function createShape(ctx) {
     //Gets the fillcheck value
     const fillCheck = fillCheckRef.current
     //Sets the context mode to drawing
@@ -543,18 +543,41 @@ const Home = () => {
       ctx.fillStyle = brushColor.current
       ctx.fill()
     }
+    //Set the brush width and color
+    ctx.lineWidth = brushSize
+    ctx.strokeStyle = brushColor.current;
     //Does the stroke
     ctx.stroke()
-    //Sets the current context to context
-    ctxRef.current = ctx
-    fillCheckRef.current  = fillCheck
   }
-  //Function for handling mousedown when holding any shape tool
+  //Function for the mouse down while  holding the shape tool
   function shapeDownHandle(event) {
     //Gets the mouse position
     const {offsetX, offsetY} = getMousePos(event)
     //Sets the shape start point to current mouse position
     shapeStartPoint.current = { x: offsetX, y: offsetY };
+    //set width and height for preshape ref
+    preShapeCanvas.current.width = canvasRef.current.width
+    preShapeCanvas.current.height = canvasRef.current.height
+    //Sets the ismakingshape to true
+    isMakingShape.current = true
+  }
+  //Function for handling moving mouse while holding the shape tool
+  //While moving continuously erases and draws the shape
+  function shapeMoveHandle(event){
+    if(isMakingShape.current){
+      //Gets the mouse position
+      const {offsetX, offsetY} = getMousePos(event)
+      //Set the shape endpoint
+      shapeEndPoint.current = { x: offsetX, y: offsetY };
+      //Get the preshapecanvas and its ref
+      const previewCanvas = preShapeCanvas.current;
+      const ctx = previewCanvas.getContext("2d");
+      //Clear the preview canvas
+      //Clearing this ctx doesnt mean we cleared the preShapeCanvas.current ctx
+      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      //draw the shape
+      createShape(ctx); 
+    }
   }
   //Function for handling mouseup when holding any shape tool
   function shapeUpHandle(event) {
@@ -562,9 +585,18 @@ const Home = () => {
     const {offsetX, offsetY} = getMousePos(event)
     //Sets the shape end point to current mouse position
     shapeEndPoint.current = { x: offsetX, y: offsetY };
+    //Get the canvas  and context
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
     //Calls the function to create the shape
-    createShape()
+    createShape(ctx); 
+    //Clear the preview canvas
+    const previewCanvas = preShapeCanvas.current;
+    previewCanvas.getContext("2d").clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    //Set ismakingshape to false
+    isMakingShape.current = false;
   }
+
 
   //Function for handling mousedown while having eraser selected
   function mouseEraserDownHandle(event){
@@ -1188,104 +1220,9 @@ function resetCanvas(){
       //Update canvas and context refs
       canvasRef.current = canvas
       ctxRef.current = ctx
-      
-      
     }
   }
-  //Function for drawing shape on given canvas context
-  function createShape(ctx) {
-
-    //Gets the fillcheck value
-    const fillCheck = fillCheckRef.current
-    //Sets the context mode to drawing
-    ctx.globalCompositeOperation="source-over";
-    //Sets the start and end points
-    const { x: startX, y: startY } = shapeStartPoint.current;
-    const { x: endX, y: endY } = shapeEndPoint.current;
-    //Begins drawing
-    ctx.beginPath()
-    //Handles different shape tools
-    switch (selectedTool) {
-      case "rectangle":
-        ctx.rect(startX, startY, (endX - startX), (endY - startY))
-        break;
-      case "circle":
-        const radius = Math.abs(Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2));
-        ctx.arc(startX, startY, radius, 0, Math.PI * 2)
-        break;
-    }
-    //If the fillcheck  = true fills the shape
-    if (fillCheck.checked) {
-      ctx.fillStyle = brushColor.current
-      ctx.fill()
-    }
-    //Set the brush width and color
-    ctx.lineWidth = brushSize
-    ctx.strokeStyle = brushColor.current;
-    //Does the stroke
-    ctx.stroke()
-  }
-  //Ref for checking if user is making a shape
-  const isMakingShape = useRef(false)
-  //Ref for the shape preview canvas
-  const preShapeCanvas = useRef(null)
-
-  //Function for the mouse down while  holding the shape tool
-  function shapeDownHandle(event) {
-    //Gets the mouse position
-    const {offsetX, offsetY} = getMousePos(event)
-    //Sets the shape start point to current mouse position
-    shapeStartPoint.current = { x: offsetX, y: offsetY };
-    //set width and height for preshape ref
-    preShapeCanvas.current.width = canvasRef.current.width
-    preShapeCanvas.current.height = canvasRef.current.height
-    //Sets the ismakingshape to true
-    isMakingShape.current = true
-  }
-  //Function for handling moving mouse while holding the shape tool
-  //While moving continuously erases and draws the shape
-  function shapeMoveHandle(event){
-    if(isMakingShape.current){
-      //Gets the mouse position
-      const {offsetX, offsetY} = getMousePos(event)
-      //Set the shape endpoint
-      shapeEndPoint.current = { x: offsetX, y: offsetY };
-      //Get the preshapecanvas and its ref
-      const previewCanvas = preShapeCanvas.current;
-      const ctx = previewCanvas.getContext("2d");
-      //Clear the preview canvas
-      //Clearing this ctx doesnt mean we cleared the preShapeCanvas.current ctx
-      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-      //draw the shape
-      createShape(ctx); 
-    }
-  }
-
-
-  //Function for handling mouseup when holding any shape tool
-  function shapeUpHandle(event) {
-    //Gets the mouse position
-    const {offsetX, offsetY} = getMousePos(event)
-    //Sets the shape end point to current mouse position
-    shapeEndPoint.current = { x: offsetX, y: offsetY };
-    //Get the canvas  and context
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    
-    //Calls the function to create the shape
-    createShape(ctx); 
-
-    //Clear the preview canvas
-    const previewCanvas = preShapeCanvas.current;
-    previewCanvas.getContext("2d").clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-    //Set ismakingshape to false
-    isMakingShape.current = false;
-  }
-
-
-
-
-
+  
 
 
 
@@ -1293,13 +1230,6 @@ function resetCanvas(){
   function toggleMenu(value, refItem){
     const menu = refItem.current
     menu.style.display = value
-  
-    if (typeof document !== "undefined") {
-      //toggleQuickCanvasMenu()
-    }else{
-      console.log("skibidi")
-    }
-
   }
 
 
@@ -1543,16 +1473,14 @@ function resetCanvas(){
             
           </div>
 
-          <div className="ContentCanvas" ref={canvasDivRef}>
-            <canvas id="myCanvas" width="400" height="200" 
-            ref={canvasRef}
+          <div className="ContentCanvas" ref={canvasDivRef}
             onMouseMove={canvasMouseMoveActions[selectedTool]} 
             onMouseDown={selectedTool === "text" ? detectTyping : canvasClickActions[selectedTool]}
             onMouseUp={canvasMouseUpActions[selectedTool]}
-            >
-              
-            </canvas>
+          >
+            <canvas id="myCanvas" width="400" height="200" ref={canvasRef}></canvas>
             <canvas className='shapeCanvas' ref={preShapeCanvas}></canvas>
+
             {selectedTool === "text" && (
               <textarea ref={textboxRef} style={{
                 position: "fixed",

@@ -163,7 +163,10 @@ canvas{
    
 }
 #myCanvas{
-   z-index: 32;
+   
+}
+.shapeCanvas{
+    pointer-events: "none";
 }
 
 
