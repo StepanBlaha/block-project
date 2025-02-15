@@ -1192,11 +1192,9 @@ function resetCanvas(){
       
     }
   }
-  function createShape() {
-    //Gets the canvas element
-    const canvas = canvasRef.current
-    //Gets the context element
-    const ctx = canvas.getContext("2d");
+  //Function for drawing shape on given canvas context
+  function createShape(ctx) {
+
     //Gets the fillcheck value
     const fillCheck = fillCheckRef.current
     //Sets the context mode to drawing
@@ -1221,70 +1219,67 @@ function resetCanvas(){
       ctx.fillStyle = brushColor.current
       ctx.fill()
     }
+    //Set the brush width and color
+    ctx.lineWidth = brushSize
+    ctx.strokeStyle = brushColor.current;
     //Does the stroke
     ctx.stroke()
-    //Sets the current context to context
-    ctxRef.current = ctx
-    fillCheckRef.current  = fillCheck
   }
-
+  //Ref for checking if user is making a shape
   const isMakingShape = useRef(false)
- const preShapeCanvas = useRef(null)
- const preShapeCtx =  useRef(null)
-  //Function for handling mousedown when holding any shape tool
+  //Ref for the shape preview canvas
+  const preShapeCanvas = useRef(null)
 
-
+  //Function for the mouse down while  holding the shape tool
   function shapeDownHandle(event) {
-    const canvas = canvasRef.current
-    const imageSrc = canvas.toDataURL()
-    //Update the save ref
-    preShapeCanvas.current = imageSrc
     //Gets the mouse position
     const {offsetX, offsetY} = getMousePos(event)
     //Sets the shape start point to current mouse position
     shapeStartPoint.current = { x: offsetX, y: offsetY };
-
+    //set width and height for preshape ref
+    preShapeCanvas.current.width = canvasRef.current.width
+    preShapeCanvas.current.height = canvasRef.current.height
+    //Sets the ismakingshape to true
     isMakingShape.current = true
   }
-
+  //Function for handling moving mouse while holding the shape tool
+  //While moving continuously erases and draws the shape
   function shapeMoveHandle(event){
     if(isMakingShape.current){
       //Gets the mouse position
       const {offsetX, offsetY} = getMousePos(event)
-      shapeReset()
+      //Set the shape endpoint
       shapeEndPoint.current = { x: offsetX, y: offsetY };
-      createShape()
+      //Get the preshapecanvas and its ref
+      const previewCanvas = preShapeCanvas.current;
+      const ctx = previewCanvas.getContext("2d");
+      //Clear the preview canvas
+      //Clearing this ctx doesnt mean we cleared the preShapeCanvas.current ctx
+      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+      //draw the shape
+      createShape(ctx); 
     }
   }
 
-  function shapeReset(){
-    //Get the canvas and context
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext("2d");
-    //Get the old canvas
-    const imageSrc = preShapeCanvas.current
-    //Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //Draw the old saved canvas 
-    const img = hiddenImgRef.current;
-    img.onload = () => {ctx.drawImage(img , 0, 0)}
-    img.src = imageSrc
-    //Update the  refs
-    hiddenImgRef.current = img
-    canvasRef.current = canvas
-    ctxRef.current = ctx
 
-
-  }
   //Function for handling mouseup when holding any shape tool
   function shapeUpHandle(event) {
     //Gets the mouse position
     const {offsetX, offsetY} = getMousePos(event)
     //Sets the shape end point to current mouse position
     shapeEndPoint.current = { x: offsetX, y: offsetY };
+    //Get the canvas  and context
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    
     //Calls the function to create the shape
-    createShape()
-    isMakingShape.current = false
+    createShape(ctx); 
+
+    //Clear the preview canvas
+    const previewCanvas = preShapeCanvas.current;
+    previewCanvas.getContext("2d").clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    //Set ismakingshape to false
+    isMakingShape.current = false;
   }
 
 
@@ -1557,6 +1552,7 @@ function resetCanvas(){
             >
               
             </canvas>
+            <canvas className='shapeCanvas' ref={preShapeCanvas}></canvas>
             {selectedTool === "text" && (
               <textarea ref={textboxRef} style={{
                 position: "fixed",
@@ -1581,7 +1577,7 @@ function resetCanvas(){
 */}
       </div>
       <img className="hiddenImg" ref={hiddenImgRef}></img>
-
+      
     </>
   );
 }
