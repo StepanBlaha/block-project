@@ -37,41 +37,39 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 TODO:
 
-
-
-  - quick  action menu  muzu udelat jako zvlast com ponent  ktery b  ude  mit sams vuj vlastni ref
-  
-
-
-
-
-
-
-
-- prihlaseni a ukladani dle uzivatele
 - vytvareni tvaru - done
 - save& export menu - done
 - pridat obrazky - done
 - hybat s obrazkem jednim - done
 - hybat s vice obrazkama - done
-- zastavit mazani pri hybani
 - eraser - done
-- zadavani jmena pro ulozeni
-- noise brush
+- zadavani jmena pro ulozeni done
+- rename done
 - vytvareni textu - done
+- mazani postu - done
+- vyplnovani (takovy ten kyblik) - done
+- Resize platna done
+
+
+Functionalities:
+- k serveru se to pripojuje vickrat (mel bych to optimalizovat)
+- prihlaseni a ukladani dle uzivatele
+
+
+Tools:
+- zastavit mazani pri hybani
+- noise brush
 - Hybani s textem
 - Vyplnovani v carach
-- vyplnovani (takovy ten kyblik) - done
 - styl line
-- k serveru se to pripojuje vickrat (mel bych to optimalizovat)
 
 Image:
 
 - mikro blackscreen pri hybani
-- aby slo pridat a detekovat vic images- 
+- aby slo pridat a detekovat vic images- done
 - aby pri hybani s image se nevymazal zbytek obsahu
 
--kruy a ctverce udelam ze kdyz bude selectnuta dana tool zapisu si pri mouse downu cords a pak pri mouse up a ty od sebe odectu a to nastavim na size arc nebo rect
+
 
 -sirka a vyska tvaru porad rozjebna
 

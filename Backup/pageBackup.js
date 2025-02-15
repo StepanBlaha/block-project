@@ -195,6 +195,13 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
 
 
 const Home = () => {
+  
+ 
+  useEffect(() => {
+    // Ensure code runs only in the browser
+    
+  }, []);
+  //Tady koonec noveho
   //Reference for link to save canvas as png
   const pngSaveRef = useRef(null)
 
@@ -257,11 +264,6 @@ const Home = () => {
   const textboxRef = useRef(null);
   //Reference for checking if user is typing
   const isTyping = useRef(false);
-  //References canvas save name menu
-  const saveMenuRef = useRef(null)
-  const saveMenuInputRef = useRef(null)
-  //Reference for blur opened displayed when modal is opened
-  const blurRef = useRef(null)
 
   //setup throttle for image move function
   const imgMoveThrottle = throttle(mouseImgMoveHandle, 200)
@@ -500,6 +502,20 @@ const Home = () => {
     createShape()
   }
 
+  
+
+  
+    function drawText(event) {
+      const { offsetX, offsetY } = getMousePos(event)
+      const canvas = canvasRef.current
+      const ctx = canvas.getContext("2d");
+      const text = "nigga"
+      ctx.font = "30px Arial";
+      ctx.fillStyle = brushColor.current
+      ctx.fillText(text, offsetX, offsetY);
+    }
+
+
   //Function for handling mousedown while having eraser selected
   function mouseEraserDownHandle(event){
     //Sets erasing to true
@@ -535,6 +551,8 @@ const Home = () => {
     //Sets erasing to false
     setErasing(false)
   }
+
+
 
   //Function for fetching data from database on reload
   useEffect(() => {
@@ -744,6 +762,34 @@ const Home = () => {
     doc.save("canvas.pdf")
   }
 
+  //Old function for saving canavas data
+ /*function saveCanvas() {
+    const canvas = canvasRef.current
+    const canvasUrl = canvas.toDataURL()
+    const data = {image: canvasUrl, date: Date.now()}
+    const jsonData = JSON.stringify(data)
+    const file = new Blob([jsonData], {type : "application/json"})
+    console.log(file)
+    const fr = new FileReader();
+    fr.onload = function(){
+      const res = JSON.parse(fr.result)
+      console.log(res)
+    }
+    fr.readAsText(file)
+  }*/
+
+  //Initial canvas setup
+  /*useEffect(()=>{
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 10;
+    ctxRef.current = ctx
+    canvasRef.current = canvas
+  },[])*/
+
   //Function for getting mouse position
   function getMousePos(event) {
     const canvas = canvasRef.current;
@@ -850,7 +896,17 @@ const Home = () => {
   const currentClickedImage = useRef(null)
   const currentClickedImageIndex = useRef(null)
 
+  /*
+  Z ceho bude arr:
+  
+  jeden arr na imgsrc
+  jeden na imagePositiony
+  #nejakou promenou ktera pri draggovani buyde obsaho vat index img co taham
 
+
+  pri pridani obrazku pridam do jednoho arraye jeho dataurl a do dtuheho jeho position,
+  pri chckovani kliku projedu array a ten kde se dotkne hodim do use ref, potom pri tahani mu dam index kliknuteho a podle toho pak taham po screenu
+  */
 
   
   function handleUserImg(e){
@@ -1137,13 +1193,23 @@ function resetCanvas(){
 
 
 
+  
+ function toggleQuickCanvasMenu(){
+  const rrr =  document.getElementById("SaveMenuButton")
+
+  console.log(rrr)
+ }
 
 
   //Function for setting display value of given menu
   function toggleMenu(value, refItem){
     const menu = refItem.current
     menu.style.display = value
-  
+    console.log(document);
+    console.log(typeof document);
+    console.log(window.document); // Should return a normal Document object
+    console.log(typeof window.document);
+    console.log(window.document === document);
     if (typeof document !== "undefined") {
       //toggleQuickCanvasMenu()
     }else{
@@ -1153,7 +1219,11 @@ function resetCanvas(){
   }
 
 
+//References forsaving the canvas
+const saveMenuRef = useRef(null)
+const saveMenuInputRef = useRef(null)
 
+const blurRef = useRef(null)
 
   return (
     <>
@@ -1262,11 +1332,13 @@ function resetCanvas(){
                 <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
               </svg>
             </div>
+
+
           </div>
 
-          {/*Menu with tools*/}
           <div className="ToolMenu">
-            {/*Image Tool*/}
+
+
             <div className="Tool" id="ImageInputButton" onMouseOver =  {() => toggleMenu("flex", imageMenuRef)} onMouseOut={() => toggleMenu("none", imageMenuRef)} >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-image size-10" viewBox="0 0 16 16" onClick={() => setSelectedTool("image")}>
                 <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
@@ -1287,32 +1359,33 @@ function resetCanvas(){
                 </div>
 
             </div>
-            {/*Brush Tool*/}
+
             <div className="Tool">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10"  onClick={() => setSelectedTool("brush")}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
               </svg>
             </div>
-            {/*Bucket Tool*/}
+
             <div className="Tool">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-paint-bucket size-10" viewBox="0 0 16 16" onClick={() => setSelectedTool("bucket")}>
                 <path d="M6.192 2.78c-.458-.677-.927-1.248-1.35-1.643a3 3 0 0 0-.71-.515c-.217-.104-.56-.205-.882-.02-.367.213-.427.63-.43.896-.003.304.064.664.173 1.044.196.687.556 1.528 1.035 2.402L.752 8.22c-.277.277-.269.656-.218.918.055.283.187.593.36.903.348.627.92 1.361 1.626 2.068.707.707 1.441 1.278 2.068 1.626.31.173.62.305.903.36.262.05.64.059.918-.218l5.615-5.615c.118.257.092.512.05.939-.03.292-.068.665-.073 1.176v.123h.003a1 1 0 0 0 1.993 0H14v-.057a1 1 0 0 0-.004-.117c-.055-1.25-.7-2.738-1.86-3.494a4 4 0 0 0-.211-.434c-.349-.626-.92-1.36-1.627-2.067S8.857 3.052 8.23 2.704c-.31-.172-.62-.304-.903-.36-.262-.05-.64-.058-.918.219zM4.16 1.867c.381.356.844.922 1.311 1.632l-.704.705c-.382-.727-.66-1.402-.813-1.938a3.3 3.3 0 0 1-.131-.673q.137.09.337.274m.394 3.965c.54.852 1.107 1.567 1.607 2.033a.5.5 0 1 0 .682-.732c-.453-.422-1.017-1.136-1.564-2.027l1.088-1.088q.081.181.183.365c.349.627.92 1.361 1.627 2.068.706.707 1.44 1.278 2.068 1.626q.183.103.365.183l-4.861 4.862-.068-.01c-.137-.027-.342-.104-.608-.252-.524-.292-1.186-.8-1.846-1.46s-1.168-1.32-1.46-1.846c-.147-.265-.225-.47-.251-.607l-.01-.068zm2.87-1.935a2.4 2.4 0 0 1-.241-.561c.135.033.324.11.562.241.524.292 1.186.8 1.846 1.46.45.45.83.901 1.118 1.31a3.5 3.5 0 0 0-1.066.091 11 11 0 0 1-.76-.694c-.66-.66-1.167-1.322-1.458-1.847z"/>
               </svg>
             </div>
-            {/*Eraser Tool*/}
+
             <div className="Tool">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eraser size-10" viewBox="0 0 16 16" onClick={() => setSelectedTool("eraser")}>
                 <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"/>
               </svg>
             </div>
-            {/*Text Tool*/}
+
             <div className="Tool">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-fonts size-10" viewBox="0 0 16 16" onClick={() => setSelectedTool("text")}>
                 <path d="M12.258 3h-8.51l-.083 2.46h.479c.26-1.544.758-1.783 2.693-1.845l.424-.013v7.827c0 .663-.144.82-1.3.923v.52h4.082v-.52c-1.162-.103-1.306-.26-1.306-.923V3.602l.431.013c1.934.062 2.434.301 2.693 1.846h.479z"/>
               </svg>
             </div>
-            {/*Shape Tool*/}
+
             <div className="Tool">
+
               <ul id="ShapeSelect">
                 <li id="ShapeSelectHover">
                   <a>
@@ -1342,7 +1415,7 @@ function resetCanvas(){
                 </li>
               </ul>
             </div>
-            {/*Fill Tool*/}
+
             <div className="Tool" id="FillTool">
               <p className="FillTitle">Fill</p>
               <label class="checkBox"> 
@@ -1350,21 +1423,25 @@ function resetCanvas(){
                 <div class="transition"></div>
               </label>
             </div>
-            {/*Brush Color*/}
+
+
+            
             <div className="Tool" id="BrushColorTool">
               <form id="brushColorForm">
                 <input type="color" name="brushColor" id="brushColor" value={brushColor.current}  onChange={changeBrushColor}  ref={brushColorRef}/>
               </form>
             </div>
-            {/*Brush Size*/}
+
             <div className="Tool">
               <form id="brushSizeForm">
                 <input type="range" name="brushSize" id="brushSize"  min="1" max="50"  value={brushSize} step="1" onChange={changeBrushSize}  ref={brushSizeRef}/>
               </form>
             </div>
-          </div>
-        </div>
 
+          </div>
+          
+
+        </div>
         <div className="Sidebar">
           <div className="SettingsMenu">
 
@@ -1379,6 +1456,34 @@ function resetCanvas(){
                   return (
                     <>
                     <SavedPost   id={_id} name={name} image={image} date={date} openFunc={openSavedCanvas} updateFunc={updateName} deleteFunc={deleteData} key={date}  blur={blurRef}/>
+   
+                    {/*
+                    <div key={date} className="savedPost">
+                      <div className="savedPostContent" >
+                        {/*Part of  saved post used for opening it
+                        <div className="savedPostOpenPart" onClick={() => openSavedCanvas(image, _id)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark size-5" viewBox="0 0 16 16">
+                            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
+                          </svg>
+                          <p>{name}</p>
+                        </div>
+                        {/*Part of  saved post used for opening menu for renaming and deleting it
+                        {/*<div className="savedPostEditPart">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                          </svg>
+                          <QuickCanvasActionMenu id = {_id} name =  {name} image = {image}/>
+                        </div>
+                        {/*tady nekde zavolam muj component 
+                        <QuickCanvasActionMenu id = {_id} name =  {name} image = {image} updateFunc={updateName}/>
+
+                        <div className="savedPostQuickActionMenu">
+                          <p>dnnd</p>
+                        </div>
+
+                      </div>
+                    </div>
+                    */}
                     </>
                   );
                 })}
