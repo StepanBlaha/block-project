@@ -162,9 +162,7 @@ canvas{
     position: absolute;
    
 }
-#myCanvas{
-   
-}
+
 .shapeCanvas{
     pointer-events: "none";
 }
