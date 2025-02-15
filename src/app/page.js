@@ -1,6 +1,6 @@
 "use client";
 
-
+import * as THREE from 'three';
 import { render } from "react-dom";
 import "./../styles/canvas.css";
 import { useEffect, useState, useRef, use } from 'react'
@@ -195,6 +195,23 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
 
 
 const Home = () => {
+/*
+  function mouseDownNoise(params) {
+    const {offsetX, offsetY} = getMousePos(event)
+    setDrawing(true)
+    
+  }
+  function mouseMoveNoise(event){
+    const {offsetX, offsetY} = getMousePos(event)
+    setMousePos({ x: offsetX, y: offsetY });
+    if (isDrawing) {
+      const ctx = ctxRef.current
+      ctx.globalCompositeOperation="source-over";
+      ctx.lineTo(offsetX, offsetY);
+      ctx.stroke()
+    }
+  }
+*/
   //Reference for link to save canvas as png
   const pngSaveRef = useRef(null)
 
