@@ -324,6 +324,7 @@ canvas{
 }
 .Tool:hover{
     background-color: #313131;
+    cursor: pointer;
 }
 .ActionTool:hover{
     background-color: #313131;
@@ -372,6 +373,7 @@ canvas{
 }
 .ActionSaveItem:hover{
     background: #676767;
+    cursor: pointer;
 }
 .ActionSaveItemIcon{
     height: fit-content;

@@ -116,7 +116,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
 
       <div className="savedPostContent" >
         {/*Part of  saved post used for opening it */}
-        <div className="savedPostOpenPart" onClick={() => {openFunc(image, id); setDisplay({"renameForm":"none"}) }}>
+        <div className="savedPostOpenPart" onClick={() => {openFunc(image, id);  }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark size-5" viewBox="0 0 16 16">
             <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
           </svg>
@@ -195,23 +195,72 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
 
 
 const Home = () => {
-/*
-  function mouseDownNoise(params) {
-    const {offsetX, offsetY} = getMousePos(event)
-    setDrawing(true)
-    
-  }
-  function mouseMoveNoise(event){
-    const {offsetX, offsetY} = getMousePos(event)
-    setMousePos({ x: offsetX, y: offsetY });
-    if (isDrawing) {
-      const ctx = ctxRef.current
-      ctx.globalCompositeOperation="source-over";
-      ctx.lineTo(offsetX, offsetY);
-      ctx.stroke()
-    }
-  }
-*/
+
+  /*
+  perlin noise brush attempt
+  const textureCanvasref = useRef(null)
+  useEffect(()=>{
+    const loader =  new THREE.TextureLoader()
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d")
+
+    const buffer = textureCanvasref.current
+    buffer.width = canvas.width
+    buffer.height = canvas.height
+    const bufferctx = buffer.getContext("2d")
+
+    loader.load("texture.png", (texture)=>{
+      const img = new Image
+      img.src = texture.image.src;
+
+      img.onload= () =>{
+        let offsetX = 0
+        let offsetY = 0
+
+        canvas.addEventListener("mousedown", (event)=>{
+          offsetX, offsetY  = getMousePos(event)
+          setDrawing(true)
+        })
+
+        canvas.addEventListener("mousemove", (event)=>{
+          console.log(img)
+          if (!isDrawing) return;
+          const {newX, newY} = getMousePos(event)
+
+        
+          
+          const dx = newX - offsetX
+          const dy = newY - offsetY
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          const stepSize = 5
+          for (let index = 0; index < dist; index+= stepSize) {
+            stepX= offsetX + ( dx * ( index / dist ))
+            stepY= offsetY + ( dy * ( index / dist ))
+            bufferctx.drawImage(img, stepX - 15, stepY - 15, 30, 30);
+
+          }
+          offsetX = newX
+          offsetY = newY
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(buffer, 0, 0);
+
+          canvasRef.current = canvas
+          ctxRef.current = ctx
+
+          
+
+        })
+        
+
+
+      }
+    })
+  },[])
+
+  */
+
+
   //Reference for link to save canvas as png
   const pngSaveRef = useRef(null)
 
@@ -413,8 +462,8 @@ const Home = () => {
     "bucket": null,
     "eraser": mouseEraserMoveHandle,
     "text": null,
-    "rectangle":  null,
-    "circle": null,
+    "rectangle":  shapeMoveHandle,
+    "circle": shapeMoveHandle,
     "image": imgMoveThrottle
   }
   //Dictionary that calls the correct function based on the selected tool
@@ -1143,11 +1192,100 @@ function resetCanvas(){
       
     }
   }
+  function createShape() {
+    //Gets the canvas element
+    const canvas = canvasRef.current
+    //Gets the context element
+    const ctx = canvas.getContext("2d");
+    //Gets the fillcheck value
+    const fillCheck = fillCheckRef.current
+    //Sets the context mode to drawing
+    ctx.globalCompositeOperation="source-over";
+    //Sets the start and end points
+    const { x: startX, y: startY } = shapeStartPoint.current;
+    const { x: endX, y: endY } = shapeEndPoint.current;
+    //Begins drawing
+    ctx.beginPath()
+    //Handles different shape tools
+    switch (selectedTool) {
+      case "rectangle":
+        ctx.rect(startX, startY, (endX - startX), (endY - startY))
+        break;
+      case "circle":
+        const radius = Math.abs(Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2));
+        ctx.arc(startX, startY, radius, 0, Math.PI * 2)
+        break;
+    }
+    //If the fillcheck  = true fills the shape
+    if (fillCheck.checked) {
+      ctx.fillStyle = brushColor.current
+      ctx.fill()
+    }
+    //Does the stroke
+    ctx.stroke()
+    //Sets the current context to context
+    ctxRef.current = ctx
+    fillCheckRef.current  = fillCheck
+  }
+
+  const isMakingShape = useRef(false)
+ const preShapeCanvas = useRef(null)
+ const preShapeCtx =  useRef(null)
+  //Function for handling mousedown when holding any shape tool
 
 
+  function shapeDownHandle(event) {
+    const canvas = canvasRef.current
+    const imageSrc = canvas.toDataURL()
+    //Update the save ref
+    preShapeCanvas.current = imageSrc
+    //Gets the mouse position
+    const {offsetX, offsetY} = getMousePos(event)
+    //Sets the shape start point to current mouse position
+    shapeStartPoint.current = { x: offsetX, y: offsetY };
+
+    isMakingShape.current = true
+  }
+
+  function shapeMoveHandle(event){
+    if(isMakingShape.current){
+      //Gets the mouse position
+      const {offsetX, offsetY} = getMousePos(event)
+      shapeReset()
+      shapeEndPoint.current = { x: offsetX, y: offsetY };
+      createShape()
+    }
+  }
+
+  function shapeReset(){
+    //Get the canvas and context
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    //Get the old canvas
+    const imageSrc = preShapeCanvas.current
+    //Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    //Draw the old saved canvas 
+    const img = hiddenImgRef.current;
+    img.onload = () => {ctx.drawImage(img , 0, 0)}
+    img.src = imageSrc
+    //Update the  refs
+    hiddenImgRef.current = img
+    canvasRef.current = canvas
+    ctxRef.current = ctx
 
 
-
+  }
+  //Function for handling mouseup when holding any shape tool
+  function shapeUpHandle(event) {
+    //Gets the mouse position
+    const {offsetX, offsetY} = getMousePos(event)
+    //Sets the shape end point to current mouse position
+    shapeEndPoint.current = { x: offsetX, y: offsetY };
+    //Calls the function to create the shape
+    createShape()
+    isMakingShape.current = false
+  }
 
 
 
@@ -1438,7 +1576,9 @@ function resetCanvas(){
           </div>
 
         </div>
-
+        {/* 
+        <canvas ref={textureCanvasref} style={{display:"none"}}></canvas>
+*/}
       </div>
       <img className="hiddenImg" ref={hiddenImgRef}></img>
 

@@ -74,6 +74,7 @@ Image:
 -sirka a vyska tvaru porad rozjebna
 
 <!---
+npm install --save three
 npm install canvasinput
 npm install mongodb
 npm install
