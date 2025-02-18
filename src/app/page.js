@@ -460,6 +460,7 @@ const Home = () => {
     "circle": shapeDownHandle,
     "triangle": shapeDownHandle,
     "diamond": shapeDownHandle,
+    "pentagon": shapeDownHandle,
     "horizontalArrow": shapeDownHandle,
     "verticalArrow": shapeDownHandle,
     "line": shapeDownHandle,
@@ -475,6 +476,7 @@ const Home = () => {
     "circle": shapeMoveHandle,
     "triangle": shapeMoveHandle,
     "diamond": shapeMoveHandle,
+    "pentagon": shapeMoveHandle,
     "horizontalArrow": shapeMoveHandle,
     "verticalArrow": shapeMoveHandle,
     "line": shapeMoveHandle,
@@ -490,6 +492,7 @@ const Home = () => {
     "circle": shapeUpHandle,
     "triangle": shapeUpHandle,
     "diamond": shapeUpHandle,
+    "pentagon": shapeUpHandle,
     "horizontalArrow": shapeUpHandle,
     "verticalArrow": shapeUpHandle,
     "line": shapeUpHandle,
@@ -608,6 +611,20 @@ const Home = () => {
         //Line to left tip
         ctx.lineTo(startX, (endY - startY) / 2 + startY)
         //end
+        ctx.lineTo((endX - startX) / 2 + startX, startY)
+        break
+      case "pentagon":
+        //Tip upper
+        ctx.moveTo((endX - startX) / 2 + startX, startY)
+        //Tip right
+        ctx.lineTo(endX, ((endY - startY) / 5) * 2 + startY)
+        //Tip bottom right
+        ctx.lineTo(((endX - startX) / 5) * 4 + startX, endY)
+        //Tip bottom left
+        ctx.lineTo(((endX - startX) / 5) + startX, endY)
+        //Tip left
+        ctx.lineTo(startX, ((endY - startY) / 5) * 2 + startY)
+        //End
         ctx.lineTo((endX - startX) / 2 + startX, startY)
         break
     }
@@ -1503,13 +1520,19 @@ function resetCanvas(){
                         <path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z"/>
                       </svg>
                     </li>
+                    {/*Pentagon */}
+                    <li className="ShapeSelectItem" >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pentagon size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("pentagon")}>
+                        <path d="M7.685 1.545a.5.5 0 0 1 .63 0l6.263 5.088a.5.5 0 0 1 .161.539l-2.362 7.479a.5.5 0 0 1-.476.349H4.099a.5.5 0 0 1-.476-.35L1.26 7.173a.5.5 0 0 1 .161-.54l6.263-5.087Zm8.213 5.28a.5.5 0 0 0-.162-.54L8.316.257a.5.5 0 0 0-.631 0L.264 6.286a.5.5 0 0 0-.162.538l2.788 8.827a.5.5 0 0 0 .476.349h9.268a.5.5 0 0 0 .476-.35l2.788-8.826Z"/>
+                      </svg>
+                    </li>
                     {/*Horizontal arrow*/}
                     <li className="ShapeSelectItem" >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("horizontalArrow")}>
                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
                       </svg>
                     </li>
-
+                    {/*Vertical arrow*/}
                     <li className="ShapeSelectItem" >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("verticalArrow")}>
                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
