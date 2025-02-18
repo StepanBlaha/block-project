@@ -462,6 +462,7 @@ const Home = () => {
     "diamond": shapeDownHandle,
     "pentagon": shapeDownHandle,
     "hexagon": shapeDownHandle,
+    "4star": shapeDownHandle,
     "horizontalArrow": shapeDownHandle,
     "verticalArrow": shapeDownHandle,
     "line": shapeDownHandle,
@@ -479,6 +480,7 @@ const Home = () => {
     "diamond": shapeMoveHandle,
     "pentagon": shapeMoveHandle,
     "hexagon": shapeMoveHandle,
+    "4star": shapeMoveHandle,
     "horizontalArrow": shapeMoveHandle,
     "verticalArrow": shapeMoveHandle,
     "line": shapeMoveHandle,
@@ -496,6 +498,7 @@ const Home = () => {
     "diamond": shapeUpHandle,
     "pentagon": shapeUpHandle,
     "hexagon": shapeUpHandle,
+    "4star": shapeUpHandle,
     "horizontalArrow": shapeUpHandle,
     "verticalArrow": shapeUpHandle,
     "line": shapeUpHandle,
@@ -566,7 +569,7 @@ const Home = () => {
         ctx.moveTo(endX, endY)
         ctx.lineTo(startX, endY)
         ctx.lineTo((endX - startX) / 2 + startX, startY)
-        ctx.lineTo(endX, endY)
+        ctx.closePath(); 
         break
       case "diamond":
         //Upper corner
@@ -578,7 +581,7 @@ const Home = () => {
         //Left corner
         ctx.lineTo(startX, (endY - startY) / 2 + startY)
         //End
-        ctx.lineTo((endX - startX) / 2 + startX, startY)
+        ctx.closePath(); 
         break
       case "horizontalArrow":
         //Arrow tip right
@@ -596,7 +599,7 @@ const Home = () => {
         //Line to upper tip
         ctx.lineTo((endX - startX) / 2 + startX, startY)
         //end
-        ctx.lineTo(endX, (endY - startY) / 2 + startY)
+        ctx.closePath(); 
         break
       case "verticalArrow":
         //Arrow tip upper 
@@ -614,7 +617,7 @@ const Home = () => {
         //Line to left tip
         ctx.lineTo(startX, (endY - startY) / 2 + startY)
         //end
-        ctx.lineTo((endX - startX) / 2 + startX, startY)
+        ctx.closePath(); 
         break
       case "pentagon":
         //Tip upper
@@ -628,7 +631,7 @@ const Home = () => {
         //Tip left
         ctx.lineTo(startX, ((endY - startY) / 5) * 2 + startY)
         //End
-        ctx.lineTo((endX - startX) / 2 + startX, startY)
+        ctx.closePath(); 
         break
       case "hexagon":
         //Tip upper
@@ -644,7 +647,27 @@ const Home = () => {
         //Tip left upper
         ctx.lineTo(startX, ((endY - startY) / 4) + startY)
         //End
-        ctx.lineTo((endX - startX) / 2 + startX, startY)
+        ctx.closePath(); 
+        break
+      case "4star":
+        //Tip upper
+        ctx.moveTo((endX - startX) / 2 + startX, startY)
+        //Inside corner upper right
+        ctx.lineTo(((endX - startX) / 5)  * 3 + startX, ((endY - startY) / 5)  * 2 + startY)
+        //Tip right
+        ctx.lineTo(endX, (endY - startY) / 2 + startY)
+        //Inside corner lower right
+        ctx.lineTo(((endX - startX) / 5)  * 3 + startX, ((endY - startY) / 5)  * 3+ startY)
+        //Tip lower
+        ctx.lineTo((endX - startX) / 2 + startX, endY)
+        //Inside corner lower left
+        ctx.lineTo(((endX - startX) / 5)  * 2 + startX, ((endY - startY) / 5)  * 3+ startY)
+        //Tip left
+        ctx.lineTo(startX, (endY - startY) / 2 + startY)
+        //Inside corner upper left
+        ctx.lineTo(((endX - startX) / 5)  * 2 + startX, ((endY - startY) / 5)  * 2+ startY)
+        //End
+        ctx.closePath(); 
         break
         
     }
@@ -1550,6 +1573,12 @@ function resetCanvas(){
                     <li className="ShapeSelectItem" >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-hexagon size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("hexagon")}>
                         <path d="M14 4.577v6.846L8 15l-6-3.577V4.577L8 1zM8.5.134a1 1 0 0 0-1 0l-6 3.577a1 1 0 0 0-.5.866v6.846a1 1 0 0 0 .5.866l6 3.577a1 1 0 0 0 1 0l6-3.577a1 1 0 0 0 .5-.866V4.577a1 1 0 0 0-.5-.866z"/>
+                      </svg>
+                    </li>
+                     {/*4 pointed star */}
+                     <li className="ShapeSelectItem" >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("4star")}>
+                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
                       </svg>
                     </li>
                     {/*Horizontal arrow*/}
