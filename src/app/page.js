@@ -459,6 +459,9 @@ const Home = () => {
     "rectangle": shapeDownHandle,
     "circle": shapeDownHandle,
     "triangle": shapeDownHandle,
+    "diamond": shapeDownHandle,
+    "horizontalArrow": shapeDownHandle,
+    "verticalArrow": shapeDownHandle,
     "line": shapeDownHandle,
     "image": handleImgMouseDown
   }
@@ -471,6 +474,9 @@ const Home = () => {
     "rectangle":  shapeMoveHandle,
     "circle": shapeMoveHandle,
     "triangle": shapeMoveHandle,
+    "diamond": shapeMoveHandle,
+    "horizontalArrow": shapeMoveHandle,
+    "verticalArrow": shapeMoveHandle,
     "line": shapeMoveHandle,
     "image": imgMoveThrottle
   }
@@ -483,6 +489,9 @@ const Home = () => {
     "rectangle": shapeUpHandle,
     "circle": shapeUpHandle,
     "triangle": shapeUpHandle,
+    "diamond": shapeUpHandle,
+    "horizontalArrow": shapeUpHandle,
+    "verticalArrow": shapeUpHandle,
     "line": shapeUpHandle,
     "image": mouseImgUpHandle
   }
@@ -552,6 +561,55 @@ const Home = () => {
         ctx.lineTo(startX, endY)
         ctx.lineTo((endX - startX) / 2 + startX, startY)
         ctx.lineTo(endX, endY)
+        break
+      case "diamond":
+        //Upper corner
+        ctx.moveTo((endX - startX) / 2 + startX, startY)
+        //Right corner
+        ctx.lineTo(endX, (endY - startY) / 2 + startY)
+        //Lower corner
+        ctx.lineTo((endX - startX) / 2 + startX, endY)
+        //Left corner
+        ctx.lineTo(startX, (endY - startY) / 2 + startY)
+        //End
+        ctx.lineTo((endX - startX) / 2 + startX, startY)
+        break
+      case "horizontalArrow":
+        //Arrow tip right
+        ctx.moveTo(endX, (endY - startY) / 2 + startY)
+        //Arrow tip bottom
+        ctx.lineTo((endX - startX) / 2 + startX, endY)
+        //Line from bottom tip
+        ctx.lineTo((endX - startX) / 2 + startX, ((endY - startY) / 4)* 3+ startY)
+        //Bottom straight line
+        ctx.lineTo(startX, ((endY - startY) / 4) * 3+ startY)
+        //side
+        ctx.lineTo(startX, ((endY - startY) / 4)  + startY)
+        //Upper straight line
+        ctx.lineTo((endX - startX) / 2 + startX, ((endY - startY) / 4)  + startY)
+        //Line to upper tip
+        ctx.lineTo((endX - startX) / 2 + startX, startY)
+        //end
+        ctx.lineTo(endX, (endY - startY) / 2 + startY)
+        break
+      case "verticalArrow":
+        //Arrow tip upper 
+        ctx.moveTo((endX - startX) / 2 + startX, startY)
+        //Arrow tip right
+        ctx.lineTo(endX, (endY - startY) / 2 + startY)
+        //Line from right tip
+        ctx.lineTo(((endX - startX) / 4)* 3+ startX, (endY - startY) / 2 + startY)
+        //Right straight line
+        ctx.lineTo(((endX - startX) / 4)* 3+ startX, endY)
+        //side
+        ctx.lineTo(((endX - startX) / 4)+ startX, endY)
+        //Left straight line
+        ctx.lineTo(((endX - startX) / 4)+ startX, (endY - startY) / 2 + startY)
+        //Line to left tip
+        ctx.lineTo(startX, (endY - startY) / 2 + startY)
+        //end
+        ctx.lineTo((endX - startX) / 2 + startX, startY)
+        break
     }
     //If the fillcheck  = true fills the shape
     if (fillCheck.checked) {
@@ -1421,25 +1479,44 @@ function resetCanvas(){
                   </a>
                   {/*Ther shape menu */}
                   <ul className="ShapeSelectList">
-
+                    {/*Square */}
                     <li className="ShapeSelectItem">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-square size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("rectangle")}>
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                       </svg>
                     </li>
-
+                    {/*Circle */}
                     <li className="ShapeSelectItem" >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("circle")}>
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                       </svg>
                     </li>
-
+                    {/*Triangle */}
                     <li className="ShapeSelectItem" >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-triangle size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("triangle")}>
                         <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"/>
                       </svg>
                     </li>
+                    {/*Diamond */}
+                    <li className="ShapeSelectItem" >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-diamond size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("diamond")}>
+                        <path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z"/>
+                      </svg>
+                    </li>
+                    {/*Horizontal arrow*/}
+                    <li className="ShapeSelectItem" >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("horizontalArrow")}>
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                      </svg>
+                    </li>
 
+                    <li className="ShapeSelectItem" >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("verticalArrow")}>
+                        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                      </svg>
+                    </li>
+
+                    {/*Line */}
                     <li className="ShapeSelectItem" id="BottomShape">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-slash size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("line")}>
                         <path d="M11.354 4.646a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708l6-6a.5.5 0 0 1 .708 0"/>
