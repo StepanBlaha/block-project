@@ -1566,69 +1566,69 @@ function resetCanvas(){
                   {/*Ther shape menu */}
                   <ul className="ShapeSelectList">
                     {/*Square */}
-                    <li className="ShapeSelectItem">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-square size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("rectangle")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("rectangle")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-square size-8" viewBox="0 0 16 16" >
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                       </svg>
                     </li>
                     {/*Circle */}
-                    <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("circle")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("circle")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle size-8" viewBox="0 0 16 16" >
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                       </svg>
                     </li>
                     {/*Triangle */}
-                    <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-triangle size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("triangle")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("triangle")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-triangle size-8" viewBox="0 0 16 16" >
                         <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"/>
                       </svg>
                     </li>
                     {/*Diamond */}
-                    <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-diamond size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("diamond")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("diamond")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-diamond size-8" viewBox="0 0 16 16" >
                         <path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z"/>
                       </svg>
                     </li>
                     {/*Pentagon */}
-                    <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pentagon size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("pentagon")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("pentagon")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pentagon size-8" viewBox="0 0 16 16" >
                         <path d="M7.685 1.545a.5.5 0 0 1 .63 0l6.263 5.088a.5.5 0 0 1 .161.539l-2.362 7.479a.5.5 0 0 1-.476.349H4.099a.5.5 0 0 1-.476-.35L1.26 7.173a.5.5 0 0 1 .161-.54l6.263-5.087Zm8.213 5.28a.5.5 0 0 0-.162-.54L8.316.257a.5.5 0 0 0-.631 0L.264 6.286a.5.5 0 0 0-.162.538l2.788 8.827a.5.5 0 0 0 .476.349h9.268a.5.5 0 0 0 .476-.35l2.788-8.826Z"/>
                       </svg>
                     </li>
                     {/*Hexagon */}
-                    <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-hexagon size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("hexagon")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("hexagon")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-hexagon size-8" viewBox="0 0 16 16" >
                         <path d="M14 4.577v6.846L8 15l-6-3.577V4.577L8 1zM8.5.134a1 1 0 0 0-1 0l-6 3.577a1 1 0 0 0-.5.866v6.846a1 1 0 0 0 .5.866l6 3.577a1 1 0 0 0 1 0l6-3.577a1 1 0 0 0 .5-.866V4.577a1 1 0 0 0-.5-.866z"/>
                       </svg>
                     </li>
-                     {/*4 pointed star */}
-                     <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("4star")}>
+                     {/*4 pointed star -----musim predelat ikonku---*/}
+                     <li className="ShapeSelectItem" onClick={() => setSelectedTool("4star")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star size-8" viewBox="0 0 16 16" >
                         <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
                       </svg>
                     </li>
                     {/*5 pointed star */}
-                    <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("5star")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("5star")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star size-8" viewBox="0 0 16 16" >
                         <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
                       </svg>
                     </li>
                     {/*Horizontal arrow*/}
-                    <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("horizontalArrow")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("horizontalArrow")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right size-8" viewBox="0 0 16 16" >
                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
                       </svg>
                     </li>
                     {/*Vertical arrow*/}
-                    <li className="ShapeSelectItem" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("verticalArrow")}>
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("verticalArrow")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up size-8" viewBox="0 0 16 16" >
                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
                       </svg>
                     </li>
 
                     {/*Line */}
-                    <li className="ShapeSelectItem" id="BottomShape">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-slash size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("line")}>
+                    <li className="ShapeSelectItem" id="BottomShape" onClick={() => setSelectedTool("line")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-slash size-8" viewBox="0 0 16 16" >
                         <path d="M11.354 4.646a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708l6-6a.5.5 0 0 1 .708 0"/>
                       </svg>
                     </li>
