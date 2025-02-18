@@ -1,3 +1,5 @@
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-chubby/css/uicons-regular-chubby.css');
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-rounded/css/uicons-thin-rounded.css');
 body, html{
     height: 100%;
     width: 100%;
@@ -965,4 +967,16 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 }
 input[type="color"]::-webkit-color-swatch {
 	border: none;
+}
+
+
+
+
+
+
+
+
+.starIcon{
+    display: block;
+    font-size: 30px;
 }

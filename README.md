@@ -49,6 +49,7 @@ TODO:
 - mazani postu - done
 - vyplnovani (takovy ten kyblik) - done
 - Resize platna done
+- dalsi tvary done
 
 
 Functionalities:
