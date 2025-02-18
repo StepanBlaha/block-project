@@ -500,6 +500,7 @@ canvas{
     background: #313131;
     border-bottom-right-radius: 7px;
     border-bottom-left-radius: 7px;
+    z-index: 3425453345;
 }
 ul li:hover > ul,
 ul li ul:hover {
