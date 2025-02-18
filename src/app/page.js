@@ -463,6 +463,7 @@ const Home = () => {
     "pentagon": shapeDownHandle,
     "hexagon": shapeDownHandle,
     "4star": shapeDownHandle,
+    "5star": shapeDownHandle,
     "horizontalArrow": shapeDownHandle,
     "verticalArrow": shapeDownHandle,
     "line": shapeDownHandle,
@@ -481,6 +482,7 @@ const Home = () => {
     "pentagon": shapeMoveHandle,
     "hexagon": shapeMoveHandle,
     "4star": shapeMoveHandle,
+    "5star": shapeMoveHandle,
     "horizontalArrow": shapeMoveHandle,
     "verticalArrow": shapeMoveHandle,
     "line": shapeMoveHandle,
@@ -499,6 +501,7 @@ const Home = () => {
     "pentagon": shapeUpHandle,
     "hexagon": shapeUpHandle,
     "4star": shapeUpHandle,
+    "5star": shapeUpHandle,
     "horizontalArrow": shapeUpHandle,
     "verticalArrow": shapeUpHandle,
     "line": shapeUpHandle,
@@ -669,7 +672,30 @@ const Home = () => {
         //End
         ctx.closePath(); 
         break
-        
+      case "5star":
+        //Tip upper
+        ctx.moveTo((endX - startX) / 2 + startX, startY)
+        //Inside corner upper right
+        ctx.lineTo(((endX - startX) / 5)  * 3 + startX, ((endY - startY) / 5)  * 2 + startY)
+        //Right upper tip
+        ctx.lineTo(endX, ((endY - startY) / 5)  * 2 + startY)
+        //Inside corner lower right
+        ctx.lineTo(((endX - startX) / 3)  * 2 + startX, ((endY - startY) / 5)  * 3 + startY)
+        //Right lower tip
+        ctx.lineTo(((endX - startX) / 5)  * 4 + startX, endY)
+        //Inside corner lower 
+        ctx.lineTo(((endX - startX) / 2)  + startX, ((endY - startY) / 7)  * 5 + startY)
+        //Left lower tip
+        ctx.lineTo(((endX - startX) / 5) + startX, endY)
+        //Inside corner lower left
+        ctx.lineTo(((endX - startX) / 3)   + startX, ((endY - startY) / 5)  * 3 + startY)
+        //Left upper tip
+        ctx.lineTo(startX, ((endY - startY) / 5)  * 2 + startY)
+        //Inside corner upper left
+        ctx.lineTo(((endX - startX) / 5)  * 2 + startX, ((endY - startY) / 5)  * 2 + startY)
+        //End
+        ctx.closePath(); 
+        break
     }
     //If the fillcheck  = true fills the shape
     if (fillCheck.checked) {
@@ -1578,6 +1604,12 @@ function resetCanvas(){
                      {/*4 pointed star */}
                      <li className="ShapeSelectItem" >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("4star")}>
+                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+                      </svg>
+                    </li>
+                    {/*5 pointed star */}
+                    <li className="ShapeSelectItem" >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("5star")}>
                         <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
                       </svg>
                     </li>
