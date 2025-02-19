@@ -259,7 +259,7 @@ const Home = () => {
   },[])
 
   */
-
+  const stateStack = useRef([])
 
   //Reference for link to save canvas as png
   const pngSaveRef = useRef(null)
@@ -364,12 +364,26 @@ const Home = () => {
     if (typeof window !== "undefined") {
       //Add the event listener
       window.addEventListener("resize", resizeCanvas);
+      window.addEventListener("keypress", stepBack);
       //Call resize initially
       resizeCanvas();
       //Remove the event listener to avoid having multiple of them at the same time
-      return () => window.removeEventListener("resize", resizeCanvas);
+      return () => {
+        window.removeEventListener("resize", resizeCanvas);
+        window.removeEventListener("keypress", stepBack);
+      }
     }
   },[])
+
+  //Function for sasving current canvas state to the stack
+  function saveToStack() {
+    //Get  the canvas and ctx
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    //Push current state to the state list
+    stateStack.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height))
+  }
+
   //Function for default canvas setup
   function canvasSetup(){
     const canvas = canvasRef.current;
@@ -378,6 +392,30 @@ const Home = () => {
     ctx.lineWidth = brushSize;
     ctxRef.current = ctx
     canvasRef.current = canvas
+  }
+
+  //Function for going one step back in canvas state stack history
+  function stepBack(event){
+    //Trigger upon pressing z
+    if(event.key === "z" && !event.shiftKey){
+      if(stateStack.current.length > 0){
+        //If length of stack is one reset the canvas completely, otherwise erase the last one
+        if (stateStack.current.length == 1) {
+          //Pop the last state
+          stateStack.current.pop()
+          //Get canvas and ctx
+          const canvas = canvasRef.current
+          const ctx = canvas.getContext("2d");
+          //Reset the canvas
+          ctx.clearRect(0, 0, canvas.width, canvas.height)
+        }else{
+          //Pop the last state
+          const lastState = stateStack.current.pop()
+          //Load the previous state
+          ctxRef.current.putImageData(stateStack.current[stateStack.current.length-1], 0, 0)
+        }
+      }
+    }
   }
 
    //Function for handling window resize
@@ -452,7 +490,6 @@ const Home = () => {
   
   function handleBlur(val) {
     if (isTyping.current) { 
-      console.log("typed")
       const canvas = canvasRef.current
       const ctx = canvas.getContext("2d");
       ctx.font = brushSizeRef.current.value*10 + "px Arial";
@@ -462,6 +499,8 @@ const Home = () => {
       const textbox = textboxRef.current;
       textbox.style.display = "none";
       textbox.value = "";
+      //Save canvas state to stack
+      saveToStack()
 
     }else{
       console.log("not typing")
@@ -574,6 +613,8 @@ const Home = () => {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     //Sets current context to changed context
     ctxRef.current = ctx
+    //Save canvas state to stack
+    saveToStack()
   }
   //Function for drawing shape on given canvas context
   function createShape(ctx) {
@@ -785,6 +826,8 @@ const Home = () => {
     previewCanvas.getContext("2d").clearRect(0, 0, previewCanvas.width, previewCanvas.height);
     //Set ismakingshape to false
     isMakingShape.current = false;
+    //Save canvas state to stack
+    saveToStack()
   }
 
 
@@ -822,6 +865,8 @@ const Home = () => {
   function mouseEraserUpHandle(){
     //Sets erasing to false
     setErasing(false)
+    //Save canvas state to stack
+    saveToStack()
   }
 
   //Function for fetching data from database on reload
@@ -1067,6 +1112,8 @@ const Home = () => {
   //Function for stopping drawing when the user lets go of the mouse button
   function mouseUpHandle(){
     setDrawing(false)
+    //Save canvas state to stack
+    saveToStack()
   }
 
   //Function for clearing the canvas
@@ -1075,6 +1122,8 @@ const Home = () => {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctxRef.current = ctx
+    //Save canvas state to stack
+    saveToStack()
     
   }
 
