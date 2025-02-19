@@ -317,8 +317,8 @@ const Home = () => {
   const [showTextbox, setShowTextbox] = useState(false);
   //State for containing textbox position
   const [textboxPos, setTextboxPos] = useState({ x: 0, y: 0 });
-  //State for containing position of written text
-  const [textboxTextPos, setTextboxTextPos] = useState({ x: 0, y: 0 });
+  //ref for containing position of written text
+  const textboxTextPos = useRef({ x: 0, y: 0 })
   //Reference for textbox object
   const textboxRef = useRef(null);
   //Reference for checking if user is typing
@@ -409,23 +409,43 @@ const Home = () => {
     //Set position of text box
     setTextboxPos({ x: boxOffsetX, y: boxOffsetY });
     //Set position of written text
-    setTextboxTextPos({ x: offsetX, y: offsetY });
+    textboxTextPos.current = { x: offsetX, y: offsetY }
     //Debug
     console.log(offsetX, offsetY)
     //Set textbox visible
     setShowTextbox(!showTextbox);
     
+    
+    const handleKeyPress = function(event){
+      if(event.key === "Enter" && !event.shiftKey){
+        //Get textbox and its text
+        const textbox = textboxRef.current;
+        const text = textbox.value;
+        //Print the text
+        handleBlur(text);
+        //Remove the event listener
+        textboxRef.current.removeEventListener("keypress", handleKeyPress)
+        //Set the visibility to false
+        setShowTextbox(false);
+      }
+    }
+
     if (!showTextbox) {
+      //Set isTyping to false
       isTyping.current = true;
+      //Display the texbox
       const textbox = textboxRef.current;
       textbox.style.display = "block";
+      //Focus the textbox and add event listener
       setTimeout(() => {
         textbox.focus();
+        textboxRef.current.addEventListener("keypress", handleKeyPress)
       }, 0);
-      
     } else {
+      //Gets textbox and current text
       const textbox = textboxRef.current;
       const text = textbox.value;
+      //Prints the text
       handleBlur(text);
     }
     
@@ -433,11 +453,12 @@ const Home = () => {
   
   function handleBlur(val) {
     if (isTyping.current) { 
+      console.log("typed")
       const canvas = canvasRef.current
       const ctx = canvas.getContext("2d");
       ctx.font = brushSizeRef.current.value*10 + "px Arial";
       ctx.fillStyle = brushColor.current
-      ctx.fillText(val, textboxTextPos.x, textboxTextPos.y);
+      ctx.fillText(val, textboxTextPos.current.x, textboxTextPos.current.y);
       isTyping.current = false;
       const textbox = textboxRef.current;
       textbox.style.display = "none";
