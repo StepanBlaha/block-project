@@ -419,7 +419,9 @@ const Home = () => {
       isTyping.current = true;
       const textbox = textboxRef.current;
       textbox.style.display = "block";
-      textbox.focus();
+      setTimeout(() => {
+        textbox.focus();
+      }, 0);
       
     } else {
       const textbox = textboxRef.current;
@@ -433,7 +435,7 @@ const Home = () => {
     if (isTyping.current) { 
       const canvas = canvasRef.current
       const ctx = canvas.getContext("2d");
-      ctx.font = brushSizeRef.current.value + "px Arial";
+      ctx.font = brushSizeRef.current.value*10 + "px Arial";
       ctx.fillStyle = brushColor.current
       ctx.fillText(val, textboxTextPos.x, textboxTextPos.y);
       isTyping.current = false;
@@ -1705,6 +1707,10 @@ function resetCanvas(){
             <canvas id="myCanvas" width="400" height="200" ref={canvasRef}></canvas>
             <canvas className='shapeCanvas' ref={preShapeCanvas}></canvas>
 
+            
+            
+
+          </div>
             {selectedTool === "text" && (
               <textarea ref={textboxRef} style={{
                 position: "fixed",
@@ -1713,15 +1719,11 @@ function resetCanvas(){
                 color: brushColor.current,
                 border: "none",
                 background: "none",
-                fontSize: brushSize + "px",
+                fontSize:  "20px",
               }}
                 placeholder="Enter text here..."
                 className="textbox"></textarea>
             )}
-            
-            
-
-          </div>
 
         </div>
         {/* 
