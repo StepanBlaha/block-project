@@ -980,6 +980,8 @@ input[type="color"]::-webkit-color-swatch {
     display: block;
     font-size: 30px;
 }
-textarea:focus{
+
+#textToolTextarea:focus{
     border: none;
+    outline: none;
 }

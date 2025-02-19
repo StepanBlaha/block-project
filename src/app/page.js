@@ -408,13 +408,10 @@ const Home = () => {
     const boxOffsetY = (event.clientY );
     //Set position of text box
     setTextboxPos({ x: boxOffsetX, y: boxOffsetY });
-    //Set position of written text
-    textboxTextPos.current = { x: offsetX, y: offsetY }
     //Debug
     console.log(offsetX, offsetY)
     //Set textbox visible
     setShowTextbox(!showTextbox);
-    
     
     const handleKeyPress = function(event){
       if(event.key === "Enter" && !event.shiftKey){
@@ -431,6 +428,8 @@ const Home = () => {
     }
 
     if (!showTextbox) {
+      //Set position of written text
+      textboxTextPos.current = { x: offsetX, y: offsetY }
       //Set isTyping to false
       isTyping.current = true;
       //Display the texbox
@@ -1742,6 +1741,7 @@ function resetCanvas(){
                 background: "none",
                 fontSize:  "20px",
               }}
+                id='textToolTextarea'
                 placeholder="Enter text here..."
                 className="textbox"></textarea>
             )}
