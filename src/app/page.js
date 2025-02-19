@@ -515,14 +515,23 @@ const Home = () => {
     "text": "text",
     "rectangle": "auto",
     "circle": "auto",
+    "triangle": "auto",
+    "diamond": "auto",
+    "pentagon": "auto",
+    "hexagon": "auto",
+    "4star": "auto",
+    "5star": "auto",
+    "horizontalArrow": "auto",
+    "verticalArrow": "auto",
+    "line": "auto",
     "image": "auto"
   }
 
   //Function for setting the cursor icon based on the selected tool 
   function setCursorIcon() {
-    const canvas = canvasRef.current
+    const canvas = canvasDivRef.current
     canvas.style.cursor = cursors[selectedTool]
-    canvasRef.current = canvas
+    canvasDivRef.current = canvas
   }
   //Triggers setCursor function upon selectedTool getting changed
   useEffect(() => {
