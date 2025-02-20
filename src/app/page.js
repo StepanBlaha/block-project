@@ -1134,6 +1134,12 @@ const Home = () => {
     saveToStack()
     
   }
+//-------------------------------------------------------------------------function for rotating canvas - doesnt work yet----------------------------------------------
+  function rotateCanvas(){
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    ctx.rotate(Math.PI / 2)
+  }
 
   //Function for converting hex to rgba format
   function hexToRGBA(hex, alpha){
@@ -1161,6 +1167,7 @@ const Home = () => {
         : `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(a)}`;
   }
 
+  //Function for changing working color upon clicking somewhere with the pipet tool
   function colorPicker(event){
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d");
