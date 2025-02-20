@@ -14,6 +14,8 @@ import * as fabric from 'fabric';
 import CanvasInputComponent from '../components/CanvasInputComponent';
 import SaveMenu from "../components/SaveMenu";
 import { jsPDF } from "jspdf";
+import dynamic from 'next/dynamic';
+
 
 
 
