@@ -985,3 +985,6 @@ input[type="color"]::-webkit-color-swatch {
     border: none;
     outline: none;
 }
+#pipetTool{
+    padding: 8px;
+}

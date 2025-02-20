@@ -528,7 +528,8 @@ const Home = () => {
     "horizontalArrow": shapeDownHandle,
     "verticalArrow": shapeDownHandle,
     "line": shapeDownHandle,
-    "image": handleImgMouseDown
+    "image": handleImgMouseDown,
+    "pipet": colorPicker,
   }
   //Dictionary that calls the correct function based on the selected tool
   const canvasMouseMoveActions = {
@@ -547,7 +548,8 @@ const Home = () => {
     "horizontalArrow": shapeMoveHandle,
     "verticalArrow": shapeMoveHandle,
     "line": shapeMoveHandle,
-    "image": imgMoveThrottle
+    "image": imgMoveThrottle,
+    "pipet": null,
   }
   //Dictionary that calls the correct function based on the selected tool
   const canvasMouseUpActions = {
@@ -566,7 +568,8 @@ const Home = () => {
     "horizontalArrow": shapeUpHandle,
     "verticalArrow": shapeUpHandle,
     "line": shapeUpHandle,
-    "image": mouseImgUpHandle
+    "image": mouseImgUpHandle,
+    "pipet": null,
   }
   //Dictionary that sets the correct cursor icon based on the selected tool
   const cursors = {
@@ -585,7 +588,8 @@ const Home = () => {
     "horizontalArrow": "auto",
     "verticalArrow": "auto",
     "line": "auto",
-    "image": "auto"
+    "image": "auto",
+    "pipet": null,
   }
 
   //Function for setting the cursor icon based on the selected tool 
@@ -1104,6 +1108,8 @@ const Home = () => {
     if (isDrawing) {
       const ctx = ctxRef.current
       ctx.globalCompositeOperation="source-over";
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
       ctx.lineTo(offsetX, offsetY);
       ctx.stroke()
     }
@@ -1114,6 +1120,8 @@ const Home = () => {
     setDrawing(false)
     //Save canvas state to stack
     saveToStack()
+    ctxRef.current.lineCap = "butt";
+    ctxRef.current.lineJoin = "miter";
   }
 
   //Function for clearing the canvas
@@ -1127,6 +1135,49 @@ const Home = () => {
     
   }
 
+  //Function for converting hex to rgba format
+  function hexToRGBA(hex, alpha){
+    let r = parseInt(hex.slice(1, 3), 16)
+    let g = parseInt(hex.slice(3, 5), 16)
+    let b = parseInt(hex.slice(5, 7), 16)
+
+    if(alpha){
+      console.log("rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")")
+      return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+    }
+  }
+  //Function for converting rgba to hex format
+  function rgbaToHex(r, g, b, a = 255) {
+
+    r = Math.max(0, Math.min(255, r));
+    g = Math.max(0, Math.min(255, g));
+    b = Math.max(0, Math.min(255, b));
+    a = Math.max(0, Math.min(255, a));
+
+    const toHex = (value) => value.toString(16).padStart(2, "0");
+
+    return a === 255
+        ? `#${toHex(r)}${toHex(g)}${toHex(b)}`
+        : `#${toHex(r)}${toHex(g)}${toHex(b)}${toHex(a)}`;
+  }
+
+  function colorPicker(event){
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    const {offsetX, offsetY} = getMousePos(event)
+    const pixel = ctx.getImageData(offsetX, offsetY, 1, 1)
+    if(pixel){
+      let r = pixel.data[0]
+      let g = pixel.data[1]
+      let b = pixel.data[2]
+      let alpha = pixel.data[3]
+      brushColor.current =rgbaToHex(r,g,b)
+      brushColorRef.current.value =rgbaToHex(r,g,b)
+      console.log(brushColor.current)
+      changeBrushColor()
+    }
+  }
+
   //Function for changing brush color
   function changeBrushColor() {
     brushColor.current = brushColorRef.current.value
@@ -1134,6 +1185,7 @@ const Home = () => {
     const ctx = canvas.getContext("2d");
     ctx.strokeStyle = brushColor.current;
     ctxRef.current = ctx
+    console.log(brushColor.current)
   }
 
   //Function for changing brush size
@@ -1724,6 +1776,12 @@ function resetCanvas(){
                 <input id="ch1" type="checkbox"ref={fillCheckRef}/>
                 <div class="transition"></div>
               </label>
+            </div>
+            {/*Pipet Tool*/}
+            <div className="Tool" id='pipetTool'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eyedropper size-8" viewBox="0 0 16 16" onClick={() => setSelectedTool("pipet")}>
+                <path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708zM2 12.707l7-7L10.293 7l-7 7H2z"/>
+              </svg>
             </div>
             {/*Brush Color*/}
             <div className="Tool" id="BrushColorTool">
