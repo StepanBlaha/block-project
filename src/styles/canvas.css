@@ -988,3 +988,115 @@ input[type="color"]::-webkit-color-swatch {
 #pipetTool{
     padding: 8px;
 }
+
+.Tool{
+    position: relative;
+    display: inline-block;
+}
+
+  .Tool {
+
+    cursor: pointer;
+    transition: all .4s 0s ease;
+  }
+  
+  .Tool,
+  .Tool:before,
+  .Tool:after {
+    box-sizing: border-box;
+  }
+  
+
+  
+  .Tool:hover:before,
+  .Tool:hover:after {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.4s 3s ease; /** that's the magic **/
+  }
+  
+  .Tool:before,
+  .Tool:after {
+    content: "";
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 110%;
+
+    transform: translateX(-50%) rotate(180deg); 
+    transition: all 0.4s 0s ease;
+  }
+  
+  .Tool:before {
+    width: 0;
+    height: 0;
+    right: -8px;
+    border: 8px solid transparent;
+    
+  }
+  
+  .Tool:after {
+    content: attr(aria-label);
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 10px;
+    background-color: #313131;
+    color: #fff;
+    border-radius: 4px;
+    white-space: nowrap; /* Prevents text wrapping */
+  }
+
+
+
+
+
+  .ActionTool {
+    position: relative;
+  display: inline-block;
+    cursor: pointer;
+    transition: all .4s 0s ease;
+  }
+  .ActionTool,
+  .ActionTool:before,
+  .ActionTool:after {
+    box-sizing: border-box;
+  }
+  .ActionTool:hover:before,
+  .ActionTool:hover:after {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.4s 3s ease; /** that's the magic **/
+  }
+  .ActionTool:before,
+  .ActionTool:after {
+    content: "";
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 110%;
+    transform: translateX(-50%) rotate(180deg); 
+    transition: all 0.4s 0s ease;
+  }
+  .ActionTool:before {
+    width: 0;
+    height: 0;
+    right: -8px;
+    border: 8px solid transparent;
+  }
+  .ActionTool:after {
+    content: attr(aria-label);
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 10px;
+    background-color: #313131;
+    color: #fff;
+    border-radius: 4px;
+    z-index: 2131;
+    white-space: nowrap; /* Prevents text wrapping */
+  }
