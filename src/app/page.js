@@ -428,6 +428,69 @@ const Home = () => {
           stepForward()
         }
         break;
+      
+      case "x":
+        if(event.ctrlKey){
+          event.preventDefault(); 
+          clearCanvas()
+        }
+        break;
+
+      case "b":
+        if(event.shiftKey){
+          event.preventDefault(); 
+          setSelectedTool("brush")
+        }
+        break;
+
+      case "f":
+        if(event.shiftKey){
+          event.preventDefault(); 
+          setSelectedTool("bucket")
+        }
+        break;
+
+      case "e":
+        if(event.shiftKey){
+          event.preventDefault(); 
+          setSelectedTool("eraser")
+        }
+        break;
+
+      case "t":
+        event.preventDefault(); 
+        if(event.shiftKey){
+          setSelectedTool("text")
+        }
+        break;
+
+      case "p":
+        if(event.shiftKey){
+          event.preventDefault(); 
+          setSelectedTool("pipet")
+        }
+        break;
+
+      case "i":
+        if(event.shiftKey){
+          event.preventDefault(); 
+          setSelectedTool("image")
+        }
+        break;
+
+      case "r":
+        if(event.shiftKey){
+          event.preventDefault(); 
+          setSelectedTool("rectangle")
+        }
+        break;
+      
+      case "c":
+        if(event.shiftKey){
+          event.preventDefault(); 
+          brushColorRef.current.click()
+        }
+        break;
 
     }
   }
