@@ -263,6 +263,8 @@ const Home = () => {
   */
   const stateStack = useRef([])
 
+  const currentStateIndex = useRef(0)
+
   //Reference for link to save canvas as png
   const pngSaveRef = useRef(null)
 
@@ -366,26 +368,17 @@ const Home = () => {
     if (typeof window !== "undefined") {
       //Add the event listener
       window.addEventListener("resize", resizeCanvas);
-      window.addEventListener("keypress", stepBack);
+      window.addEventListener("keydown", handleHotkeyActions);
       //Call resize initially
       resizeCanvas();
       //Remove the event listener to avoid having multiple of them at the same time
       return () => {
         window.removeEventListener("resize", resizeCanvas);
-        window.removeEventListener("keypress", stepBack);
+        window.removeEventListener("keydown", handleHotkeyActions);
       }
     }
   },[])
-
-  //Function for sasving current canvas state to the stack
-  function saveToStack() {
-    //Get  the canvas and ctx
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext("2d");
-    //Push current state to the state list
-    stateStack.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height))
-  }
-
+  
   //Function for default canvas setup
   function canvasSetup(){
     const canvas = canvasRef.current;
@@ -396,28 +389,84 @@ const Home = () => {
     canvasRef.current = canvas
   }
 
-  //Function for going one step back in canvas state stack history
-  function stepBack(event){
-    //Trigger upon pressing z
-    if(event.key === "z" && !event.shiftKey){
-      if(stateStack.current.length > 0){
-        //If length of stack is one reset the canvas completely, otherwise erase the last one
-        if (stateStack.current.length == 1) {
-          //Pop the last state
-          stateStack.current.pop()
-          //Get canvas and ctx
-          const canvas = canvasRef.current
-          const ctx = canvas.getContext("2d");
-          //Reset the canvas
-          ctx.clearRect(0, 0, canvas.width, canvas.height)
-        }else{
-          //Pop the last state
-          const lastState = stateStack.current.pop()
-          //Load the previous state
-          ctxRef.current.putImageData(stateStack.current[stateStack.current.length-1], 0, 0)
-        }
+  //Function for sasving current canvas state to the stack
+  function saveToStack() {
+    //Get  the canvas and ctx
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d");
+    if (currentStateIndex.current == stateStack.current.length - 1) {
+      //Push current state to the state list
+      stateStack.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+      if(stateStack.current.length != 1){
+        currentStateIndex.current = currentStateIndex.current + 1
+      }
+    }else{
+      const newStack = stateStack.current.slice(0, currentStateIndex.current + 1);
+      stateStack.current = newStack
+      stateStack.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height))
+      if(stateStack.current.length != 1){
+        currentStateIndex.current = currentStateIndex.current + 1
       }
     }
+    console.log("statestack stack  " +stateStack.current)
+    console.log("stateindex  stack" + currentStateIndex.current)
+  }
+
+  // Function for handling hotkey actions upon pressing button
+  function handleHotkeyActions(event){
+    //Run function according to pressed hotkey
+    switch(event.key.toLowerCase()){
+      case "z":
+        if(event.ctrlKey){
+          event.preventDefault(); 
+          stepBack()
+        }
+        break;
+      case "y":
+        if(event.ctrlKey){
+          event.preventDefault(); 
+          stepForward()
+        }
+        break;
+
+    }
+  }
+  //Function for going one step back in canvas state stack history
+  function stepBack(){
+    //Trigger upon pressing z
+    if(stateStack.current.length > 0){
+      //If length of stack is one reset the canvas completely, otherwise erase the last one
+      if (stateStack.current.length == 1 || currentStateIndex.current == 0) {
+        //Pop the last state
+        stateStack.current.pop()
+        //Get canvas and ctx
+        const canvas = canvasRef.current
+        const ctx = canvas.getContext("2d");
+        //Reset the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        //Set current state index back to 0
+        currentStateIndex.current = 0
+      }else{
+        //Pop the last state
+        const newStateIndex = currentStateIndex.current - 1
+        //Load the previous state
+        ctxRef.current.putImageData(stateStack.current[newStateIndex], 0, 0)
+        //Decrease current state index
+        currentStateIndex.current = currentStateIndex.current - 1
+      }
+    }
+  }
+
+  //Function for going one step forward in canvas state stack history
+  function stepForward() {
+    //Run only if the current state isnt the newest one
+    if(stateStack.current.length > currentStateIndex.current + 1){
+      //Load next state
+      const newStateIndex = currentStateIndex.current + 1
+      ctxRef.current.putImageData(stateStack.current[newStateIndex], 0, 0)
+      //Increase current state index
+      currentStateIndex.current = currentStateIndex.current + 1
+    }   
   }
 
    //Function for handling window resize

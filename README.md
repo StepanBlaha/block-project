@@ -150,3 +150,29 @@ setShapeEndPoint({ x: offsetX, y: offsetY });
 createShape()
 _/
 }
+/*
+old function for stepback
+  function stepBack(event){
+    //Trigger upon pressing z
+    if(event.key === "z" && !event.shiftKey){
+      if(stateStack.current.length > 0){
+        //If length of stack is one reset the canvas completely, otherwise erase the last one
+        if (stateStack.current.length == 1) {
+          //Pop the last state
+          stateStack.current.pop()
+          //Get canvas and ctx
+          const canvas = canvasRef.current
+          const ctx = canvas.getContext("2d");
+          //Reset the canvas
+          ctx.clearRect(0, 0, canvas.width, canvas.height)
+        }else{
+          //Pop the last state
+          const lastState = stateStack.current.pop()
+          //Load the previous state
+          ctxRef.current.putImageData(stateStack.current[stateStack.current.length-1], 0, 0)
+        }
+      }
+    }
+  }
+
+  */
