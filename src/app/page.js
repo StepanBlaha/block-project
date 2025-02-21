@@ -198,71 +198,9 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
 
 const Home = () => {
 
-  /*
-  perlin noise brush attempt
-  const textureCanvasref = useRef(null)
-  useEffect(()=>{
-    const loader =  new THREE.TextureLoader()
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext("2d")
-
-    const buffer = textureCanvasref.current
-    buffer.width = canvas.width
-    buffer.height = canvas.height
-    const bufferctx = buffer.getContext("2d")
-
-    loader.load("texture.png", (texture)=>{
-      const img = new Image
-      img.src = texture.image.src;
-
-      img.onload= () =>{
-        let offsetX = 0
-        let offsetY = 0
-
-        canvas.addEventListener("mousedown", (event)=>{
-          offsetX, offsetY  = getMousePos(event)
-          setDrawing(true)
-        })
-
-        canvas.addEventListener("mousemove", (event)=>{
-          console.log(img)
-          if (!isDrawing) return;
-          const {newX, newY} = getMousePos(event)
-
-        
-          
-          const dx = newX - offsetX
-          const dy = newY - offsetY
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          const stepSize = 5
-          for (let index = 0; index < dist; index+= stepSize) {
-            stepX= offsetX + ( dx * ( index / dist ))
-            stepY= offsetY + ( dy * ( index / dist ))
-            bufferctx.drawImage(img, stepX - 15, stepY - 15, 30, 30);
-
-          }
-          offsetX = newX
-          offsetY = newY
-
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(buffer, 0, 0);
-
-          canvasRef.current = canvas
-          ctxRef.current = ctx
-
-          
-
-        })
-        
-
-
-      }
-    })
-  },[])
-
-  */
+  //Reference for canvas state stack
   const stateStack = useRef([])
-
+  //Reference for current state index
   const currentStateIndex = useRef(0)
 
   //Reference for link to save canvas as png
@@ -389,7 +327,7 @@ const Home = () => {
     canvasRef.current = canvas
   }
 
-  //Function for sasving current canvas state to the stack
+  //Function for saving current canvas state to the stack
   function saveToStack() {
     //Get  the canvas and ctx
     const canvas = canvasRef.current
@@ -397,19 +335,21 @@ const Home = () => {
     if (currentStateIndex.current == stateStack.current.length - 1) {
       //Push current state to the state list
       stateStack.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+      //Increase the current state index if the stack length is more than 1
       if(stateStack.current.length != 1){
         currentStateIndex.current = currentStateIndex.current + 1
       }
     }else{
+      //Remove all states after the current state
       const newStack = stateStack.current.slice(0, currentStateIndex.current + 1);
       stateStack.current = newStack
+      //Push the current state to the stack
       stateStack.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height))
+      //Increase the current state index if the stack length is more than 1
       if(stateStack.current.length != 1){
         currentStateIndex.current = currentStateIndex.current + 1
       }
     }
-    console.log("statestack stack  " +stateStack.current)
-    console.log("stateindex  stack" + currentStateIndex.current)
   }
 
   // Function for handling hotkey actions upon pressing button
@@ -1129,7 +1069,7 @@ const Home = () => {
       const canvasData = {
         name: canvasName,
         image: canvasUrl, 
-        date: Date.now()
+        date: new Date().toISOString() 
       }
       // Send the data to the server
       const response = await fetch("http://localhost:3000/api/posts", {
@@ -1950,7 +1890,6 @@ function resetCanvas(){
                 {queryData.map((data) => {
                   const { _id, name, image, date } = data;
                   return (
-                    <>
                     <SavedPost   
                     id={_id} 
                     name={name} 
@@ -1962,7 +1901,6 @@ function resetCanvas(){
                     key={_id}  
                     blur={blurRef}
                     />
-                    </>
                   );
                 })}
               </div>
