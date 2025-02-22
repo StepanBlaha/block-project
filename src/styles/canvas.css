@@ -1124,8 +1124,16 @@ input[type="color"]::-webkit-color-swatch {
     margin-top: 13px;
     margin-left: 2px;
     padding: 3px;
+    position: absolute;
+    right: 5px;
+    z-index: 45453;
   }
   .SidebarButton   svg{
     width: 3rem;
     height: 3rem ;
   }
+.SidebarContent{
+    width: 200px;
+}
+
+

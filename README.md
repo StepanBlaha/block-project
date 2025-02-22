@@ -230,3 +230,55 @@ old function for stepback
         {children}
       </body>
     </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//ted 
+button:
+    /* float: right; */
+    position: absolute;
+    right: 5px;
+    z-index: 45453;
+
+
+  left: calc(var(--sidebar-width)* -1 / 1.35);
+
+
+
+    --sidebar-width: 250px;
+  .group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:w-0 {
+    width: 65px;
+}
+
+    //Por bdouci predelani sidebaru
+
+    .group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:left-\[calc\(var\(--sidebar-width\)\*-1\)\] {
+    left: calc(var(--sidebar-width)* -1 / 1.5);
+}
+.group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:w-0 {
+    width: 105px;
+}
+
+
+sidebarbutton:
+    position: absolute;
+    z-index: 3244323234;

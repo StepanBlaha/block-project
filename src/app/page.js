@@ -1447,8 +1447,8 @@ function resetCanvas(){
       updateName={updateName}
       deleteData={deleteData}
       blurRef={blurRef}
+      handleSidebar={handleSidebar}
     />
-    <SidebarTrigger onClick={handleSidebar} className="SidebarButton"/>
     <main>
       <div className="Main">
 

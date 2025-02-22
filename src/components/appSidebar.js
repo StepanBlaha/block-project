@@ -42,10 +42,11 @@ const items = [
       icon: Settings,
     },
   ]
-export default function AppSidebar({queryData, openSavedCanvas, updateName, deleteData, blurRef}) {
+export default function AppSidebar({queryData, openSavedCanvas, updateName, deleteData, blurRef,  handleSidebar}) {
     return(
         <Sidebar>
-            <SidebarContent >
+              <SidebarTrigger onClick={handleSidebar} className="SidebarButton"/>
+            <SidebarContent className="SidebarContent">
               {/*Aplications */}
                 <SidebarGroup>
                     <SidebarGroupLabel>Application</SidebarGroupLabel>
