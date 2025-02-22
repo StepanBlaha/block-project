@@ -18,7 +18,6 @@ cursor{
     height: 100%;
     width: 100%;
     float: left;
-    border: 2px solid red;
 }
 .Title{
     height: 10%;
@@ -145,19 +144,16 @@ cursor{
     height:90% ;
     width: 100%;
     float: left;
-    border: 2px solid brown;
 }
 .ContentTitle{
     float: left;
     height: 10%;
     width: 100%;
-    border: 2px solid red;
 }
 .ContentCanvas{
     float: left;
     height: 100%;
     width: 100%;
-    border: 2px solid red;
     position: relative;
 }
 
@@ -227,7 +223,6 @@ canvas{
 .savedPostQuickActionMenu{
     height: 100px;
     width: 100px;
-    border: 1px solid red;
     position: absolute;
     left: 140px;
     top: 0px;
@@ -301,7 +296,6 @@ canvas{
     height: fit-content;
     width: 100%;
     float: left;
-    border: 2px solid red;
     gap: 5px;
     padding-left: 10px;
     padding-right: 10px;
@@ -310,7 +304,9 @@ canvas{
     align-content: center;
     align-items: center;
     justify-content: space-between;
-    
+    background-color: #18181B;
+    border-bottom: 1px solid #262626;
+
 }
 .ToolMenu{
     height: 100%;
