@@ -578,7 +578,6 @@ ul li ul:hover {
     height: fit-content;
     position: absolute;
     top: 50px;
-    border: 1px solid red;
     background-color: #18181B;
     border: 1px solid #262626;
     padding: 10px;
@@ -587,12 +586,12 @@ ul li ul:hover {
     gap: 10px;
     justify-content: center;
     border-radius: 7px;
+    z-index: 34324;
 }
 .InputCardSection{
     width: 100%;
     height: fit-content;
     float: left;
-    border: 1px solid red;
     display: flex;
     justify-content: center;
    
@@ -618,13 +617,13 @@ ul li ul:hover {
     display: flex;
     width: 70px;
     height: 30px;
-    background-color: #27272A;
+    background-color: #36363b;
     float: right;
     border-radius: 4px;
     transition: background .2s ease-in-out;
 }
 #ImageInputSubmit:hover{
-    background: #4d4d4d;
+    background-color: #444449;
 }
 input[type=file] {
     width: 350px;
