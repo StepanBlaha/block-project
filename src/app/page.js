@@ -326,7 +326,6 @@ const Home = () => {
     canvasRef.current = canvas
     ctxRef.current =  ctx
     //Perform initial canvas setup again
-    console.log(canvasRef.current.width, canvasRef.current.height )
     canvasSetup()
   }
 

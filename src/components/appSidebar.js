@@ -12,6 +12,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarSeparator,
   } from "@/components/ui/sidebar"
 
 const items = [
@@ -63,6 +64,7 @@ export default function AppSidebar({queryData, openSavedCanvas, updateName, dele
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
+                <SidebarSeparator />
               {/*Saved Posts */}
                 <SidebarGroup>
                     <SidebarGroupLabel>Posts</SidebarGroupLabel>

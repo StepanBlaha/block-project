@@ -88,7 +88,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
     const card = menuRef.current;
     const rect = event.currentTarget.getBoundingClientRect();
     card.style.top = `${rect.top - 10}px`;
-    card.style.left = `${rect.right + 10}px`; // Adjust the offset as needed
+    card.style.left = `${rect.right + 20}px`;
     card.style.position = "fixed";
   }
   // Function to show the rename card and position it correctly
@@ -97,6 +97,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
     const card = formRef.current;
     const rect = event.currentTarget.getBoundingClientRect();
     card.style.top = `${rect.top - 15}px`;
+    card.style.left = `${rect.right - rect.width - 10}px`;
     card.style.position = "fixed";
   }
   return(
