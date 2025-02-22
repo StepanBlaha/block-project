@@ -82,13 +82,29 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
     //Debug
     console.log("Post Updated")
   }
+  // Function to show the quick action card and position it correctly
+  function showQuickActionCard(event) {
+    setDisplay({ quickAction: "flex" });
+    const card = menuRef.current;
+    const rect = event.currentTarget.getBoundingClientRect();
+    card.style.top = `${rect.top - 10}px`;
+    card.style.left = `${rect.right + 10}px`; // Adjust the offset as needed
+    card.style.position = "fixed";
+  }
+  // Function to show the rename card and position it correctly
+  function showRenameForm(event){
+    setDisplay({"renameForm":"flex", "quickAction":"none"})
+    const card = formRef.current;
+    const rect = event.currentTarget.getBoundingClientRect();
+    card.style.top = `${rect.top - 15}px`;
+    card.style.position = "fixed";
+  }
   return(
     <>
     <div key={date} className="savedPost">
       {/*Rename post form*/}
-      <div className="RenameCardDiv" ref={formRef} style={{ display: windowList.renameForm }}>
-        <div className="RenameCardBlur" onClick={() => setDisplay({"quickAction":"none"})}></div>
-        <div className="CanvasRenameCard">
+      
+        <div className="CanvasRenameCard" ref={formRef} style={{ display: windowList.renameForm }}>
           <div className="CanvasRenameFormDiv">
             <form className="CanvasRenameForm"  onSubmit={(event)  => updatePostName(event)}>
               <input type="text" className="RenameInput"  placeholder="New name..." ref={updateInputRef} />
@@ -96,7 +112,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
             </form>
           </div>
         </div>
-      </div>
+
 
 
       <div className="savedPostContent" >
@@ -108,7 +124,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
           <p>{name}</p>
         </div>
 
-        <div className="savedPostEditPart" onClick={() => setDisplay({"quickAction":"flex"})}>
+        <div className="savedPostEditPart" onClick={showQuickActionCard}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots-vertical size-5" viewBox="0 0 16 16">
             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
           </svg>
@@ -118,7 +134,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
           <div className="card" ref={menuRef}  style={{ display: windowList.quickAction }}>
             <ul className="list">
               {/*Rename post button */}
-              <li className="element" onClick={(e) =>{ e.stopPropagation(); setDisplay({"renameForm":"flex", "quickAction":"none"});}}>
+              <li className="element" onClick={(e) =>{ e.stopPropagation(); showRenameForm(e);}}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"

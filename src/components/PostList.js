@@ -1,7 +1,3 @@
-import dynamic from 'next/dynamic';
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import AppSidebar from "@/components/appSidebar";
-import { useState, useEffect, useRef } from 'react';
 import SavedPost from "@/components/Post"
 
 function SavedPostList({ queryData, openSavedCanvas, updateName, deleteData, blurRef }){

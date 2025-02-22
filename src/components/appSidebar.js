@@ -2,6 +2,7 @@
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import SavedPostList from "@/components/PostList"
+import SidebarPostMenu from "@/components/SidebarPostList"
 import {
     Sidebar,
     SidebarContent,
@@ -44,17 +45,11 @@ export default function AppSidebar({queryData, openSavedCanvas, updateName, dele
     return(
         <Sidebar>
             <SidebarContent >
+              {/*Aplications */}
                 <SidebarGroup>
                     <SidebarGroupLabel>Application</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                        <SavedPostList
-                          queryData={queryData}
-                          openSavedCanvas={openSavedCanvas}
-                          updateName={updateName}
-                          deleteData={deleteData}
-                          blurRef={blurRef}
-                        />
                             {items.map((item)=>(
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
@@ -65,6 +60,21 @@ export default function AppSidebar({queryData, openSavedCanvas, updateName, dele
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+              {/*Saved Posts */}
+                <SidebarGroup>
+                    <SidebarGroupLabel>Posts</SidebarGroupLabel>
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                        <SavedPostList
+                          queryData={queryData}
+                          openSavedCanvas={openSavedCanvas}
+                          updateName={updateName}
+                          deleteData={deleteData}
+                          blurRef={blurRef}
+                        />             
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>

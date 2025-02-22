@@ -1423,7 +1423,7 @@ function resetCanvas(){
   }
 
 
-
+  
   //Ref for checking whether the sidebar  is open
   const [isSidebarOpen, setSidebarOpen] = useState(false);  
   //Resize canvas when sidebar is toggled
@@ -1440,18 +1440,17 @@ function resetCanvas(){
 
   return (
     <>
-    
-    <div className="AllPostBlur" ref={blurRef}></div>
-    <AppSidebar 
-      queryData={queryData}
-      openSavedCanvas={openSavedCanvas}
-      updateName={updateName}
-      deleteData={deleteData}
-      blurRef={blurRef}
-    />
-    <SidebarTrigger onClick={handleSidebar} className="SidebarButton"/>
+  <AppSidebar 
+    queryData={queryData}
+    openSavedCanvas={openSavedCanvas}
+    updateName={updateName}
+    deleteData={deleteData}
+    blurRef={blurRef}
+  />
+    <SidebarTrigger onClick={handleSidebar}/>
     <main>
       <div className="Main">
+        <div className="AllPostBlur" ref={blurRef} onClick={() => console.log("skibidi")}></div>
 
         {/*Menu for setting name for the saved canvas */} 
         <div className="SaveCardDiv" ref={saveMenuRef}>
@@ -1733,7 +1732,28 @@ function resetCanvas(){
           </div>
         </div>
 
+        <div className="Sidebar">
+          <div className="SettingsMenu">
+
+           {/*Display loading message while loading*/}
+            {loading && <div>Loading...</div>}
+
+            {/*Displays fetch data once loaded*/}
+            <SavedPostList
+            queryData={queryData}
+            openSavedCanvas={openSavedCanvas}
+            updateName={updateName}
+            deleteData={deleteData}
+            blurRef={blurRef}
+          />
+          </div>
+        </div>
+
         <div className="Content">
+
+          <div className="ContentTitle">
+            
+          </div>
 
           <div className="ContentCanvas" ref={canvasDivRef}
             onMouseMove={canvasMouseMoveActions[selectedTool]} 
