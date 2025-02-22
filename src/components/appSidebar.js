@@ -1,5 +1,7 @@
+"use client"
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
- 
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import SavedPostList from "@/components/PostList"
 import {
     Sidebar,
     SidebarContent,
@@ -38,7 +40,7 @@ const items = [
       icon: Settings,
     },
   ]
-export default function AppSidebar() {
+export default function AppSidebar({queryData, openSavedCanvas, updateName, deleteData, blurRef}) {
     return(
         <Sidebar>
             <SidebarContent >
@@ -46,6 +48,13 @@ export default function AppSidebar() {
                     <SidebarGroupLabel>Application</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
+                        <SavedPostList
+                          queryData={queryData}
+                          openSavedCanvas={openSavedCanvas}
+                          updateName={updateName}
+                          deleteData={deleteData}
+                          blurRef={blurRef}
+                        />
                             {items.map((item)=>(
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>

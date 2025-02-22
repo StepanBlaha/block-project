@@ -8,6 +8,9 @@ body, html{
     overflow-y: hidden;
     overflow-x: hidden;
 }
+main{
+    width: 100%;
+}
 cursor{
     color: white;
 }
