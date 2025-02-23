@@ -260,6 +260,10 @@ const Home = () => {
           event.preventDefault(); 
           setSelectedTool("rectangle")
         }
+        if(event.ctrlKey){
+          event.preventDefault(); 
+          rotateCanvas()
+        }
         break;
       
       case "c":
@@ -307,6 +311,26 @@ const Home = () => {
       //Increase current state index
       currentStateIndex.current = currentStateIndex.current + 1
     }   
+  }
+  //Function for rotating canvas 90 degrees clockwise
+  function rotateCanvas(){
+    //Get canvas and context
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d"); 
+    //Create image from the old canvas
+    const tempSrc = canvas.toDataURL();
+    const tempImage = new Image();
+    tempImage.src = tempSrc;
+    //Wait for the image to load
+    tempImage.onload = () => {
+      //Clear canvas, rotate it and draw image
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.save()
+      ctx.translate(canvas.width/2, canvas.height/2)
+      ctx.rotate(90 * Math.PI/180)
+      ctx.drawImage(tempImage , -tempImage.width/2, -tempImage.height/2)
+      ctx.restore();
+    }
   }
 
    //Function for handling window resize
@@ -1026,11 +1050,7 @@ const Home = () => {
     
   }
 //-------------------------------------------------------------------------function for rotating canvas - doesnt work yet----------------------------------------------
-  function rotateCanvas(){
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext("2d");
-    ctx.rotate(Math.PI / 2)
-  }
+
 
   //Function for converting hex to rgba format
   function hexToRGBA(hex, alpha){
@@ -1508,6 +1528,7 @@ function resetCanvas(){
                       </div>
                     </div>
                   </a>
+
                   {/*Save as pdf*/}
                   <div className="ActionSaveItem" onClick={saveCanvasAsPdf}>
                     <div className="ActionSaveItemIcon">
@@ -1533,6 +1554,10 @@ function resetCanvas(){
             <div className="ActionTool" aria-label='ctrl + y'>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-big-right size-8" onClick={stepForward}><path d="M6 9h6V5l7 7-7 7v-4H6V9z"/></svg>
             </div>
+            <div className="ActionTool" aria-label='ctrl + r'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-rotate-cw-square size-8" onClick={rotateCanvas}><path d="M12 5H6a2 2 0 0 0-2 2v3"/><path d="m9 8 3-3-3-3"/><path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/></svg>            
+            </div>
+
 
           </div>
 
