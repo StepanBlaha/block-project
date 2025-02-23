@@ -87,8 +87,8 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
     setDisplay({ quickAction: "flex" });
     const card = menuRef.current;
     const rect = event.currentTarget.getBoundingClientRect();
-    card.style.top = `${rect.top - 10}px`;
-    card.style.left = `${rect.right + 20}px`;
+    card.style.top = `${rect.top - 13}px`;
+    card.style.left = `${rect.right + 69}px`;
     card.style.position = "fixed";
   }
   // Function to show the rename card and position it correctly
@@ -96,10 +96,11 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
     setDisplay({"renameForm":"flex", "quickAction":"none"})
     const card = formRef.current;
     const rect = event.currentTarget.getBoundingClientRect();
-    card.style.top = `${rect.top - 15}px`;
-    card.style.left = `${rect.right - rect.width - 10}px`;
+    card.style.top = `${rect.top - 12}px`;
+    card.style.left = `${rect.right - rect.width - 12}px`;
     card.style.position = "fixed";
   }
+  
   return(
     <>
     <div key={date} className="savedPost">
@@ -119,9 +120,7 @@ function SavedPost({id, name,  image, date, openFunc, updateFunc, deleteFunc, bl
       <div className="savedPostContent" >
         {/*Part of  saved post used for opening it */}
         <div className="savedPostOpenPart" onClick={() => {openFunc(image, id);  }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-file-earmark size-5" viewBox="0 0 16 16">
-            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-file size-5"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
           <p>{name}</p>
         </div>
 

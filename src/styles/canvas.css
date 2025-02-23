@@ -321,7 +321,7 @@ canvas{
     width: fit-content;
     float: left;
     border-radius: 5px;
-    padding: 5px;
+    padding: 8px;
     transition: ease-in-out 0.1s;
 }
 .ActionTool{
@@ -330,7 +330,7 @@ canvas{
     float: left;
     
     border-radius: 5px;
-    padding: 5px;
+    padding: 8px;
     transition: ease-in-out 0.1s;
 }
 .Tool:hover{
@@ -353,7 +353,7 @@ canvas{
 
 .ActionSaveMenu{
     position: absolute;
-    top: 50px;
+    top: 48px;
     left: 0;
     width: 160px;
     height: fit-content;
@@ -468,7 +468,7 @@ canvas{
 }
 
 #ShapeSelect{
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 #ShapeSelect a {
     display: flex
@@ -500,7 +500,7 @@ canvas{
     opacity: 0;
     position: absolute;
     padding-left: 0;
-    left: -5;
+    left: -16;
     display: none;
     background-color: #18181B;
     border: 1px solid #262626;
@@ -573,7 +573,8 @@ ul li ul:hover {
     width: fit-content;
     height: fit-content;
     position: absolute;
-    top: 50px;
+    left: 0;
+    top: 48px;
     background-color: #18181B;
     border: 1px solid #262626;
     padding: 10px;
@@ -779,16 +780,9 @@ input[type=file]::file-selector-button:hover {
     /* background-color: rgba(36, 40, 50, 1);
   background-image: linear-gradient(135deg, rgba(36, 40, 50, 1) 0%, rgba(36, 40, 50, 1) 40%, rgba(37, 28, 40, 1) 100%); */
   
-    background-color: rgba(36, 40, 50, 1);
-    background-image: linear-gradient(
-      139deg,
-      rgba(36, 40, 50, 1) 0%,
-      rgba(36, 40, 50, 1) 0%,
-      rgba(37, 28, 40, 1) 100%
-    );
-  
+
     border-radius: 10px;
-    padding: 15px 0px;
+    padding: 10px 0px;
     flex-direction: column;
     gap: 10px;
     display: none;
@@ -797,6 +791,15 @@ input[type=file]::file-selector-button:hover {
     top: -10px;
     z-index: 300;
   }
+ .card{
+    background-color: #18181B !important;
+   border: 1px solid #262626;
+    border-radius: 7px;
+}
+.card .element svg{
+    stroke: white;
+}
+
   
   .card .separator {
     border-top: 1.5px solid #42434a;
@@ -814,9 +817,10 @@ input[type=file]::file-selector-button:hover {
     display: flex;
     align-items: center;
     color: #7e8590;
+    color: white;
     gap: 10px;
     transition: all 0.3s ease-out;
-    padding: 4px 7px;
+        padding: 6px 10px;
     border-radius: 6px;
     cursor: pointer;
   }
@@ -830,14 +834,18 @@ input[type=file]::file-selector-button:hover {
   .card .list .element .label {
     font-weight: 600;
   }
-  
+  /*
   .card .list .element:hover {
     background-color: #5353ff;
     color: #ffffff;
     transform: translate(1px, -1px);
+  }*/
+  .card .list .element:hover {
+    background-color: #27272A;
   }
   .card .list .delete:hover {
     background-color: #8e2a2a;
+    background-color: #27272A;
   }
   
   .card .list .element:active {
@@ -846,8 +854,9 @@ input[type=file]::file-selector-button:hover {
   
   .card .list:not(:last-child) .element:hover svg {
     stroke: #ffffff;
+    stroke: white;
   }
-  
+  /*
   .card .list:last-child svg {
     stroke: #bd89ff;
   }
@@ -858,7 +867,7 @@ input[type=file]::file-selector-button:hover {
   .card .list:last-child .element:hover {
     background-color: rgba(56, 45, 71, 0.836);
   }
-  
+  */
 
 
 
@@ -960,7 +969,7 @@ input[type=file]::file-selector-button:hover {
 .AllPostBlur{
     width: 100%;
     height: 100%;
-    border: 1px  solid red;
+
     position: absolute;
     display: none;
     z-index: 2;
@@ -994,7 +1003,9 @@ input[type="color"]::-webkit-color-swatch {
 #pipetTool{
     padding: 8px;
 }
-
+#ShapeSelectTool{
+    margin-top: 14px;
+}
 .Tool{
     position: relative;
     display: inline-block;
@@ -1131,5 +1142,6 @@ input[type="color"]::-webkit-color-swatch {
 .SidebarContent{
     width: 200px;
 }
+
 
 
