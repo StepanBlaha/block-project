@@ -141,9 +141,15 @@ cursor{
 
 
 .Content{
-    height:90% ;
+    height:100% ;
     width: 100%;
     float: left;
+    /*whiteish*/
+    background-color: #D4D4D8;
+    /*blueish*/
+    background-color:  #1E1E24;
+    /*gray*/
+    background-color:  #242427;
 }
 .ContentTitle{
     float: left;
@@ -300,13 +306,13 @@ canvas{
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
     justify-content: space-between;
-    background-color: #18181B;
+    background-color: #18181b;
     border-bottom: 1px solid #262626;
-
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
 }
 .ToolMenu{
     height: 100%;
@@ -538,6 +544,8 @@ ul li ul:hover {
 }
 .ShapeSelectItem:hover{
     background: #27272A;
+    border-left: #18181B;
+    border-right: #18181B;
 
 }
 
