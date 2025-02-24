@@ -51,13 +51,13 @@ TODO:
 - Resize platna done
 - dalsi tvary done
 
-
 Functionalities:
+
 - k serveru se to pripojuje vickrat (mel bych to optimalizovat)
 - prihlaseni a ukladani dle uzivatele
 
-
 Tools:
+
 - zastavit mazani pri hybani
 - noise brush
 - Hybani s textem
@@ -69,8 +69,6 @@ Image:
 - mikro blackscreen pri hybani
 - aby slo pridat a detekovat vic images- done
 - aby pri hybani s image se nevymazal zbytek obsahu
-
-
 
 -sirka a vyska tvaru porad rozjebna
 
@@ -150,60 +148,32 @@ setShapeEndPoint({ x: offsetX, y: offsetY });
 createShape()
 _/
 }
-/*
+/\*
 old function for stepback
-  function stepBack(event){
-    //Trigger upon pressing z
-    if(event.key === "z" && !event.shiftKey){
-      if(stateStack.current.length > 0){
-        //If length of stack is one reset the canvas completely, otherwise erase the last one
-        if (stateStack.current.length == 1) {
-          //Pop the last state
-          stateStack.current.pop()
-          //Get canvas and ctx
-          const canvas = canvasRef.current
-          const ctx = canvas.getContext("2d");
-          //Reset the canvas
-          ctx.clearRect(0, 0, canvas.width, canvas.height)
-        }else{
-          //Pop the last state
-          const lastState = stateStack.current.pop()
-          //Load the previous state
-          ctxRef.current.putImageData(stateStack.current[stateStack.current.length-1], 0, 0)
-        }
-      }
-    }
-  }
+function stepBack(event){
+//Trigger upon pressing z
+if(event.key === "z" && !event.shiftKey){
+if(stateStack.current.length > 0){
+//If length of stack is one reset the canvas completely, otherwise erase the last one
+if (stateStack.current.length == 1) {
+//Pop the last state
+stateStack.current.pop()
+//Get canvas and ctx
+const canvas = canvasRef.current
+const ctx = canvas.getContext("2d");
+//Reset the canvas
+ctx.clearRect(0, 0, canvas.width, canvas.height)
+}else{
+//Pop the last state
+const lastState = stateStack.current.pop()
+//Load the previous state
+ctxRef.current.putImageData(stateStack.current[stateStack.current.length-1], 0, 0)
+}
+}
+}
+}
 
-  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\*/
 
   <html lang="en"  className="dark">
       <body
@@ -219,66 +189,39 @@ old function for stepback
       </body>
     </html>
 
-
-
-
-
     <html lang="en"  className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      > 
+      >
         {children}
       </body>
     </html>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//ted 
+//ted
 button:
-    /* float: right; */
-    position: absolute;
-    right: 5px;
-    z-index: 45453;
+/_ float: right; _/
+position: absolute;
+right: 5px;
+z-index: 45453;
 
-
-  left: calc(var(--sidebar-width)* -1 / 1.35);
-
-
+left: calc(var(--sidebar-width)\* -1 / 1.35);
 
     --sidebar-width: 250px;
-  .group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:w-0 {
-    width: 65px;
+
+.group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:w-0 {
+width: 65px;
 }
 
     //Por bdouci predelani sidebaru
 
     .group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:left-\[calc\(var\(--sidebar-width\)\*-1\)\] {
     left: calc(var(--sidebar-width)* -1 / 1.5);
+
 }
 .group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:w-0 {
-    width: 105px;
+width: 105px;
 }
 
-
 sidebarbutton:
-    position: absolute;
-    z-index: 3244323234;
+position: absolute;
+z-index: 3244323234;

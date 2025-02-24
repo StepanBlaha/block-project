@@ -439,6 +439,7 @@ const Home = () => {
     "rectangle": shapeDownHandle,
     "circle": shapeDownHandle,
     "triangle": shapeDownHandle,
+    "rightTriangle": shapeDownHandle,
     "diamond": shapeDownHandle,
     "pentagon": shapeDownHandle,
     "hexagon": shapeDownHandle,
@@ -459,6 +460,7 @@ const Home = () => {
     "rectangle":  shapeMoveHandle,
     "circle": shapeMoveHandle,
     "triangle": shapeMoveHandle,
+    "rightTriangle": shapeMoveHandle,
     "diamond": shapeMoveHandle,
     "pentagon": shapeMoveHandle,
     "hexagon": shapeMoveHandle,
@@ -479,6 +481,7 @@ const Home = () => {
     "rectangle": shapeUpHandle,
     "circle": shapeUpHandle,
     "triangle": shapeUpHandle,
+    "rightTriangle": shapeUpHandle,
     "diamond": shapeUpHandle,
     "pentagon": shapeUpHandle,
     "hexagon": shapeUpHandle,
@@ -499,6 +502,7 @@ const Home = () => {
     "rectangle": "auto",
     "circle": "auto",
     "triangle": "auto",
+    "rightTriangle": "auto",
     "diamond": "auto",
     "pentagon": "auto",
     "hexagon": "auto",
@@ -567,6 +571,12 @@ const Home = () => {
         ctx.moveTo(endX, endY)
         ctx.lineTo(startX, endY)
         ctx.lineTo((endX - startX) / 2 + startX, startY)
+        ctx.closePath(); 
+        break
+      case "rightTriangle":
+        ctx.moveTo(endX, endY)
+        ctx.lineTo(startX, endY)
+        ctx.lineTo(startX, startY)
         ctx.closePath(); 
         break
       case "diamond":
@@ -1630,6 +1640,10 @@ function resetCanvas(){
                     {/*Triangle */}
                     <li className="ShapeSelectItem" onClick={() => setSelectedTool("triangle")}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-triangle size-8"><path d="M13.73 4a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/></svg>
+                      </li>
+                    {/* Right Triangle */}
+                    <li className="ShapeSelectItem" onClick={() => setSelectedTool("rightTriangle")}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-triangle-right size-8"><path d="M22 18a2 2 0 0 1-2 2H3c-1.1 0-1.3-.6-.4-1.3L20.4 4.3c.9-.7 1.6-.4 1.6.7Z"/></svg>
                     </li>
                     {/*Diamond */}
                     <li className="ShapeSelectItem" onClick={() => setSelectedTool("diamond")}>
