@@ -25,12 +25,7 @@ cursor{
     float: left;
     border: 2px solid blue;
 }
-.Sidebar{
-    height:90% ;
-    width: 193px;
-    float: left;
-    border: 2px solid green;
-}
+
 .SettingsMenu{
     height: 80%;
     width: 100%;
@@ -372,7 +367,7 @@ canvas{
     border: 1px solid #262626;
     border-radius: 7px;
     gap: 6px;
-    z-index: 43563654563487;
+    z-index: 1;
 }
 .ActionSaveMenu a {
     width: 100%;
@@ -432,7 +427,7 @@ canvas{
     left: -52px;
     position: absolute;
     transform: rotateZ(45deg);
-    z-index: 100;
+    z-index: 1;
 }
 
 .checkBox input[type=checkbox]:checked + div {
@@ -512,7 +507,7 @@ canvas{
     border: 1px solid #262626;
     border-bottom-right-radius: 7px;
     border-bottom-left-radius: 7px;
-    z-index: 3425453345;
+    z-index: 1;
 }
 ul li:hover > ul,
 ul li ul:hover {
@@ -556,7 +551,7 @@ ul li ul:hover {
     width: 400px;
     height: 40px;
     position: absolute;
-    z-index: 10;
+    z-index: 1;
     display: none;
 }
 
@@ -591,7 +586,7 @@ ul li ul:hover {
     gap: 10px;
     justify-content: center;
     border-radius: 7px;
-    z-index: 34324;
+    z-index: 1;
 }
 .InputCardSection{
     width: 100%;
@@ -685,7 +680,7 @@ input[type=file]::file-selector-button:hover {
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 43436;
+    z-index: 2;
     display: none;
     
 }
@@ -797,7 +792,7 @@ input[type=file]::file-selector-button:hover {
     position: absolute;
     left: 180px;
     top: -10px;
-    z-index: 300;
+    z-index: 4 !important;
   }
  .card{
     background-color: #18181B !important;
@@ -902,7 +897,7 @@ input[type=file]::file-selector-button:hover {
     width: 100%;
     left: 0;
     position: relative;
-    z-index: 43436;
+    z-index: 5 !important;
     display: none;
     
 }
@@ -1122,7 +1117,7 @@ input[type="color"]::-webkit-color-swatch {
     background-color: #27272A;
     color: #fff;
     border-radius: 4px;
-    z-index: 2131;
+    z-index: 2;
     white-space: nowrap; /* Prevents text wrapping */
   }
 
@@ -1141,7 +1136,7 @@ input[type="color"]::-webkit-color-swatch {
     padding: 3px;
     position: absolute;
     right: 5px;
-    z-index: 45453;
+    z-index: 1;
   }
   .SidebarButton   svg{
     width: 3rem;
@@ -1150,6 +1145,8 @@ input[type="color"]::-webkit-color-swatch {
 .SidebarContent{
     width: 200px;
 }
-
+.Sidebar{
+    z-index: 1;
+}
 
 

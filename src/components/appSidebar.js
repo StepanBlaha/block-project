@@ -44,7 +44,7 @@ const items = [
   ]
 export default function AppSidebar({queryData, openSavedCanvas, updateName, deleteData, blurRef,  handleSidebar}) {
     return(
-        <Sidebar>
+        <Sidebar className='Sidebar'>
               <SidebarTrigger onClick={handleSidebar} className="SidebarButton"/>
             <SidebarContent className="SidebarContent">
               {/*Aplications */}
