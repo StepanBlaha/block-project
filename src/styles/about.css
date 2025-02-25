@@ -1,0 +1,137 @@
+body, html{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    float: left;
+}
+main{
+    width: 100%;
+    height: 100%;
+    float: left;
+
+}
+.Main{
+    height: fit-content;
+    width: 100%;
+    float: left;
+    border: 1px solid green;
+}
+.Navbar{
+    height: 100px;
+    width: 100%;
+    float: left;
+    border: 1px solid red;
+}
+.Content{
+    min-height: 1000px;
+    height: fit-content;
+    width: 100%;
+    float: left;
+    border: 1px solid Blue;
+}
+
+.Hero{
+    height: 800PX;
+    width: 100%;
+    float: left;
+    border: 1px solid yellow;   
+}
+.HeroContent{
+    height: 100%;
+    width: 60%;
+    float: left;
+    border: 1px solid pink;
+}
+.HeroCenter{
+    height: 100%;
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid brown;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.HeroTitle{
+    height: 100px;
+    width: 100%;
+    float: left;
+    border: 1px solid pink;
+}
+.HeroTitle h2{
+    font-size: 50px;
+    font-weight: 700;
+    color: white;
+}
+.HeroDescription{
+    height: 100px;
+    width: 100%;
+    float: left;
+    border: 1px solid pink;
+}
+.HeroDescription p{
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+}
+.HeroButton{
+    height: 60px;
+    width: 140px;
+    float: left;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00B99A;
+    border-radius: 10px;
+}
+.HeroButton p{
+    font-weight: 700;
+    color: #fff;
+}
+.HeroImage{
+    height: 100%;
+    width: 40%;
+    float: left;
+    border: 1px solid pink;
+}
+.HeroScreen{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    position: relative
+}
+.MockupFrame{
+    -webkit-box-shadow:  0px 0px 141px 31px #00B99A;
+    -moz-box-shadow:  0px 0px 141px 31px #00B99A;
+    box-shadow:  0px 0px 141px 31px #00B99A;
+
+
+    -webkit-box-shadow: 0px 0px 106px 7px #00B99A;
+    -moz-box-shadow: 0px 0px 106px 7px #00B99A;
+    box-shadow: 0px 0px 106px 7px #00B99A;
+}
+.screen-shadow::before {
+    content: "";
+    position: absolute;
+    inset: 0; /* Covers entire div */
+    -webkit-box-shadow: inset 0px 0px 48px 8px rgba(255,255,255,0.08);
+    -moz-box-shadow: inset 0px 0px 48px 8px rgba(255,255,255,0.08);
+    box-shadow: inset 0px 0px 48px 8px rgba(255,255,255,0.08);
+    pointer-events: none; /* Ensures interaction with elements inside */
+    z-index: 1;
+    border-radius: 30px;
+}
+.HeroPhone{
+    position: absolute;
+    right: 0;
+    z-index: 32;
+    bottom: 0;
+    border-radius: 36px;
+    -webkit-box-shadow: 0px 0px 69px 1px rgba(0,185,154,0.11);
+    -moz-box-shadow: 0px 0px 69px 1px rgba(0,185,154,0.11);
+    box-shadow: 0px 0px 69px 1px rgba(0,185,154,0.11);
+}

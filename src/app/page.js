@@ -1454,7 +1454,7 @@ function resetCanvas(){
     const menu = refItem.current
     menu.style.display = value
   }
-
+  
 
 
   //Ref for checking whether the sidebar  is open
