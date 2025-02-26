@@ -7,6 +7,7 @@ const Page = () => {
                 <div className="Navbar">
 
                 </div>
+
                 <div className="Content">
 
                     <div className="Hero">
@@ -56,6 +57,15 @@ const Page = () => {
 
                         </div>
 
+                    </div>
+
+                    <div className="Features">
+                        <div className="FeatureGrid">
+                            <div className="Feature Feature1"></div>
+                            <div className="Feature Feature2"></div>
+                            <div className="Feature Feature3"></div>
+                            <div className="Feature Feature4"></div>
+                        </div>
                     </div>
 
                 </div>
