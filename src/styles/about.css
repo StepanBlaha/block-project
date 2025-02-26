@@ -1,3 +1,8 @@
+:root {
+    --scroll_item_width: 200px;
+    --white: #faf0e6;
+  }
+
 body, html{
     height: 100%;
     width: 100%;
@@ -158,30 +163,56 @@ main{
     display: flex;
     justify-content: center;
     align-items: center; 
+    margin-top: 50px;
 }
 .FeatureGrid{
-    height: 100%;
-    width: fit-content;
+    /*height: 100%;
+    width: 80%;
     margin: 0 auto;
-
     justify-content: center;
     border: 1px solid pink;
+    display: flex;
+    flex-wrap: wrap;
+    */
+    height: 100%;
+    border: 1px solid pink;
+    width: fit-content;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1rem;
 
 }
 .Feature{
     height: 200px;
     width: 300px;
     margin: 10px;
-    border: 1px solid pink;
 
     border-radius: 20px;
     background-color: #fff;
     background-color: #18181b;
     border: 1px solid #262626;
+    /*
     -webkit-box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
     -moz-box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
     box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
+    */
+/* really small shadow
+    -webkit-box-shadow: 0px 0px 27px 4px rgba(0,185,154,0.1);
+    -moz-box-shadow: 0px 0px 27px 4px rgba(0,185,154,0.1);
+    box-shadow: 0px 0px 27px 4px rgba(0,185,154,0.1);
+    */
+    -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+-moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+
 }
+@media (min-width: 600px) {
+    .FeatureGrid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1400px) {
+    .FeatureGrid { grid-template-columns: repeat(4, 1fr); }
+  }
+/*
 .FeatureGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -194,3 +225,275 @@ main{
     .Feature2 { grid-area: 1 / 2 / 2 / 3; }
     .Feature3 { grid-area: 2 / 1 / 3 / 2; }
     .Feature4 { grid-area: 2 / 2 / 3 / 3; }
+    */
+.FeatureLogo{
+    width:100%;
+    height: 35%;
+    float: left;
+
+    display: flex;
+    align-items: center;
+}
+.FeatureContent{
+    width:100%;
+    height: 65%;
+    float: left;
+    display: flex;
+}
+.FeatureText{
+    font-size: 14px;
+    font-weight: 500;
+    color: #757575;
+    width: fit-content;
+    height: 85%;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    align-items: flex-start;
+}
+.FeatureLogoCube{
+    float: left;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: #18181b;
+    border: 1px solid #262626;
+    margin: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*
+    -webkit-box-shadow: inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    -moz-box-shadow: inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    box-shadow: inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    */
+}
+.FeatureLogoCube svg{
+    stroke: #098b74;
+}
+.FeatureTitle{
+    font-size: 20px;
+    font-weight: 700;
+    color: #708d85;
+    color: #098b74;
+    width: fit-content;
+    height: 80%;
+    float: left;
+
+    display: flex;
+    align-items: center;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.TechScroll{
+    height: fit-content;
+    width: 100%;
+    float: left;
+    border: 1px solid #ff0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    min-height: 500px !important;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.TechScrollContent{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid pink;
+    overflow: hidden;
+}
+/*
+.TechScrollSection{
+    overflow: hidden;
+    height: fit-content;
+    white-space: nowrap;
+    animation: 10s linear infinite scrollText;
+    margin: 0;
+    font-size: 0;
+    display: flex;
+    width: 100%;
+
+    justify-content: space-around;
+    justify-content: space-between;
+  width: fit-content;
+  gap: 7px;
+}
+.TechScrollItem{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #fff;
+    height: 65px;
+    width: 160px;
+    border-radius: 10px;
+    background-color: #18181b;
+    border: 1px solid #262626;
+
+    -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+-moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+
+}
+
+@keyframes scrollText {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+    */
+
+.TechScrollSection{
+    border: 1px solid;
+    width: 90%;
+    margin-inline: auto;
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    border: 1px solid red;
+    mask-image: linear-gradient(to right,
+      rgba(0,0,0,0), 
+      rgba(0,0,0,1) 20%,
+      rgba(0,0,0,1) 80%,
+      rgba(0,0,0,0)
+    );
+}
+@keyframes scrollleft {
+    to {
+        left: calc(var(--scroll_item_width) * -1);
+    }
+}
+.TechScrollItem{
+    height: 100px;
+    width: var( --scroll_item_width);
+    background-color: #18181b;
+    border: 1px solid red;
+    position: absolute;
+    left: max(calc(var(--scroll_item_width) * 8), 100%);
+    animation-name: scrollleft;
+    animation-duration: 30s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    height: 65px;
+    width: 160px;
+    border-radius: 10px;
+    background-color: #18181b;
+    border: 1px solid #262626;
+
+    -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    -moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    /*
+    background-image: url(/node.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    */
+    display: flex;
+    overflow: hidden;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    margin-top: 15px;
+
+}
+.item1{
+    animation-delay: calc(30s / 8 * (8 - 1) * -1);
+    
+}
+.item2{
+    animation-delay: calc(30s / 8 * (8 - 2) * -1);
+}
+.item3{
+    animation-delay: calc(30s / 8 * (8 - 3) * -1);
+}
+.item4{
+    animation-delay: calc(30s / 8 * (8 - 4) * -1);
+}
+.item5{
+    animation-delay: calc(30s / 8 * (8 - 5) * -1);
+}
+.item6{
+    animation-delay: calc(30s / 8 * (8 - 6) * -1);
+}
+.item7{
+    animation-delay: calc(30s / 8 * (8 - 7) * -1);
+}
+.item8{
+    animation-delay: calc(30s / 8 * (8 - 8) * -1);
+}
+
+
+
+
+
+
+.TechScrollTitle{
+    height: 100px;
+    width: 100%;
+    float: left;
+    border: 1px solid pink;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.TechScrollTitle h2{
+    width: fit-content;
+    font-size: 26px;
+    font-weight: 700;
+    color: #757575;
+    color: #098b74;
+    -webkit-box-shadow: 0 0 31px 4px #00b99a1a, inset 0 0 20px 2px #00b99a0f;
+    -moz-box-shadow: 0 0 31px 4px #00b99a1a, inset 0 0 20px 2px #00b99a0f;
+    box-shadow: 0 0 31px 4px #00b99a1a, inset 0 0 20px 2px #00b99a0f;
+}
