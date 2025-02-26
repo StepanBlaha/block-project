@@ -51,6 +51,7 @@ TODO:
 - Resize platna done
 - dalsi tvary done
 
+
 Functionalities:
 
 - k serveru se to pripojuje vickrat (mel bych to optimalizovat)
@@ -69,6 +70,13 @@ Image:
 - mikro blackscreen pri hybani
 - aby slo pridat a detekovat vic images- done
 - aby pri hybani s image se nevymazal zbytek obsahu
+
+
+Landing page
+- framer motion background animation
+- feature boxes
+- navbar
+- infinite scroll tool showcase
 
 -sirka a vyska tvaru porad rozjebna
 
