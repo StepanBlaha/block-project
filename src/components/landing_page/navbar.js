@@ -13,9 +13,9 @@ const Navbar = ({isSmallScreen, logedIn}) => {
                 <div className="NavbarContent">
                     <div className="NavbarLogo"></div>
 
-                    <div className="NavbarPages">
+                    
                         {isSmallScreen ? <NavbarBurger /> : <NavbarFull />}
-                    </div>
+                    
 
                     <div className="NavbarAuth">
                         <div className="NavbarAuthButton">

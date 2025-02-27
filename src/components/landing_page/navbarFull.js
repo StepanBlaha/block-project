@@ -4,6 +4,7 @@
 const NavbarFull = () => {
     return(
         <>
+        <div className="NavbarPages">
             <div className="NavbarPage">
                 <p>Home</p>
             </div>
@@ -16,6 +17,7 @@ const NavbarFull = () => {
             <div className="NavbarPage">
                 <p>Features</p>
             </div>
+        </div>
         </>
     )
 }
