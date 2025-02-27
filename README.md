@@ -81,6 +81,7 @@ Landing page
 -sirka a vyska tvaru porad rozjebna
 
 <!---
+npm install flowbite
 npm install socket.io socket.io-client
 npm install --save three
 npm install canvasinput

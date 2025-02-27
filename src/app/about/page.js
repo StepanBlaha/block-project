@@ -3,43 +3,39 @@ import { Link } from "lucide-react";
 import "./../../styles/about.css";
 import { useEffect, useState, useRef, use } from 'react'
 import React from 'react';
+import Navbar from "@/components/landing_page/navbar";
+import { set } from "mongoose";
 
 const Page = () => {
     const scrollerRef = useRef(null)
-
+    //Ref for checking if the user is loged in
     const logedIn = useRef(false)
+    //State for checking if the screen is small
+    const  [isSmallScreen, setIsSmallScreen] = useState(false)
+
+    useEffect(() => {
+        //Function for handling changes in the navbar
+        function changeNavbar(){
+            if(window.innerWidth < 768){
+                setIsSmallScreen(true)
+            }else{
+                setIsSmallScreen(false)
+            }
+        }
+        //Add event listener for resizing the window
+        window.addEventListener('resize', changeNavbar)
+        //Remove event listener when the component is unmounted
+        return () => {
+            window.removeEventListener('resize', changeNavbar)
+        }
+    }, [])
 
 
 
     return(
         <>
             <div className="Main">
-                <div className="Navbar">
-                    <div className="NavbarContent">
-                        <div className="NavbarLogo"></div>
-                        <div className="NavbarPages">
-                            <div className="NavbarPage">
-                                <p>Home</p>
-                            </div>
-                            <div className="NavbarPage">
-                                <p>About</p>
-                            </div>
-                            <div className="NavbarPage">
-                                <p>Canvas</p>
-                            </div>
-                            <div className="NavbarPage">
-                                <p>Features</p>
-                            </div>
-                        </div>
-                        <div className="NavbarAuth">
-                            <div className="NavbarAuthButton">
-                                <p>Sign in</p>
-                            </div>
-                            
-                        </div>
-                    </div>
-
-                </div>
+                <Navbar isSmallScreen={isSmallScreen} logedIn={logedIn.current}/>
 
                 <div className="Content">
 
