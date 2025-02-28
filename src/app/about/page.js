@@ -4,7 +4,16 @@ import "./../../styles/about.css";
 import { useEffect, useState, useRef, use } from 'react'
 import React from 'react';
 import Navbar from "@/components/landing_page/navbar";
+import { Roboto } from "next/font/google";
 import { set } from "mongoose";
+
+
+const roboto = Roboto({
+    subsets: ["latin"],
+    weight: ["400","700"],
+    variable: "--font-roboto",
+})
+
 
 const Page = () => {
     const scrollerRef = useRef(null)
@@ -34,7 +43,7 @@ const Page = () => {
 
     return(
         <>
-            <div className="Main">
+            <div className={`${roboto.className} Main ${roboto.variable}`}>
                 <Navbar isSmallScreen={isSmallScreen} logedIn={logedIn.current}/>
 
                 <div className="Content">
