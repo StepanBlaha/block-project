@@ -88,6 +88,43 @@ const Page = () => {
 
                     </div>
 
+                    {/*Techscroll section */}
+                    <div className="TechScroll">
+                        <div className="TechScrollTitle">
+                            <h2>Built with</h2>
+                        </div>
+                        <div className="TechScrollContent" ref={scrollerRef}>
+                            <div className="TechScrollSection">
+                                <div className="TechScrollItem item1">
+                                    <img src="/node.svg" alt="Node js" />
+                                </div>
+                                <div className="TechScrollItem item2">
+                                    <img src="/mongodb.svg" alt="Mongo db" />
+                                </div>
+                                <div className="TechScrollItem item3">
+                                    <img src="/html.svg" alt="Html" />
+                                </div>
+                                <div className="TechScrollItem item4">
+                                    <img src="/react.svg" alt="React" />
+                                </div>
+                                <div className="TechScrollItem item5">
+                                    <img src="/nextjs.svg" alt="Next js" />
+                                </div>
+                                <div className="TechScrollItem item6">
+                                    <img src="/npm.svg" alt="NPM" />
+                                </div>
+                                <div className="TechScrollItem item7">
+                                    <img src="/tailwind.svg" alt="Tailwind" />
+                                </div>
+                                <div className="TechScrollItem item8">
+                                    <img src="/github.svg" alt="Github" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {/*Feature section */}
                     <div className="Features">
                         <div className="FeatureGrid">
 
@@ -164,41 +201,6 @@ const Page = () => {
                         </div>
                     </div>
 
-
-                    <div className="TechScroll">
-                        <div className="TechScrollTitle">
-                            <h2>Built with</h2>
-                        </div>
-                        <div className="TechScrollContent" ref={scrollerRef}>
-                            <div className="TechScrollSection">
-                                <div className="TechScrollItem item1">
-                                    <img src="/node.svg" alt="Node js" />
-                                </div>
-                                <div className="TechScrollItem item2">
-                                    <img src="/mongodb.svg" alt="Mongo db" />
-                                </div>
-                                <div className="TechScrollItem item3">
-                                    <img src="/html.svg" alt="Html" />
-                                </div>
-                                <div className="TechScrollItem item4">
-                                    <img src="/react.svg" alt="React" />
-                                </div>
-                                <div className="TechScrollItem item5">
-                                    <img src="/nextjs.svg" alt="Next js" />
-                                </div>
-                                <div className="TechScrollItem item6">
-                                    <img src="/npm.svg" alt="NPM" />
-                                </div>
-                                <div className="TechScrollItem item7">
-                                    <img src="/tailwind.svg" alt="Tailwind" />
-                                </div>
-                                <div className="TechScrollItem item8">
-                                    <img src="/github.svg" alt="Github" />
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>
