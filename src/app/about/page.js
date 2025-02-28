@@ -90,6 +90,7 @@ const Page = () => {
 
                     {/*Techscroll section */}
                     <div className="TechScroll">
+                    <div className="TechScrollBackgroundColor"></div>
                         <div className="TechScrollTitle">
                             <h2>Built with</h2>
                         </div>
@@ -123,9 +124,10 @@ const Page = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                     {/*Feature section */}
                     <div className="Features">
+                        <div className="FeatureBackgroundColor"></div>
                         <div className="FeatureGrid">
 
                             <div className="Feature Feature1">
