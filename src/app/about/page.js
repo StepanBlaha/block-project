@@ -68,6 +68,7 @@ const Page = () => {
                         <div className="HeroImage">
 
                             <div className="HeroScreen">
+                                {/*
                                 <div class="MockupFrame relative mx-auto border-neutral-900 dark:border-neutral-900 bg-neutral-900 border-[14px] rounded-[2.5rem] h-[454px] max-w-[341px] md:h-[682px] md:max-w-[512px]">
                                     <div class=" h-[32px] w-[3px] bg-neutral-900 dark:bg-neutral-900 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
                                     <div class=" h-[46px] w-[3px] bg-neutral-900 dark:bg-neutral-900 absolute -start-[17px] top-[124px] rounded-s-lg"></div>
@@ -91,6 +92,23 @@ const Page = () => {
                                         </div>
                                     </div>
                                 </div>
+                                */}
+                                <div className="MockupFrame">
+                                    <figure className=" ms-auto me-20 relative z-[1] max-w-full w-[50rem] h-auto shadow-[0_2.75rem_3.5rem_-2rem_rgb(45_55_75_/_20%),_0_0_5rem_-2rem_rgb(45_55_75_/_15%)] dark:shadow-[0_2.75rem_3.5rem_-2rem_rgb(0_0_0_/_20%),_0_0_5rem_-2rem_rgb(0_0_0_/_15%)] rounded-b-lg">
+                                        <div className="relative flex items-center max-w-[50rem] bg-gray-800 rounded-t-lg py-2 px-24 dark:bg-neutral-700">
+                                            <div className="flex gap-x-1 absolute top-2/4 start-4 -translate-y-1">
+                                            <span className="size-2 bg-gray-600 rounded-full dark:bg-neutral-600"></span>
+                                            <span className="size-2 bg-gray-600 rounded-full dark:bg-neutral-600"></span>
+                                            <span className="size-2 bg-gray-600 rounded-full dark:bg-neutral-600"></span>
+                                            </div>
+                                            <div className="flex justify-center items-center size-full bg-gray-700 text-[.25rem] text-gray-400 rounded-sm sm:text-[.5rem] dark:bg-neutral-600 dark:text-neutral-400">www.sketchup.com</div>
+                                        </div>
+
+                                        <div className="bg-gray-800 rounded-b-lg">
+                                            <img className="max-w-full h-auto rounded-b-lg" src="/canvas_screen_wide.png" alt="Browser Placeholder" />
+                                        </div>
+                                    </figure>
+                                </div>
                             </div>
 
                         </div>
@@ -99,7 +117,7 @@ const Page = () => {
 
                     {/*Techscroll section */}
                     <div className="TechScroll">
-                    <div className="TechScrollBackgroundColor"></div>
+                    {/*<div className="TechScrollBackgroundColor"></div>*/}
                         <div className="TechScrollTitle">
                             <h2>Built with</h2>
                         </div>
