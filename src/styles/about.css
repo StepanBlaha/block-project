@@ -102,6 +102,7 @@ main{
     font-size: 35px;
     font-weight: 700;
     color: #00B99A;
+    cursor: pointer;
 }
 
 .NavbarPages{
@@ -186,6 +187,7 @@ main{
     min-width: 200px;
 }
 .NavbarAuthButton{
+    cursor: pointer;
     width: 200px;
     font-size: 23px;
     font-weight: 600;
@@ -196,17 +198,35 @@ main{
     background-color: #18181b;
     border: 1px solid #262626;
 
+    
     -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
     -moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
     box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
-
+    
     -webkit-box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
--moz-box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
-box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
+    -moz-box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
+    box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
     display: flex;
     align-items: center;
     justify-content: center;
+    /*New testing design*/
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    background-color: #111113;
+    border: 1px solid #202020;
 
+    background-color: #171718;
+    border: 1px solid #2d2d2d;
+
+    -webkit-box-shadow: 0px 0px 31px 4px black ;
+    -moz-box-shadow: 0px 0px 31px 4px black ;
+    box-shadow: 0px 0px 31px 4px rgba(37, 37, 37, 0.379) ;
+
+}
+.NavbarAuthButton:hover{
+    -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+-moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+transform: translateY(-2px);
 }
 .NavbarAuthButton p{
     color: #098b74;
@@ -361,11 +381,21 @@ box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
     background-color: #00B99A;
     border-radius: 10px;
     
-    background: #11998e; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #11998e, #38ef7d); /* Chrome 10-25, Safari 5.1-6 */
+    
+    background: -webkit-linear-gradient(to right, #11998e, #38ef7d); 
     background: linear-gradient(to right, #11998e, #38ef7d); 
-
-
+    
+    background: linear-gradient(to right, #098b74, #00B99A); 
+    
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    background-color: #111113;
+    border: 1px solid #202020;
+}
+.HeroButton:hover{
+    -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.4),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    -moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.4),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.4),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    transform: translateY(-4px);
 }
 .HeroButton p{
     font-weight: 700;
@@ -475,7 +505,8 @@ box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
     border: 1px solid #202020;
 */
 
-
+    transition: ease-in-out 0.2s;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     height: 200px;
     width: 300px;
     margin: 10px;
@@ -484,6 +515,11 @@ box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
     background-color: #fff;
     background-color: #18181b;
     border: 1px solid #262626;
+
+
+
+    background-color: #111113;
+    border: 1px solid #202020;
     /*
     -webkit-box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
     -moz-box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
@@ -494,10 +530,23 @@ box-shadow: 0px 0px 28px 4px rgba(0,185,154,0.13);
     -moz-box-shadow: 0px 0px 27px 4px rgba(0,185,154,0.1);
     box-shadow: 0px 0px 27px 4px rgba(0,185,154,0.1);
     */
-    -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
--moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
 
+
+
+    /*
+    -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    -moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    */
+    -webkit-box-shadow: 0px 0px 31px 4px black ;
+    -moz-box-shadow: 0px 0px 31px 4px black ;
+    box-shadow: 0px 0px 31px 4px rgba(37, 37, 37, 0.379) ;
+}
+.Feature:hover{
+    -webkit-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    -moz-box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,185,154,0.06);
+    transform: translateY(-4px);
 }
 @media (min-width: 600px) {
     .FeatureGrid { grid-template-columns: repeat(2, 1fr); }
@@ -691,12 +740,19 @@ box-shadow: 0px 0px 31px 4px rgba(0,185,154,0.1),inset 0px 0px 20px 2px rgba(0,1
     position: relative;
     height: 100px;
     overflow: hidden;
+    transition: calc(30 * .1) ease-out;
     mask-image: linear-gradient(to right,
       rgba(0,0,0,0), 
       rgba(0,0,0,1) 20%,
       rgba(0,0,0,1) 80%,
       rgba(0,0,0,0)
     );
+
+    
+}
+
+.TechScrollSection:hover .TechScrollItem{
+    animation-play-state: paused;
 }
 @keyframes scrollleft {
     to {

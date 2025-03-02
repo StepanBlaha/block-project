@@ -53,10 +53,10 @@ const Page = () => {
 
                             <div className="HeroCenter">
                                 <div className="HeroTitle">
-                                    <h2>Hero Title</h2>
+                                    <h2>SketchUp</h2>
                                 </div>
                                 <div className="HeroDescription">
-                                    <p>Hero Description</p>
+                                    <p>A blank canvas, endless possibilities. Create, paint, and bring your ideas to life!</p>
                                 </div>
                                 <div className="HeroButton"> 
                                     <p>Start drawing</p>
