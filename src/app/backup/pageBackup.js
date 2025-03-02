@@ -11,8 +11,8 @@ import { set } from "mongoose";
 import { off, send } from "process";
 import { get, map } from "jquery";
 import * as fabric from 'fabric';
-import CanvasInputComponent from '../components/CanvasInputComponent';
-import SaveMenu from "../components/SaveMenu";
+import CanvasInputComponent from '../../components/CanvasInputComponent';
+import SaveMenu from "../../components/SaveMenu";
 import { jsPDF } from "jspdf";
 import dynamic from 'next/dynamic';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"

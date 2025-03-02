@@ -5,7 +5,7 @@ const NavbarFull = () => {
         <>
         <div className="NavbarPages">
             <div className="NavbarPage">
-                <p>Home</p>
+                <p><a href="/home">Home</a></p>
             </div>
             <div className="NavbarPage">
                 <p>About</p>
