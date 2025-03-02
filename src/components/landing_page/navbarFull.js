@@ -14,7 +14,7 @@ const NavbarFull = () => {
                 <p><a href="/canvas">Canvas</a></p>
             </div>
             <div className="NavbarPage">
-                <p>Features</p>
+                <p><a href="/features">Features</a></p>
             </div>
         </div>
         </>
