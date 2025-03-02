@@ -1,6 +1,5 @@
 'use client';
-
-
+import Link from 'next/link'
 const NavbarFull = () => {
     return(
         <>
@@ -12,7 +11,7 @@ const NavbarFull = () => {
                 <p>About</p>
             </div>
             <div className="NavbarPage">
-                <p>Canvas</p>
+                <p><a href="/canvas">Canvas</a></p>
             </div>
             <div className="NavbarPage">
                 <p>Features</p>
