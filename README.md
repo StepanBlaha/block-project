@@ -74,9 +74,9 @@ Image:
 
 Landing page
 - framer motion background animation
-- feature boxes
-- navbar
-- infinite scroll tool showcase
+- feature boxes done
+- navbar done
+- infinite scroll tool showcase done
 
 -sirka a vyska tvaru porad rozjebna
 
