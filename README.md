@@ -79,7 +79,7 @@ Landing page
 - infinite scroll tool showcase done
 
 -sirka a vyska tvaru porad rozjebna
-
+   xdd
 <!---
 npm install flowbite
 npm install socket.io socket.io-client
